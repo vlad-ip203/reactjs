@@ -1,10 +1,15 @@
 import './App.css';
 import logo from './logo.svg';
+import MainMenu from "./components/nav/MainMenu";
 
 function App() {
     return (
         <div className="app">
             <header className="app-header">
+                <MainMenu/>
+            </header>
+
+            <main>
                 <img src={logo} className="app-logo" alt="logo"/>
                 <p>
                     Hello, <strike>World</strike> React!
@@ -15,7 +20,7 @@ function App() {
                    rel="noopener noreferrer">
                     Link to the tutorial used
                 </a>
-            </header>
+            </main>
         </div>
     );
 }
