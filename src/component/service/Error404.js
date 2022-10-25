@@ -1,11 +1,11 @@
 import css from './Error404.module.css';
 import logo from "../../res/logo.svg";
 
-import MainMenu from "../nav/MainMenu";
-
 import React from 'react';
 import {useRouteError} from "react-router-dom";
 import {Container} from "react-bootstrap";
+
+import MainMenu from "../nav/MainMenu";
 
 
 const Error404 = () => {
@@ -13,25 +13,32 @@ const Error404 = () => {
     console.error(error)
 
     return (
-        <div>
+        <>
             <header>
                 <MainMenu/>
             </header>
 
             <main><Container>
-                <h1>Oups!</h1>
+                <h1>Oops!</h1>
                 <p>Seems like you're requesting a page we can't find</p>
+
+                <p className='text-info'>
+                    Error: {error.status}
+                    <br/>
+                    Details: {error.statusText || error.message}
+                </p>
+
                 <img className={css.logo} src={logo} alt="logo"/>
             </Container></main>
 
             <footer className='fixed-bottom'>
-                <p className={css.details}>
+                <p className='text-light'>
                     — Добродію, у Вас край п'ятого рядка хиба.
                     <br/>
                     — Годі ж Вам, Василе. То не хиба, а la fonctionnalité!
                 </p>
             </footer>
-        </div>
+        </>
     );
 };
 

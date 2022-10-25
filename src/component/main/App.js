@@ -1,16 +1,10 @@
-import MainMenu from "../nav/MainMenu";
-
 import {Container} from "react-bootstrap";
 
 
 function App() {
     return (
-        <div>
-            <header>
-                <MainMenu/>
-            </header>
-
-            <main><Container>
+        <main className='content'>
+            <Container>
                 <p>
                     Hello, <strike>World</strike> React!
                     <br/>
@@ -21,8 +15,8 @@ function App() {
                         Link to the tutorial used
                     </a>
                 </p>
-            </Container></main>
-        </div>
+            </Container>
+        </main>
     );
 }
 

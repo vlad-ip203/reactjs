@@ -1,10 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-import Error404 from "./component/service/Error404";
-import App from './component/main/App';
-import reportWebVitals from './reportWebVitals';
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
@@ -12,12 +8,20 @@ import {
     RouterProvider
 } from "react-router-dom";
 
+import Root from "./root";
+import Error404 from "./component/service/Error404";
+import App from './component/main/App';
+import reportWebVitals from './reportWebVitals';
+
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <App/>,
-        errorElement: <Error404/>
+        path: '/',
+        element: <Root/>,
+        errorElement: <Error404/>,
+        children: [
+            {index: true, element: <App/>},
+        ]
     }
 ]);
 

@@ -2,6 +2,7 @@ import css from './MainMenu.module.css';
 
 import React from 'react';
 import {Navbar, Container} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 
 const MainMenu = () => {
@@ -12,7 +13,7 @@ const MainMenu = () => {
 
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                    Profile: <a href="/login">Username</a>
+                    Profile: <Link to="/login">Username</Link>
                 </Navbar.Text>
             </Navbar.Collapse>
         </Container></Navbar>
