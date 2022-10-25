@@ -1,6 +1,6 @@
 import './App.css';
-import logo from './logo.svg';
-import MainMenu from "./components/nav/MainMenu";
+import logo from '../../res/logo.svg';
+import MainMenu from "../nav/MainMenu";
 
 function App() {
     return (
