@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-import App from './component/root/App';
+import App from './component/main/App';
 import reportWebVitals from './reportWebVitals';
 
 import React from 'react';
