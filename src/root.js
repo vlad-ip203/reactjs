@@ -1,3 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './root.css';
+
 import React from 'react';
 import {Outlet} from "react-router-dom";
 
@@ -11,7 +14,9 @@ const Root = () => {
                 <MainMenu/>
             </header>
 
-            <Outlet/>
+            <main className='root-main'>
+                <Outlet/>
+            </main>
 
             <footer className='fixed-bottom'>
                 <i>It's a footer</i>

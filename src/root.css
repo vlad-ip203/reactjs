@@ -12,7 +12,12 @@ code {
     monospace;
 }
 
-
 .link {
     color: #61dafb;
+    text-decoration: none;
+}
+
+
+.root-main {
+    padding: 16px 0;
 }

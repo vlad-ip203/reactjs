@@ -3,7 +3,6 @@ import {Container} from "react-bootstrap";
 
 function App() {
     return (
-        <main className='content'>
             <Container>
                 <p>
                     Hello, <strike>World</strike> React!
@@ -16,7 +15,6 @@ function App() {
                     </a>
                 </p>
             </Container>
-        </main>
     );
 }
 
