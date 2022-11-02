@@ -1,46 +1,53 @@
 import css from "./ItemCard.module.css"
-import link from "../../res/link.svg"
+import icon_chain from "../../res/link.svg"
 
 import React from "react"
 import {Card} from "react-bootstrap"
 
 
-const PREFIX_LINK = "http://127.0.0.1:43110/"
+const LINK_PREFIX = "http://127.0.0.1:43110/"
 
-function onClickListener(address: string) {
-    window.open(PREFIX_LINK + address, "_blank")
+function newTab(url: string) {
+    window.open(url, "_blank")
 }
 
+
 const ItemCard = args => {
+    const image = IMAGE_DIR + args.card.icon
+    const link = LINK_PREFIX +
+        (args.card.domain ?
+            args.card.domain :
+            args.card.address)
+
     return <Card className={css.card}
-                 onClick={() => onClickListener(
-                     args.card.domain ?
-                         args.card.domain :
-                         args.card.address
-                 )}>
+                 onClick={() => newTab(link)}>
         {/*{args.card.icon &&
-            <Card.Img className={css.icon}
-                      variant="top"
-                      src={PREFIX_IMG + args.card.icon}/>}*/}
+            <Card.Header>
+                <Card.Img className={css.icon}
+                          variant="top"
+                          src={image}/>
+            </Card.Header>}*/}
 
         <Card.Body>
             <Card.Title>{args.card.title}</Card.Title>
 
-            <Card.Text>
-                {args.card.domain &&
+            {args.card.description || null}
+        </Card.Body>
+
+        {args.card.domain &&
+            <Card.Footer>
+                <Card.Text>
                     <Card.Subtitle>
-                        <img src={link} alt="Chain icon"/>
+                        <img src={icon_chain} alt="Chain icon"/>
                         {" "}
                         <a className="link"
-                           href={PREFIX_LINK + args.card.domain}
-                           target="_blank">
+                           href={link}
+                           target="_blank" rel="noreferrer">
                             {args.card.domain}
                         </a>
-                    </Card.Subtitle>}
-
-                {args.card.description || null}
-            </Card.Text>
-        </Card.Body>
+                    </Card.Subtitle>
+                </Card.Text>
+            </Card.Footer>}
     </Card>
 }
 
