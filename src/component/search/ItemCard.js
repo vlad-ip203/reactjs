@@ -19,36 +19,38 @@ const ItemCard = args => {
             args.card.domain :
             args.card.address)
 
-    return <Card className={css.card}
-                 onClick={() => newTab(link)}>
-        {/*{args.card.icon &&
-            <Card.Header>
-                <Card.Img className={css.icon}
-                          variant="top"
-                          src={image}/>
-            </Card.Header>}*/}
+    return (
+        <Card className={css.card}
+              onClick={() => newTab(link)}>
+            {args.card.icon &&
+                <Card.Header>
+                    <Card.Img className={css.icon}
+                              variant="top"
+                              src={image}/>
+                </Card.Header>}
 
-        <Card.Body>
-            <Card.Title>{args.card.title}</Card.Title>
+            <Card.Body>
+                <Card.Title>{args.card.title}</Card.Title>
 
-            {args.card.description || null}
-        </Card.Body>
+                {args.card.description || null}
+            </Card.Body>
 
-        {args.card.domain &&
-            <Card.Footer>
-                <Card.Text>
-                    <Card.Subtitle>
-                        <img src={icon_chain} alt="Chain icon"/>
-                        {" "}
-                        <a className="link"
-                           href={link}
-                           target="_blank" rel="noreferrer">
-                            {args.card.domain}
-                        </a>
-                    </Card.Subtitle>
-                </Card.Text>
-            </Card.Footer>}
-    </Card>
+            {args.card.domain &&
+                <Card.Footer>
+                    <Card.Text>
+                        <Card.Subtitle>
+                            <img src={icon_chain} alt="Chain icon"/>
+                            {" "}
+                            <a className="link"
+                               href={link}
+                               target="_blank" rel="noreferrer">
+                                {args.card.domain}
+                            </a>
+                        </Card.Subtitle>
+                    </Card.Text>
+                </Card.Footer>}
+        </Card>
+    )
 }
 
 export default ItemCard

@@ -44,7 +44,7 @@ const breakpointCols = {
 }
 
 
-function App() {
+function Home() {
     const [sites, setSites] = useState([])
 
     useEffect(() => {
@@ -57,15 +57,9 @@ function App() {
             <Masonry breakpointCols={breakpointCols}
                      className="masonry-grid"
                      columnClassName="masonry-grid-column">
-                {sites.map(item => {
-                    return <ItemCard key={item.key}
-                                     card={{
-                                         icon: item.icon,
-                                         title: item.title,
-                                         description: item.description,
-                                         address: item.address,
-                                         domain: item.domain
-                                     }}/>
+                {sites.map((site, index) => {
+                    return <ItemCard key={index}
+                                     card={site}/>
                 })}
             </Masonry>
         </Container>

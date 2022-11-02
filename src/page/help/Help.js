@@ -1,10 +1,12 @@
 import React from "react"
+import {Container} from "react-bootstrap"
+
 
 const Help = () => {
     return (
-        <div>
+        <Container>
             <p>Help page</p>
-        </div>
+        </Container>
     )
 }
 
