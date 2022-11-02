@@ -1,10 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './root.css';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./root.css"
 
-import React from 'react';
-import {Outlet} from "react-router-dom";
+import React from "react"
+import {Outlet} from "react-router-dom"
 
-import MainMenu from "./component/nav/MainMenu";
+import MainMenu from "./component/nav/MainMenu"
 
 
 const Root = () => {
@@ -14,15 +14,15 @@ const Root = () => {
                 <MainMenu/>
             </header>
 
-            <main className='root-main'>
+            <main className="root-main">
                 <Outlet/>
             </main>
 
-            <footer className='fixed-bottom'>
+            <footer className="fixed-bottom">
                 <i>It's a footer</i>
             </footer>
         </>
-    );
-};
+    )
+}
 
-export default Root;
+export default Root

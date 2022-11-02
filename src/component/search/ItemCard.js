@@ -1,8 +1,8 @@
-import css from './ItemCard.module.css'
-import link from '../../res/link.svg'
+import css from "./ItemCard.module.css"
+import link from "../../res/link.svg"
 
-import React from 'react';
-import {Card} from "react-bootstrap";
+import React from "react"
+import {Card} from "react-bootstrap"
 
 
 const linkPrefix = "http://127.0.0.1:43110/"
@@ -12,7 +12,7 @@ const ItemCard = (args) => {
         <Card>
             {args.card.icon &&
                 <Card.Img className={css.icon}
-                          variant='top'
+                          variant="top"
                           src={args.card.icon}/>}
 
             <Card.Body>
@@ -24,8 +24,8 @@ const ItemCard = (args) => {
                     {args.card.domain &&
                         <Card.Subtitle>
                             <img src={link} alt="Chain icon"/>
-                            {' '}
-                            <a className='link'
+                            {" "}
+                            <a className="link"
                                href={linkPrefix + args.card.domain}>
                                 {args.card.domain}
                             </a>
@@ -34,13 +34,13 @@ const ItemCard = (args) => {
                     {args.card.description || null}
                 </Card.Text>
 
-                <Card.Link className='link'
+                <Card.Link className="link"
                            href={linkPrefix + args.card.address}>
                     Open
                 </Card.Link>
             </Card.Body>
         </Card>
-    );
-};
+    )
+}
 
-export default ItemCard;
+export default ItemCard

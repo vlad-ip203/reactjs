@@ -1,9 +1,9 @@
-import {Container} from "react-bootstrap";
-import Masonry from "react-masonry-css";
+import {Container} from "react-bootstrap"
+import Masonry from "react-masonry-css"
 import {child, get, getDatabase, ref} from "firebase/database"
-import {useEffect, useState} from "react";
+import {useEffect, useState} from "react"
 
-import ItemCard from "../search/ItemCard";
+import ItemCard from "../search/ItemCard"
 
 
 function fetchSites(db, update) {
@@ -55,12 +55,12 @@ function App() {
     return (
         <Container>
             <Masonry breakpointCols={breakpointCols}
-                     className='masonry-grid'
-                     columnClassName='masonry-grid-column'>
+                     className="masonry-grid"
+                     columnClassName="masonry-grid-column">
                 {sites.map(item => {
                     return <ItemCard key={item.key}
                                      card={{
-                                         //icon: null,
+                                         icon: item.icon,
                                          title: item.title,
                                          description: item.description,
                                          address: item.address,
@@ -69,7 +69,7 @@ function App() {
                 })}
             </Masonry>
         </Container>
-    );
+    )
 }
 
-export default App;
+export default App

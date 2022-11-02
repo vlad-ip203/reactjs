@@ -1,16 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {initializeApp} from "firebase/app";
-import {getAnalytics} from "firebase/analytics";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import {initializeApp} from "firebase/app"
+//import {getAnalytics} from "firebase/analytics";
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
 
-import Root from "./root";
-import Error404 from "./component/service/Error404";
-import App from './component/main/App';
-import reportWebVitals from './reportWebVitals';
+import Root from "./root"
+import Error404 from "./component/service/Error404"
+import App from "./component/main/App"
+import reportWebVitals from "./reportWebVitals"
 
 
 //Your Firebase configuration
+// noinspection SpellCheckingInspection
 const firebaseConfig = {
     apiKey: "AIzaSyAw8ZJ-8tQtvz4Grj3qzavVSQE6xjD8Rng",
     authDomain: "cursenreact-js.firebaseapp.com",
@@ -22,33 +23,34 @@ const firebaseConfig = {
     measurementId: "G-DKB13LDD45",
 
     databaseURL: "https://cursenreact-js-default-rtdb.europe-west1.firebasedatabase.app"
-};
+}
 
 //Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+initializeApp(firebaseConfig)
+// const app = initializeApp(firebaseConfig)
+// const analytics = getAnalytics(app)
 
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: <Root/>,
         errorElement: <Error404/>,
         children: [
-            {index: true, element: <App/>},
+            {index: true, element: <App/>}
         ]
     }
-]);
+])
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
         <RouterProvider router={router}/>
     </React.StrictMode>
-);
+)
 
 
 //If you want to start measuring performance in your app, pass a function
 //to log results (for example: reportWebVitals(console.log))
 //or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
+reportWebVitals(console.log)

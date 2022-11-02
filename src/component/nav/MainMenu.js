@@ -1,8 +1,8 @@
-import css from './MainMenu.module.css';
+import css from "./MainMenu.module.css"
 
-import React from 'react';
-import {Navbar, Container} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import React from "react"
+import {Navbar, Container} from "react-bootstrap"
+import {Link} from "react-router-dom"
 
 
 const MainMenu = () => {
@@ -17,7 +17,7 @@ const MainMenu = () => {
                 </Navbar.Text>
             </Navbar.Collapse>
         </Container></Navbar>
-    );
-};
+    )
+}
 
-export default MainMenu;
+export default MainMenu
