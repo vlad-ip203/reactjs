@@ -4,10 +4,12 @@ import {initializeApp} from "firebase/app"
 //import {getAnalytics} from "firebase/analytics";
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 
+import reportWebVitals from "./reportWebVitals"
 import Root from "./root"
 import Error404 from "./component/service/Error404"
 import Home from "./page/home/Home"
-import reportWebVitals from "./reportWebVitals"
+import About from "./page/about/About"
+import Help from "./page/help/Help"
 
 
 //Your Firebase configuration
@@ -38,6 +40,8 @@ const router = createBrowserRouter([
         errorElement: <Error404/>,
         children: [
             {index: true, element: <Home/>},
+            {path: "/help", element: <Help/>},
+            {path: "/about", element: <About/>}
         ]
     }
 ])
