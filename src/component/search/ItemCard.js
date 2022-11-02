@@ -11,7 +11,7 @@ function onClickListener(address: string) {
     window.open(PREFIX_LINK + address, "_blank")
 }
 
-const ItemCard = (args) => {
+const ItemCard = args => {
     return <Card className={css.card}
                  onClick={() => onClickListener(
                      args.card.domain ?

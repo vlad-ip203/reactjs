@@ -6,7 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom"
 
 import Root from "./root"
 import Error404 from "./component/service/Error404"
-import App from "./component/main/App"
+import Home from "./page/home/Home"
 import reportWebVitals from "./reportWebVitals"
 
 
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <Root/>,
         errorElement: <Error404/>,
         children: [
-            {index: true, element: <App/>}
+            {index: true, element: <Home/>},
         ]
     }
 ])

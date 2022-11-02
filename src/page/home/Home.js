@@ -3,7 +3,7 @@ import Masonry from "react-masonry-css"
 import {child, get, getDatabase, ref} from "firebase/database"
 import {useEffect, useState} from "react"
 
-import ItemCard from "../search/ItemCard"
+import ItemCard from "../../component/search/ItemCard"
 
 
 function fetchSites(db, update) {
@@ -72,4 +72,4 @@ function App() {
     )
 }
 
-export default App
+export default Home

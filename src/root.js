@@ -8,21 +8,15 @@ import MainMenu from "./component/nav/MainMenu"
 
 
 const Root = () => {
-    return (
-        <>
-            <header>
-                <MainMenu/>
-            </header>
+    return <>
+        <header className="sticky-top">
+            <MainMenu/>
+        </header>
 
-            <main className="root-main">
-                <Outlet/>
-            </main>
-
-            <footer className="fixed-bottom">
-                <i>It's a footer</i>
-            </footer>
-        </>
-    )
+        <main className="root-main">
+            <Outlet/>
+        </main>
+    </>
 }
 
 export default Root
