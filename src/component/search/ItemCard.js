@@ -7,31 +7,36 @@ import {Card} from "react-bootstrap"
 
 const PREFIX_LINK = "http://127.0.0.1:43110/"
 
-const clickListener = (address: string) => {
-    window.open(address, "_blank")
-    return false
+function onClickListener(address: string) {
+    window.open(PREFIX_LINK + address, "_blank")
 }
 
 const ItemCard = (args) => {
-    return <Card className={css.card} onClick={() => clickListener(PREFIX_LINK + args.card.address)}>
-        {args.card.icon &&
-            <Card.Img
-                className={css.icon}
-                variant="top"
-                src={args.card.icon}/>}
+    return <Card className={css.card}
+                 onClick={() => onClickListener(
+                     args.card.domain ?
+                         args.card.domain :
+                         args.card.address
+                 )}>
+        {/*{args.card.icon &&
+            <Card.Img className={css.icon}
+                      variant="top"
+                      src={PREFIX_IMG + args.card.icon}/>}*/}
 
-            <Card.Body>
-                <Card.Title>{args.card.title}</Card.Title>
-                <Card.Text>
-                    {args.card.domain &&
-                        <Card.Subtitle>
-                            <img src={link} alt="Chain icon"/>
-                            {" "}
-                            <a className="link"
-                               href={PREFIX_LINK + args.card.domain}>
-                                {args.card.domain}
-                            </a>
-                        </Card.Subtitle>}
+        <Card.Body>
+            <Card.Title>{args.card.title}</Card.Title>
+
+            <Card.Text>
+                {args.card.domain &&
+                    <Card.Subtitle>
+                        <img src={link} alt="Chain icon"/>
+                        {" "}
+                        <a className="link"
+                           href={PREFIX_LINK + args.card.domain}
+                           target="_blank">
+                            {args.card.domain}
+                        </a>
+                    </Card.Subtitle>}
 
                 {args.card.description || null}
             </Card.Text>
