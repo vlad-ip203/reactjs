@@ -13,7 +13,7 @@ function newTab(url: string) {
 
 
 const ItemCard = args => {
-    const image = IMAGE_DIR + args.card.icon
+    const image = /*IMAGE_DIR +*/ args.card.icon
     const link = LINK_PREFIX +
         (args.card.domain ?
             args.card.domain :
