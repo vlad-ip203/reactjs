@@ -11,20 +11,20 @@ const MainMenu = () => {
                 collapseOnSelect expand="sm"
                 bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">cursenreact.js</Navbar.Brand>
+                <Link className="navbar-brand" to="/">cursenreact.js</Link>
 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className={"me-auto"}>
-                        <Nav.Link href="/help">Help</Nav.Link>
-                        <Nav.Link href="/about">About</Nav.Link>
+                    <Nav className="me-auto">
+                        <Link className="nav-link" to="/help">Help</Link>
+                        <Link className="nav-link" to="/about">About</Link>
 
                         <NavDropdown title="Dropdown"
                                      menuVariant="dark">
-                            <NavDropdown.Item href="/help">Help</NavDropdown.Item>
+                            <Link className="dropdown-item" to="/help">Help</Link>
                             <NavDropdown.Divider/>
-                            <NavDropdown.Item href="/about">About</NavDropdown.Item>
+                            <Link className="dropdown-item" to="/about">About</Link>
                         </NavDropdown>
                     </Nav>
 
