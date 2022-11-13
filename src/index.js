@@ -5,9 +5,10 @@ import {initializeApp} from "firebase/app"
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 
 import {Log} from "./module/log"
+import {Site} from "./module/app"
 import reportWebVitals from "./reportWebVitals"
-import Root from "./root"
-import Error404 from "./component/service/Error404"
+import Root from "./page/Root"
+import Error404 from "./page/service/Error404"
 import Home from "./page/home/Home"
 import About from "./page/about/About"
 import Help from "./page/help/Help"
@@ -37,14 +38,14 @@ initializeApp(firebaseConfig)
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: Site.ROOT,
         element: <Root/>,
         errorElement: <Error404/>,
         children: [
             {index: true, element: <Home/>},
-            {path: "/bookmarks", element: <Bookmarks/>},
-            {path: "/help", element: <Help/>},
-            {path: "/about", element: <About/>}
+            {path: Site.BOOKMARKS, element: <Bookmarks/>},
+            {path: Site.HELP, element: <Help/>},
+            {path: Site.ABOUT, element: <About/>}
         ]
     }
 ])

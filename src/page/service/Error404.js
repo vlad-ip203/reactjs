@@ -5,7 +5,7 @@ import React from "react"
 import {useRouteError} from "react-router-dom"
 import {Container} from "react-bootstrap"
 
-import MainMenu from "../nav/MainMenu"
+import MainMenu from "../../component/nav/MainMenu"
 
 
 const Error404 = () => {
@@ -17,18 +17,20 @@ const Error404 = () => {
             <MainMenu/>
         </header>
 
-        <main><Container>
-            <h1>Oops!</h1>
-            <p>Seems like you're requesting a page we can't find</p>
+        <main>
+            <Container>
+                <h1>Oops!</h1>
+                <p>Seems like you're requesting a page we can't find</p>
 
-            <p className="text-info">
-                Error: {error.status}
-                <br/>
-                Details: {error.statusText || error.message}
-            </p>
+                <p className="text-info">
+                    Error: {error.status}
+                    <br/>
+                    Details: {error.statusText || error.message}
+                </p>
 
-            <img className={css.logo} src={logo} alt="logo"/>
-        </Container></main>
+                <img className={css.logo} src={logo} alt="logo"/>
+            </Container>
+        </main>
 
         <footer className="fixed-bottom">
             <p className="text-light">

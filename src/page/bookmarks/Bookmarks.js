@@ -2,8 +2,8 @@ import React from "react"
 import {Container} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 
-import {KEY_BOOKMARKS, MASONRY_BREAKPOINT_COLS} from "../../module/const"
-import ItemCard from "../../component/search/ItemCard"
+import {KEY_BOOKMARKS, MASONRY_BREAKPOINT_COLS} from "../../module/app"
+import ItemCard from "../../component/card/ItemCard"
 
 
 const Bookmarks = () => {

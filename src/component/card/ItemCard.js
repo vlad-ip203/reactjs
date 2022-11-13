@@ -6,7 +6,7 @@ import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
 import React, {useState} from "react"
 import {Card, Image} from "react-bootstrap"
 
-import {KEY_BOOKMARKS} from "../../module/const"
+import {KEY_BOOKMARKS} from "../../module/app"
 
 
 let bookmarks = []
