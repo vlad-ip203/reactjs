@@ -4,3 +4,10 @@
     margin: auto;
     padding: 24px;
 }
+
+.icon_bookmark {
+    position: absolute;
+    top: 6px;
+    right: 3px;
+    height: 24px;
+}

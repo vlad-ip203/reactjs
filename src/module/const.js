@@ -5,3 +5,5 @@ export const MASONRY_BREAKPOINT_COLS = {
     800: 2,
     400: 1
 }
+
+export const KEY_BOOKMARKS = "bookmarks"
