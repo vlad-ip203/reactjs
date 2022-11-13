@@ -1,5 +1,7 @@
 import css from "./ItemCard.module.css"
-import icon_chain from "../../res/link.svg"
+import icon_link from "../../res/icon_link.svg"
+import icon_bookmark from "../../res/icon_bookmark.svg"
+import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
 
 import React from "react"
 import {Card} from "react-bootstrap"
@@ -20,8 +22,7 @@ const ItemCard = args => {
             args.card.address)
 
     return (
-        <Card className={css.card}
-              onClick={() => newTab(link)}>
+        <Card>
             {args.card.icon &&
                 <Card.Header>
                     <Card.Img className={css.icon}
@@ -29,7 +30,8 @@ const ItemCard = args => {
                               src={image}/>
                 </Card.Header>}
 
-            <Card.Body>
+            <Card.Body role="button"
+                       onClick={() => newTab(link)}>
                 <Card.Title>{args.card.title}</Card.Title>
 
                 {args.card.description || null}
@@ -39,7 +41,7 @@ const ItemCard = args => {
                 <Card.Footer>
                     <Card.Text>
                         <Card.Subtitle>
-                            <img src={icon_chain} alt="Chain icon"/>
+                            <img src={icon_link} alt="Chain icon"/>
                             {" "}
                             <a className="link"
                                href={link}
