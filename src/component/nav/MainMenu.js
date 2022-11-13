@@ -17,10 +17,9 @@ const MainMenu = () => {
 
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className="nav-link" to="/help">Help</Link>
-                        <Link className="nav-link" to="/about">About</Link>
+                        <Link className="nav-link" to="/bookmarks">Bookmarks</Link>
 
-                        <NavDropdown title="Dropdown"
+                        <NavDropdown title="Help"
                                      menuVariant="dark">
                             <Link className="dropdown-item" to="/help">Help</Link>
                             <NavDropdown.Divider/>

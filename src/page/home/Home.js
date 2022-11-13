@@ -3,6 +3,7 @@ import Masonry from "react-masonry-css"
 import {child, get, getDatabase, ref} from "firebase/database"
 import {useEffect, useState} from "react"
 
+import {MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import ItemCard from "../../component/search/ItemCard"
 
 
@@ -35,15 +36,6 @@ function fetchSites(db, update) {
 }
 
 
-const breakpointCols = {
-    default: 5,
-    1600: 4,
-    1200: 3,
-    800: 2,
-    400: 1
-}
-
-
 function Home() {
     const [sites, setSites] = useState([])
 
@@ -54,7 +46,7 @@ function Home() {
 
     return (
         <Container>
-            <Masonry breakpointCols={breakpointCols}
+            <Masonry breakpointCols={MASONRY_BREAKPOINT_COLS}
                      className="masonry-grid"
                      columnClassName="masonry-grid-column">
                 {sites.map((site, index) => {
