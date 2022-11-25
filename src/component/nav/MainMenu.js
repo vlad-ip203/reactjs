@@ -43,10 +43,10 @@ const MainMenu = () => {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown title="Language"
+                        <NavDropdown title={getString(state, STRINGS.NAV_LANGUAGE)}
                                      menuVariant="dark">
                             {LANGUAGES.map(key =>
-                                <DropdownItem onClick={() => setLanguage(dispatch, key)}>
+                                <DropdownItem key={key} onClick={() => setLanguage(dispatch, key)}>
                                     {getString(state, key)}
                                 </DropdownItem>
                             )}

@@ -24,7 +24,8 @@ export const STRINGS = {
     NAV_BOOKMARKS: 21,
     NAV_HELP: 22,
     NAV_HELP_HELP: 221,
-    NAV_HELP_ABOUT: 222
+    NAV_HELP_ABOUT: 222,
+    NAV_LANGUAGE: 23
 }
 
 //String translations and default values
@@ -38,13 +39,15 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
         {key: STRINGS.NAV_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_HELP, value: "Help"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "About"}
+        {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
+        {key: STRINGS.NAV_LANGUAGE, value: "Language"}
     ],
     "uk-UA": [
         {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
         {key: STRINGS.NAV_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"}
+        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
+        {key: STRINGS.NAV_LANGUAGE, value: "Мова"}
     ]
 }
 

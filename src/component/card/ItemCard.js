@@ -101,17 +101,15 @@ const ItemCard = args => {
 
             {args.card.domain &&
                 <Card.Footer>
-                    <Card.Text>
-                        <Card.Subtitle>
-                            <img src={icon_link} alt="Chain icon"/>
-                            {" "}
-                            <a className="link"
-                               href={link}
-                               target="_blank" rel="noreferrer">
-                                {args.card.domain}
-                            </a>
-                        </Card.Subtitle>
-                    </Card.Text>
+                    <Card.Subtitle>
+                        <img src={icon_link} alt="Chain icon"/>
+                        {" "}
+                        <a className="link"
+                           href={link}
+                           target="_blank" rel="noreferrer">
+                            {args.card.domain}
+                        </a>
+                    </Card.Subtitle>
                 </Card.Footer>}
         </Card>
     )

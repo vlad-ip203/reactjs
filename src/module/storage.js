@@ -8,7 +8,7 @@ const KEYS = {
 
 export function readLanguage(): string {
     const lang = window.localStorage.getItem(KEYS.LANGUAGE)
-    return lang in LANGUAGES ?
+    return LANGUAGES.some(value => value === lang) ?
         lang :
         LANGUAGE_FALLBACK
 }
