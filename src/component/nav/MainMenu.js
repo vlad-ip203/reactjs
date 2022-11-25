@@ -2,38 +2,59 @@ import css from "./MainMenu.module.css"
 
 import React from "react"
 import {Navbar, Container, Nav, NavDropdown} from "react-bootstrap"
+import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link} from "react-router-dom"
 
 import {Site} from "../../module/app"
+import {useGlobalState, setLanguage} from "../../module/context"
+import {getString, LANGUAGES, STRINGS} from "../../module/const"
 
 
 const MainMenu = () => {
+    const [state, dispatch] = useGlobalState()
+
     return (
         <Navbar className={css.header}
                 collapseOnSelect expand="sm"
                 bg="dark" variant="dark">
             <Container>
-                <Link className="navbar-brand" to={Site.ROOT}>cursenreact.js</Link>
+                <Link className="navbar-brand" to={Site.ROOT}>
+                    {getString(state, STRINGS.APP_NAME)}
+                </Link>
 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className="nav-link" to={Site.BOOKMARKS}>Bookmarks</Link>
+                        <Link className="nav-link" to={Site.BOOKMARKS}>
+                            {getString(state, STRINGS.NAV_BOOKMARKS)}
+                        </Link>
 
-                        <NavDropdown title="Help"
+                        <NavDropdown title={getString(state, STRINGS.NAV_HELP)}
                                      menuVariant="dark">
-                            <Link className="dropdown-item" to={Site.HELP}>Help</Link>
+                            <Link className="dropdown-item" to={Site.HELP}>
+                                {getString(state, STRINGS.NAV_HELP_HELP)}
+                            </Link>
                             <NavDropdown.Divider/>
-                            <Link className="dropdown-item" to={Site.ABOUT}>About</Link>
+                            <Link className="dropdown-item" to={Site.ABOUT}>
+                                {getString(state, STRINGS.NAV_HELP_ABOUT)}
+                            </Link>
                         </NavDropdown>
                     </Nav>
 
-                    <Navbar.Collapse className="justify-content-end">
+                    <Nav>
+                        <NavDropdown title="Language"
+                                     menuVariant="dark">
+                            {LANGUAGES.map(key =>
+                                <DropdownItem onClick={() => setLanguage(dispatch, key)}>
+                                    {getString(state, key)}
+                                </DropdownItem>
+                            )}
+                        </NavDropdown>
                         <Navbar.Text>
                             Profile: <Link to={Site.LOGIN}>Username</Link>
                         </Navbar.Text>
-                    </Navbar.Collapse>
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

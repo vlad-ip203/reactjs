@@ -19,15 +19,32 @@ export const LANGUAGE_FALLBACK = LANGUAGE_EN_US
 
 //String keys
 export const STRINGS = {
+    APP_NAME: 11,
+
+    NAV_BOOKMARKS: 21,
+    NAV_HELP: 22,
+    NAV_HELP_HELP: 221,
+    NAV_HELP_ABOUT: 222
 }
 
 //String translations and default values
 const TRANSLATIONS = {
     "default": [
+        {key: LANGUAGE_EN_US, value: "English"},
+        {key: LANGUAGE_UK_UA, value: "Українська"},
+        {key: STRINGS.APP_NAME, value: "cursenreact.js"}
     ],
     "en-US": [
+        {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
+        {key: STRINGS.NAV_HELP, value: "Help"},
+        {key: STRINGS.NAV_HELP_HELP, value: "Help"},
+        {key: STRINGS.NAV_HELP_ABOUT, value: "About"}
     ],
     "uk-UA": [
+        {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
+        {key: STRINGS.NAV_HELP, value: "Допомога"},
+        {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
+        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"}
     ]
 }
 
