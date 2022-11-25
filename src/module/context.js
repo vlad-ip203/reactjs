@@ -1,8 +1,12 @@
-import React from "react"
-import {STRINGS} from "./const"
+// noinspection JSUnresolvedVariable
+
+import React, {Context} from "react"
+
+import {readLanguage, putLanguage} from "./storage"
 
 
 const defaultGlobalState = {
+    language: readLanguage()
 }
 
 const GlobalStateContext = React.createContext(defaultGlobalState)
@@ -28,3 +32,13 @@ export const useGlobalState = () => [
     React.useContext(GlobalStateContext),
     React.useContext(DispatchStateContext)
 ]
+
+
+export function getLanguage(state: Context): string {
+    return state.language
+}
+
+export function setLanguage(dispatch: Context, value: string) {
+    putLanguage(value)
+    dispatch({language: value})
+}
