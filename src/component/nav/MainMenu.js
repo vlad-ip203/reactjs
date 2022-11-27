@@ -1,5 +1,3 @@
-import css from "./MainMenu.module.css"
-
 import React from "react"
 import {Navbar, Container, Nav, NavDropdown} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
@@ -14,9 +12,8 @@ const MainMenu = () => {
     const [state, dispatch] = useGlobalState()
 
     return (
-        <Navbar className={css.header}
-                collapseOnSelect expand="sm"
-                bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="sm"
+                bg="light" variant="light">
             <Container>
                 <Link className="navbar-brand" to={Site.ROOT}>
                     {getString(state, STRINGS.APP_NAME)}

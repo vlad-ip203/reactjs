@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 
 import {KEY_BOOKMARKS, MASONRY_BREAKPOINT_COLS} from "../../module/app"
-import ItemCard from "../../component/card/ItemCard"
+import ItemCard from "../card/ItemCard"
 
 
 const Bookmarks = () => {

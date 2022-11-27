@@ -1,10 +1,9 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./Root.css"
+import "../style/style.scss"
 
 import React from "react"
 import {Outlet} from "react-router-dom"
 
-import MainMenu from "../component/nav/MainMenu"
+import MainMenu from "./nav/MainMenu"
 
 
 const Root = () => {

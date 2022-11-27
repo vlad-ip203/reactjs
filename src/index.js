@@ -8,12 +8,12 @@ import {Log} from "./module/log"
 import {Site} from "./module/app"
 import {GlobalStateProvider} from "./module/context"
 import reportWebVitals from "./reportWebVitals"
-import Root from "./page/Root"
-import Error404 from "./page/service/Error404"
-import Home from "./page/home/Home"
-import About from "./page/about/About"
-import Help from "./page/help/Help"
-import Bookmarks from "./page/bookmarks/Bookmarks"
+import Root from "./component/Root"
+import Error404 from "./component/page-service/Error404"
+import Home from "./component/page-home/Home"
+import About from "./component/page-about/About"
+import Help from "./component/page-help/Help"
+import Bookmarks from "./component/page-bookmarks/Bookmarks"
 
 
 //Your Firebase configuration

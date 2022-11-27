@@ -4,7 +4,7 @@ import {child, get, getDatabase, ref} from "firebase/database"
 import {useEffect, useState} from "react"
 
 import {MASONRY_BREAKPOINT_COLS} from "../../module/app"
-import ItemCard from "../../component/card/ItemCard"
+import ItemCard from "../card/ItemCard"
 
 
 function fetchSites(db, update) {

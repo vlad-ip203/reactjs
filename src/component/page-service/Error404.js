@@ -5,7 +5,7 @@ import React from "react"
 import {useRouteError} from "react-router-dom"
 import {Container} from "react-bootstrap"
 
-import MainMenu from "../../component/nav/MainMenu"
+import MainMenu from "../nav/MainMenu"
 
 
 const Error404 = () => {
