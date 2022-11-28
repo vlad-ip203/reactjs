@@ -28,7 +28,7 @@ const MainMenu = () => {
                         </Link>
 
                         <NavDropdown title={getString(state, STRINGS.NAV_HELP)}
-                                     menuVariant="dark">
+                                     menuVariant="light">
                             <Link className="dropdown-item" to={Site.HELP}>
                                 {getString(state, STRINGS.NAV_HELP_HELP)}
                             </Link>
@@ -41,7 +41,7 @@ const MainMenu = () => {
 
                     <Nav>
                         <NavDropdown title={getString(state, STRINGS.NAV_LANGUAGE)}
-                                     menuVariant="dark">
+                                     menuVariant="light">
                             {LANGUAGES.map(key =>
                                 <DropdownItem key={key} onClick={() => setLanguage(dispatch, key)}>
                                     {getString(state, key)}

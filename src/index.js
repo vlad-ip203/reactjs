@@ -4,8 +4,8 @@ import {initializeApp} from "firebase/app"
 //import {getAnalytics} from "firebase/analytics";
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 
-import {Log} from "./module/log"
 import {Site} from "./module/app"
+import {Log} from "./module/log"
 import {GlobalStateProvider} from "./module/context"
 import reportWebVitals from "./reportWebVitals"
 import Root from "./component/Root"
@@ -64,4 +64,4 @@ root.render(
 //If you want to start measuring performance in your app, pass a function
 //to log results (for example: reportWebVitals(console.log))
 //or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(Log.d)
+//reportWebVitals(Log.d)
