@@ -4,6 +4,7 @@ import React, {Context} from "react"
 
 import {readLanguage, putLanguage, readTheme, putTheme} from "./storage"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./const"
+import {Log} from "./log"
 
 
 const defaultGlobalState = {
@@ -65,13 +66,22 @@ export function getAppTheme(state: Context): string {
     }
 }
 
+const themeListenerSupported = (): boolean =>
+    window.matchMedia("(prefers-color-scheme: dark)").media !== "not all"
+
 function readSystemTheme(): string {
+    if (!themeListenerSupported())
+        return THEME_LIGHT
+
     return window.matchMedia("(prefers-color-scheme: dark)").matches ?
         THEME_DARK : //System theme is dark
         THEME_LIGHT  //System theme is light
 }
 
 export function listenSystemThemeChanges(state: Context, dispatch: Context) {
+    if (!themeListenerSupported())
+        return
+
     window.matchMedia("(prefers-color-scheme: dark)")
         .addEventListener("change", event => {
             const theme = event.matches ?

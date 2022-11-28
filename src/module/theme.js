@@ -16,6 +16,11 @@ const ThemeSelector = ({children}) => {
 
     return <>
         <Helmet>
+            <link rel="stylesheet"
+                  type="text/css"
+                  href={theme === THEME_LIGHT ?
+                      styles_light :
+                      styles_dark}/>
         </Helmet>
         {children}
     </>
