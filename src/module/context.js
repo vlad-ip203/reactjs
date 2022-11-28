@@ -36,9 +36,8 @@ export const useGlobalState = () => [
 ]
 
 
-export function getLanguage(state: Context): string {
-    return state.language
-}
+
+export const getLanguage = (state: Context): string => state.language
 
 export function setLanguage(dispatch: Context, value: string) {
     putLanguage(value)
@@ -51,4 +50,22 @@ export const getTheme = (state: Context): string => state.theme
 export function setTheme(dispatch: Context, value: string) {
     putTheme(value)
     dispatch({theme: value})
+}
+
+export function getAppTheme(state: Context): string {
+    switch (getTheme(state)) {
+        default:
+        case THEME_SYSTEM:
+            return readSystemTheme()
+        case THEME_LIGHT:
+            return THEME_LIGHT
+        case THEME_DARK:
+            return THEME_DARK
+    }
+}
+
+function readSystemTheme(): string {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ?
+        THEME_DARK : //System theme is dark
+        THEME_LIGHT  //System theme is light
 }

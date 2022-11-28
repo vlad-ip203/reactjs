@@ -7,6 +7,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import {Site} from "./module/app"
 import {Log} from "./module/log"
 import {GlobalStateProvider} from "./module/context"
+import ThemeSelector from "./module/theme"
 import reportWebVitals from "./reportWebVitals"
 import Root from "./component/Root"
 import Error404 from "./component/page-service/Error404"
@@ -55,7 +56,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
         <GlobalStateProvider>
-            <RouterProvider router={router}/>
+            <ThemeSelector>
+                <RouterProvider router={router}/>
+            </ThemeSelector>
         </GlobalStateProvider>
     </React.StrictMode>
 )
