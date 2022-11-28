@@ -12,6 +12,7 @@ const styles_dark = "styles/bootstrap-night.min.css" //bootstrap-dark-5 package
 const ThemeSelector = ({children}) => {
     const [state, dispatch] = useGlobalState()
     const theme = getAppTheme(state)
+    useEffect(() => listenSystemThemeChanges(state, dispatch))
 
     return <>
         <Helmet>

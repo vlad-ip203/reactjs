@@ -35,6 +35,7 @@ export const useGlobalState = () => [
     React.useContext(DispatchStateContext)
 ]
 
+const notifyContextChanged = (dispatch: Context) => dispatch({})
 
 
 export const getLanguage = (state: Context): string => state.language
@@ -68,4 +69,19 @@ function readSystemTheme(): string {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ?
         THEME_DARK : //System theme is dark
         THEME_LIGHT  //System theme is light
+}
+
+export function listenSystemThemeChanges(state: Context, dispatch: Context) {
+    window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", event => {
+            const theme = event.matches ?
+                THEME_DARK :
+                THEME_LIGHT
+
+            if (getTheme(state) === THEME_SYSTEM) {
+                Log.v("theme::ThemeSelector: useEffect-> theme change approved = " + theme)
+                notifyContextChanged(dispatch)
+            } else
+                Log.v("theme::ThemeSelector: useEffect-> theme change denied = " + theme)
+        })
 }
