@@ -4,8 +4,8 @@ import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link} from "react-router-dom"
 
 import {Site} from "../../module/app"
-import {useGlobalState, setLanguage} from "../../module/context"
-import {getString, LANGUAGES, STRINGS} from "../../module/const"
+import {useGlobalState, setLanguage, setTheme} from "../../module/context"
+import {getString, LANGUAGES, STRINGS, THEMES} from "../../module/const"
 
 
 const MainMenu = () => {
@@ -44,6 +44,14 @@ const MainMenu = () => {
                                      menuVariant="light">
                             {LANGUAGES.map(key =>
                                 <DropdownItem key={key} onClick={() => setLanguage(dispatch, key)}>
+                                    {getString(state, key)}
+                                </DropdownItem>
+                            )}
+                        </NavDropdown>
+                        <NavDropdown title={getString(state, STRINGS.NAV_THEME)}
+                                     menuVariant="light">
+                            {THEMES.map(key =>
+                                <DropdownItem key={key} onClick={() => setTheme(dispatch, key)}>
                                     {getString(state, key)}
                                 </DropdownItem>
                             )}

@@ -4,6 +4,16 @@ import {Log} from "./log"
 import {getLanguage} from "./context"
 
 
+export const THEME_SYSTEM = "system"
+export const THEME_LIGHT = "light"
+export const THEME_DARK = "dark"
+export const THEMES = [
+    THEME_SYSTEM,
+    THEME_LIGHT,
+    THEME_DARK
+]
+
+
 //Languages
 const LANGUAGE_EN_US = "en-US"
 const LANGUAGE_UK_UA = "uk-UA"
@@ -25,7 +35,8 @@ export const STRINGS = {
     NAV_HELP: 22,
     NAV_HELP_HELP: 221,
     NAV_HELP_ABOUT: 222,
-    NAV_LANGUAGE: 23
+    NAV_LANGUAGE: 23,
+    NAV_THEME: 24
 }
 
 //String translations and default values
@@ -40,14 +51,22 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
-        {key: STRINGS.NAV_LANGUAGE, value: "Language"}
+        {key: STRINGS.NAV_LANGUAGE, value: "Language"},
+        {key: STRINGS.NAV_THEME, value: "Theme"},
+        {key: THEME_SYSTEM, value: "System default"},
+        {key: THEME_LIGHT, value: "Light"},
+        {key: THEME_DARK, value: "Dark"}
     ],
     "uk-UA": [
         {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
         {key: STRINGS.NAV_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
-        {key: STRINGS.NAV_LANGUAGE, value: "Мова"}
+        {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
+        {key: STRINGS.NAV_THEME, value: "Тема"},
+        {key: THEME_SYSTEM, value: "За вибором системи"},
+        {key: THEME_LIGHT, value: "Світла"},
+        {key: THEME_DARK, value: "Темна"}
     ]
 }
 

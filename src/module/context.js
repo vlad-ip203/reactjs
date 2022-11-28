@@ -2,11 +2,13 @@
 
 import React, {Context} from "react"
 
-import {readLanguage, putLanguage} from "./storage"
+import {readLanguage, putLanguage, readTheme, putTheme} from "./storage"
+import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./const"
 
 
 const defaultGlobalState = {
-    language: readLanguage()
+    language: readLanguage(),
+    theme: readTheme()
 }
 
 const GlobalStateContext = React.createContext(defaultGlobalState)
@@ -41,4 +43,12 @@ export function getLanguage(state: Context): string {
 export function setLanguage(dispatch: Context, value: string) {
     putLanguage(value)
     dispatch({language: value})
+}
+
+
+export const getTheme = (state: Context): string => state.theme
+
+export function setTheme(dispatch: Context, value: string) {
+    putTheme(value)
+    dispatch({theme: value})
 }
