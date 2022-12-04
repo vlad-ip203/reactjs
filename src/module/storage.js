@@ -3,7 +3,7 @@ import {LANGUAGES, LANGUAGE_FALLBACK, THEMES, THEME_SYSTEM} from "./const"
 
 const KEYS = {
     LANGUAGE: "lang",
-    THEME: "theme"
+    THEME: "theme",
 }
 
 
@@ -18,10 +18,10 @@ export function putLanguage(value: string) {
     window.localStorage.setItem(KEYS.LANGUAGE, value)
 }
 
-export function readTheme():string {
+export function readTheme(): string {
     const theme = window.localStorage.getItem(KEYS.THEME)
     return THEMES.some(value => value === theme) ?
-        theme:
+        theme :
         THEME_SYSTEM
 }
 

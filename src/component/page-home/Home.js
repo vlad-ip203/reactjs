@@ -22,16 +22,16 @@ function fetchSites(db, update) {
                             title: site.title,
                             description: site.description,
                             address: site.address,
-                            domain: site.domain
+                            domain: site.domain,
                         }
                     })
                     update(out)
                 } else
                     console.error("No data received, can't update site list")
-            }
+            },
         ).catch(reason => {
             console.error(reason)
-        }
+        },
     )
 }
 

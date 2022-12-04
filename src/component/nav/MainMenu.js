@@ -45,7 +45,7 @@ const MainMenu = () => {
                             {LANGUAGES.map(key =>
                                 <DropdownItem key={key} onClick={() => setLanguage(dispatch, key)}>
                                     {getString(state, key)}
-                                </DropdownItem>
+                                </DropdownItem>,
                             )}
                         </NavDropdown>
                         <NavDropdown title={getString(state, STRINGS.NAV_THEME)}
@@ -53,7 +53,7 @@ const MainMenu = () => {
                             {THEMES.map(key =>
                                 <DropdownItem key={key} onClick={() => setTheme(dispatch, key)}>
                                     {getString(state, key)}
-                                </DropdownItem>
+                                </DropdownItem>,
                             )}
                         </NavDropdown>
                         <Navbar.Text>

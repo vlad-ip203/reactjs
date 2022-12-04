@@ -10,7 +10,7 @@ export const THEME_DARK = "dark"
 export const THEMES = [
     THEME_SYSTEM,
     THEME_LIGHT,
-    THEME_DARK
+    THEME_DARK,
 ]
 
 
@@ -19,7 +19,7 @@ const LANGUAGE_EN_US = "en-US"
 const LANGUAGE_UK_UA = "uk-UA"
 export const LANGUAGES = [
     LANGUAGE_EN_US,
-    LANGUAGE_UK_UA
+    LANGUAGE_UK_UA,
 ]
 
 //Language properties
@@ -36,7 +36,7 @@ export const STRINGS = {
     NAV_HELP_HELP: 221,
     NAV_HELP_ABOUT: 222,
     NAV_LANGUAGE: 23,
-    NAV_THEME: 24
+    NAV_THEME: 24,
 }
 
 //String translations and default values
@@ -44,30 +44,33 @@ const TRANSLATIONS = {
     "default": [
         {key: LANGUAGE_EN_US, value: "English"},
         {key: LANGUAGE_UK_UA, value: "Українська"},
-        {key: STRINGS.APP_NAME, value: "cursenreact.js"}
+
+        {key: STRINGS.APP_NAME, value: "cursenreact.js"},
     ],
     "en-US": [
+        {key: THEME_SYSTEM, value: "System default"},
+        {key: THEME_LIGHT, value: "Light"},
+        {key: THEME_DARK, value: "Dark"},
+
         {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
         {key: STRINGS.NAV_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
         {key: STRINGS.NAV_LANGUAGE, value: "Language"},
         {key: STRINGS.NAV_THEME, value: "Theme"},
-        {key: THEME_SYSTEM, value: "System default"},
-        {key: THEME_LIGHT, value: "Light"},
-        {key: THEME_DARK, value: "Dark"}
     ],
     "uk-UA": [
+        {key: THEME_SYSTEM, value: "За вибором системи"},
+        {key: THEME_LIGHT, value: "Світла"},
+        {key: THEME_DARK, value: "Темна"},
+
         {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
         {key: STRINGS.NAV_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
         {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
         {key: STRINGS.NAV_THEME, value: "Тема"},
-        {key: THEME_SYSTEM, value: "За вибором системи"},
-        {key: THEME_LIGHT, value: "Світла"},
-        {key: THEME_DARK, value: "Темна"}
-    ]
+    ],
 }
 
 
@@ -76,7 +79,7 @@ function getLanguageStack(state: Context) {
 
     let stack = [
         LANGUAGE_DEFAULT, //Look for a default value
-        language //Look for a translation
+        language, //Look for a translation
     ]
     //Fallback language just in case
     if (language !== LANGUAGE_FALLBACK)

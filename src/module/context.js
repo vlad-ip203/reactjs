@@ -9,7 +9,7 @@ import {Log} from "./log"
 
 const defaultGlobalState = {
     language: readLanguage(),
-    theme: readTheme()
+    theme: readTheme(),
 }
 
 const GlobalStateContext = React.createContext(defaultGlobalState)
@@ -18,7 +18,7 @@ const DispatchStateContext = React.createContext(undefined)
 export const GlobalStateProvider = ({children}) => {
     const [state, dispatch] = React.useReducer(
         (state, newValue) => ({...state, ...newValue}),
-        defaultGlobalState
+        defaultGlobalState,
     )
 
     return (
@@ -33,7 +33,7 @@ export const GlobalStateProvider = ({children}) => {
 
 export const useGlobalState = () => [
     React.useContext(GlobalStateContext),
-    React.useContext(DispatchStateContext)
+    React.useContext(DispatchStateContext),
 ]
 
 const notifyContextChanged = (dispatch: Context) => dispatch({})
