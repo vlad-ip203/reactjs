@@ -1,10 +1,12 @@
 import React, {useState} from "react"
 import {Container, Form, Row, Col, Button} from "react-bootstrap"
+import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
 import {getString, STRINGS} from "../../module/const"
 import {findDoc, Database} from "../../module/db"
 import {Log} from "../../module/log"
+import {Site} from "../../module/app"
 
 
 const REGEX_NAME = /^\w{3,16}$/
@@ -17,6 +19,7 @@ let name = "", email = "", pass = "", pass2 = ""
 
 const Auth = () => {
     const [state, dispatch] = useGlobalState()
+    const navigate = useNavigate()
 
     const [isLogin, setIsLogin] = useState(true)
 
@@ -32,11 +35,14 @@ const Auth = () => {
     function setEmail(value: string) {
         email = value
         setEmailWrong(email && !REGEX_EMAIL.test(email))
+        if (isLogin)
+            setPassWrong(pass && !test_pass())
     }
     function setPass(value: string) {
         pass = value
         setPassWrong(pass && !test_pass())
-        setPass2Wrong(pass2 && !test_pass2())
+        if (!isLogin)
+            setPass2Wrong(pass2 && !test_pass2())
     }
     function setPass2(value: string) {
         pass2 = value
@@ -50,8 +56,9 @@ const Auth = () => {
         }
 
         Log.v("Auth::tryToLogin: attempting to login")
-        if (!await login(dispatch, email, pass))
-            setPassWrong(true)
+        if (await login(dispatch, email, pass))
+            navigate(Site.ROOT)
+        else setPassWrong(true)
     }
 
     async function tryToRegister() {
@@ -70,7 +77,8 @@ const Auth = () => {
 
         if (!userByNameRef && !userByEmailRef) {
             Log.v("Auth::tryToRegister: attempting to register")
-            await register(dispatch, name, email, pass)
+            if (await register(dispatch, name, email, pass))
+                navigate(Site.ROOT)
         }
     }
 

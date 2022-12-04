@@ -1,7 +1,7 @@
 import React from "react"
 import {Navbar, Container, Nav, NavDropdown} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
-import {Link} from "react-router-dom"
+import {Link, useNavigate, redirect} from "react-router-dom"
 
 import {Site} from "../../module/app"
 import {useGlobalState, setLanguage, setTheme, getUserName} from "../../module/context"
@@ -10,6 +10,7 @@ import {getString, LANGUAGES, STRINGS, THEMES} from "../../module/const"
 
 const MainMenu = () => {
     const [state, dispatch] = useGlobalState()
+    const navigate = useNavigate()
 
     return (
         <Navbar collapseOnSelect expand="md"
