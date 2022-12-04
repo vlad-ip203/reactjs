@@ -37,6 +37,10 @@ export const STRINGS = {
     NAV_HELP_ABOUT: 222,
     NAV_LANGUAGE: 23,
     NAV_THEME: 24,
+    NAV_ACCOUNT: 25,
+    NAV_PROFILE: 26,
+    NAV_PROFILE_AUTH: 261,
+    NAV_PROFILE_LOGOUT: 262,
 
     AUTH_LOGIN: 31,
     AUTH_LOGGING: 311,
@@ -78,6 +82,10 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
         {key: STRINGS.NAV_LANGUAGE, value: "Language"},
         {key: STRINGS.NAV_THEME, value: "Theme"},
+        {key: STRINGS.NAV_ACCOUNT, value: "Account"},
+        {key: STRINGS.NAV_PROFILE, value: "Profile"},
+        {key: STRINGS.NAV_PROFILE_AUTH, value: "Login"},
+        {key: STRINGS.NAV_PROFILE_LOGOUT, value: "Logout"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Login"},
         {key: STRINGS.AUTH_LOGGING, value: "Login"},
@@ -113,6 +121,10 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
         {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
         {key: STRINGS.NAV_THEME, value: "Тема"},
+        {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
+        {key: STRINGS.NAV_PROFILE, value: "Профіль"},
+        {key: STRINGS.NAV_PROFILE_AUTH, value: "Увійти"},
+        {key: STRINGS.NAV_PROFILE_LOGOUT, value: "Вийти"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Увійти"},
         {key: STRINGS.AUTH_LOGGING, value: "Вхід"},

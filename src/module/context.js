@@ -5,7 +5,7 @@ import React, {Context} from "react"
 import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from "./storage"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./const"
 import {Log} from "./log"
-import {addUser, getUserByCredentials} from "./db"
+import {addUser, getUserByCredentials, USER_GUEST} from "./db"
 
 
 const defaultGlobalState = {
@@ -121,6 +121,10 @@ export async function login(dispatch: Context, email: string, password: string) 
         return true
     }
     return false
+}
+
+export function logout(dispatch: Context) {
+    setUser(dispatch, USER_GUEST)
 }
 
 export function setUser(dispatch: Context, user) {
