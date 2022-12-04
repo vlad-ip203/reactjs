@@ -3,7 +3,7 @@ export class Site {
     static BOOKMARKS = "/bookmarks"
     static HELP = "/help"
     static ABOUT = "/about"
-    static LOGIN = "/login"
+    static AUTH = "/auth"
 }
 
 export const KEY_BOOKMARKS = "bookmarks"

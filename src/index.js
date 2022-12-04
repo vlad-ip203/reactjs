@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import {initializeApp} from "firebase/app"
 import {getAnalytics} from "firebase/analytics"
-import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import {getFirestore} from "firebase/firestore"
 
 import {Site} from "./module/app"
 import {GlobalStateProvider} from "./module/context"
@@ -28,12 +29,13 @@ const firebaseConfig = {
     //For Firebase JS SDK v7.20.0 and later, measurementId is optional
     measurementId: "G-DKB13LDD45",
 
-    databaseURL: "https://cursenreact-js-default-rtdb.europe-west1.firebasedatabase.app",
+    databaseURL: "https://cursenreact-js.firebaseio.com",
 }
 
 //Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app)
+export const database = getFirestore(app)
 
 
 const router = createBrowserRouter([
@@ -46,6 +48,7 @@ const router = createBrowserRouter([
             {path: Site.BOOKMARKS, element: <Bookmarks/>},
             {path: Site.HELP, element: <Help/>},
             {path: Site.ABOUT, element: <About/>},
+            {path: Site.AUTH, element: <Auth/>},
         ],
     },
 ])

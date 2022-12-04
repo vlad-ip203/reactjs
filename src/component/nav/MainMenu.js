@@ -12,7 +12,7 @@ const MainMenu = () => {
     const [state, dispatch] = useGlobalState()
 
     return (
-        <Navbar collapseOnSelect expand="sm"
+        <Navbar collapseOnSelect expand="md"
                 bg="light" variant="light">
             <Container>
                 <Link className="navbar-brand" to={Site.ROOT}>
@@ -57,7 +57,7 @@ const MainMenu = () => {
                             )}
                         </NavDropdown>
                         <Navbar.Text>
-                            Profile: <Link to={Site.LOGIN}>Username</Link>
+                            Profile: <Link to={Site.AUTH}>Username</Link>
                         </Navbar.Text>
                     </Nav>
                 </Navbar.Collapse>
