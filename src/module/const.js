@@ -44,6 +44,7 @@ export const STRINGS = {
     AUTH_REGISTRATION: 321,
     AUTH_NICK: 35,
     AUTH_NAME_HINT: 351,
+    AUTH_NAME_TIP: 352,
     AUTH_EMAIL: 36,
     AUTH_EMAIL_HINT: 361,
     AUTH_EMAIL_TIP: 362,
@@ -51,6 +52,9 @@ export const STRINGS = {
     AUTH_PASSWORD_HINT: 371,
     AUTH_PASSWORD_CONFIRM: 372,
     AUTH_PASSWORD_CONFIRM_HINT: 3721,
+    AUTH_ERROR_DATA: 391,
+    AUTH_ERROR_NAME: 392,
+    AUTH_ERROR_EMAIL: 393,
 }
 
 //String translations and default values
@@ -79,6 +83,10 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_REGISTRATION, value: "Registration"},
         {key: STRINGS.AUTH_NICK, value: "Nickname"},
         {key: STRINGS.AUTH_NAME_HINT, value: "How should we call you?"},
+        {
+            key: STRINGS.AUTH_NAME_TIP,
+            value: "Nickname must have 3 to 16 characters and can contain letters, numbers, and underscores",
+        },
         {key: STRINGS.AUTH_EMAIL, value: "Email address"},
         {key: STRINGS.AUTH_EMAIL_HINT, value: "Enter your email"},
         {key: STRINGS.AUTH_EMAIL_TIP, value: "We'll never share your email with anyone else"},
@@ -86,6 +94,9 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_PASSWORD_HINT, value: "Enter your password"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM, value: "Password confirmation"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM_HINT, value: "Enter your password again"},
+        {key: STRINGS.AUTH_ERROR_DATA, value: "Wrong email and/or password"},
+        {key: STRINGS.AUTH_ERROR_NAME, value: "This nickname is wrong or already taken"},
+        {key: STRINGS.AUTH_ERROR_EMAIL, value: "This email is wrong or already registered"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
@@ -105,6 +116,10 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_REGISTRATION, value: "Реєстрація"},
         {key: STRINGS.AUTH_NICK, value: "Нікнейм"},
         {key: STRINGS.AUTH_NAME_HINT, value: "Як нам звертатися до Вас?"},
+        {
+            key: STRINGS.AUTH_NAME_TIP,
+            value: "Нікнейм повинен мати від 3 до 16 символів та може містити букви, цифри й підкреслення",
+        },
         {key: STRINGS.AUTH_EMAIL, value: "Електронна пошта"},
         {key: STRINGS.AUTH_EMAIL_HINT, value: "Введіть Вашу електронну пошту"},
         {key: STRINGS.AUTH_EMAIL_TIP, value: "Ми ніколи не поділимося Вашою електронною адресою з кимось іншим"},
@@ -112,6 +127,9 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_PASSWORD_HINT, value: "Введіть Ваш пароль"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM, value: "Підтвердження паролю"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM_HINT, value: "Введіть Ваш пароль ще раз"},
+        {key: STRINGS.AUTH_ERROR_DATA, value: "Неправильні електронна пошта та/або пароль"},
+        {key: STRINGS.AUTH_ERROR_NAME, value: "Нікнейм неправильний або вже зайнятий"},
+        {key: STRINGS.AUTH_ERROR_EMAIL, value: "Пошта неправильна або вже зареєстрована"},
     ],
 }
 
