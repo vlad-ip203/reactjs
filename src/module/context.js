@@ -2,14 +2,16 @@
 
 import React, {Context} from "react"
 
-import {readLanguage, putLanguage, readTheme, putTheme} from "./storage"
+import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from "./storage"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./const"
 import {Log} from "./log"
+import {addUser, getUserByCredentials} from "./db"
 
 
 const defaultGlobalState = {
     language: readLanguage(),
     theme: readTheme(),
+    user: readUser(),
 }
 
 const GlobalStateContext = React.createContext(defaultGlobalState)
@@ -94,4 +96,34 @@ export function listenSystemThemeChanges(state: Context, dispatch: Context) {
             } else
                 Log.v("theme::ThemeSelector: useEffect-> theme change denied = " + theme)
         })
+}
+
+
+const getUser = (state: Context): string => state.user
+const getUserID = (state: Context): string => state.user.id
+export const getUserName = (state: Context): string => state.user.name
+
+export async function register(dispatch: Context, name: string, email: string, pass: string) {
+    const user = await addUser(name, email, pass)
+
+    if (user) {
+        await setUser(dispatch, user)
+        return true
+    }
+    return false
+}
+
+export async function login(dispatch: Context, email: string, password: string) {
+    const user = await getUserByCredentials(email, password)
+
+    if (user) {
+        await setUser(dispatch, user)
+        return true
+    }
+    return false
+}
+
+export function setUser(dispatch: Context, user) {
+    putUser(user)
+    dispatch({user: user})
 }

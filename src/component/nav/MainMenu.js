@@ -4,7 +4,7 @@ import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link} from "react-router-dom"
 
 import {Site} from "../../module/app"
-import {useGlobalState, setLanguage, setTheme} from "../../module/context"
+import {useGlobalState, setLanguage, setTheme, getUserName} from "../../module/context"
 import {getString, LANGUAGES, STRINGS, THEMES} from "../../module/const"
 
 
@@ -57,7 +57,7 @@ const MainMenu = () => {
                             )}
                         </NavDropdown>
                         <Navbar.Text>
-                            Profile: <Link to={Site.AUTH}>Username</Link>
+                            Profile: <Link to={Site.AUTH}>{getUserName(state)}</Link>
                         </Navbar.Text>
                     </Nav>
                 </Navbar.Collapse>

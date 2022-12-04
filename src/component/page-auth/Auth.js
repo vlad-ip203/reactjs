@@ -1,84 +1,10 @@
-import React, {useState, Context} from "react"
+import React, {useState} from "react"
 import {Container, Form, Row, Col, Button} from "react-bootstrap"
-import {collection, addDoc, where, query, getDocs} from "firebase/firestore"
-import {genSaltSync, hashSync} from "bcryptjs-react"
 
-import {database} from "../../index"
-import {useGlobalState} from "../../module/context"
+import {useGlobalState, login, register} from "../../module/context"
 import {getString, STRINGS} from "../../module/const"
+import {findDoc, Database} from "../../module/db"
 import {Log} from "../../module/log"
-import {Database} from "../../module/app"
-
-
-async function findUser(field, value) {
-    let out = null
-    try {
-        const users = await collection(database, Database.USERS)
-
-        //Query users by email
-        const q = query(users, where(field, "==", value))
-
-        const snapshot = await getDocs(q)
-        snapshot.forEach(docRef => out = docRef)
-    } catch (e) {
-        Log.e("Auth::findUser: unable to query the user")
-        Log.e("Auth::findUser:   - field = " + field)
-        Log.e("Auth::findUser:   - value = " + value)
-        Log.e("Auth::findUser:   = catching: " + e)
-    }
-    return out
-}
-
-async function login(dispatch: Context, email, pass) {
-    const userRef = await findUser(Database.USERS_EMAIL, email)
-    if (!userRef) {
-        Log.e("Auth::login: unable to find the user")
-        Log.e("Auth::login:   - email = " + email)
-        return false
-    }
-
-    const userID = userRef.id
-    const userName = userRef.get(Database.USERS_NAME)
-    const userPassHash = userRef.get(Database.USERS_PASSWORD_HASH)
-    const userPassSalt = userRef.get(Database.USERS_PASSWORD_SALT)
-
-    const genHash = hashSync(pass, userPassSalt)
-
-    if (genHash && genHash === userPassHash) {
-        await auth(dispatch, userID, userName)
-        return true
-    }
-    return false
-}
-
-async function register(dispatch: Context, name, email, pass) {
-    const genSalt = genSaltSync(10)
-    const genHash = hashSync(pass, genSalt)
-
-    let id
-    try {
-        const docRef = await addDoc(collection(database, Database.USERS), {
-            name: name,
-            email: email,
-            passwordSalt: genSalt,
-            passwordHash: genHash,
-        })
-        id = docRef.id
-
-        Log.v("Auth::register: user added to database")
-        Log.v("Auth::register:   - id   = " + id)
-        Log.v("Auth::register:   - name = " + name)
-    } catch (e) {
-        Log.e("Auth::register: unable to add user")
-        Log.e("Auth::register:   - name  = " + name)
-        Log.e("Auth::register:   - email = " + email)
-        Log.e("Auth::register:   = catching: " + e)
-        return
-    }
-
-    await auth(dispatch, id, name)
-}
-
 
 
 const REGEX_NAME = /^\w{3,16}$/
@@ -86,8 +12,6 @@ const REGEX_EMAIL = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 const test_pass = () => !pass ? false : pass.length >= 8
 const test_pass2 = () => pass && pass === pass2
 
-async function auth(dispatch: Context, id, name) {
-}
 
 let name = "", email = "", pass = "", pass2 = ""
 
@@ -112,6 +36,7 @@ const Auth = () => {
     function setPass(value: string) {
         pass = value
         setPassWrong(pass && !test_pass())
+        setPass2Wrong(pass2 && !test_pass2())
     }
     function setPass2(value: string) {
         pass2 = value
@@ -124,7 +49,7 @@ const Auth = () => {
             return
         }
 
-        Log.v("Auth::tryToRegister: attempting to login")
+        Log.v("Auth::tryToLogin: attempting to login")
         if (!await login(dispatch, email, pass))
             setPassWrong(true)
     }
@@ -136,14 +61,14 @@ const Auth = () => {
         }
 
         //Name passed static checks, checking in DB
-        const user1Ref = await findUser(Database.USERS_NAME, name)
-        setNameWrong(user1Ref)
+        const userByNameRef = await findDoc(Database.USERS, Database.USERS_NAME, name)
+        setNameWrong(userByNameRef)
 
         //Email passed static checks, checking in DB
-        const user2Ref = await findUser(Database.USERS_EMAIL, email)
-        setEmailWrong(user2Ref)
+        const userByEmailRef = await findDoc(Database.USERS, Database.USERS_EMAIL, email)
+        setEmailWrong(userByEmailRef)
 
-        if (!user1Ref && !user2Ref) {
+        if (!userByNameRef && !userByEmailRef) {
             Log.v("Auth::tryToRegister: attempting to register")
             await register(dispatch, name, email, pass)
         }
@@ -217,6 +142,10 @@ const Auth = () => {
                                 onClick={() => {
                                     if (!isLogin) {
                                         setIsLogin(true)
+                                        setNameWrong(false)
+                                        setEmailWrong(false)
+                                        setPassWrong(false)
+                                        setPass2Wrong(false)
                                         return
                                     }
                                     void tryToLogin()
@@ -230,6 +159,10 @@ const Auth = () => {
                                 onClick={() => {
                                     if (isLogin) {
                                         setIsLogin(false)
+                                        setNameWrong(false)
+                                        setEmailWrong(false)
+                                        setPassWrong(false)
+                                        setPass2Wrong(false)
                                         return
                                     }
                                     void tryToRegister()

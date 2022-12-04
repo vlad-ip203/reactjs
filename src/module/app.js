@@ -6,14 +6,6 @@ export class Site {
     static AUTH = "/auth"
 }
 
-export class Database {
-    static USERS = "users"
-    static USERS_NAME = "name"
-    static USERS_EMAIL = "email"
-    static USERS_PASSWORD_HASH = "passwordHash"
-    static USERS_PASSWORD_SALT = "passwordSalt"
-}
-
 export const KEY_BOOKMARKS = "bookmarks"
 
 export const MASONRY_BREAKPOINT_COLS = {
