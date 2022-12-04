@@ -4,6 +4,7 @@ export class Site {
     static HELP = "/help"
     static ABOUT = "/about"
     static AUTH = "/auth"
+    static PROFILE = "/profile"
 }
 
 export const KEY_BOOKMARKS = "bookmarks"

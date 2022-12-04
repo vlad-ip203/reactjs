@@ -21,7 +21,8 @@ export const USER_GUEST = {
 
 export async function findDoc(table: string, row: string, value: string) {
     const docs = await findDocs(table, row, value)
-    Log.i("db::findDoc: found " + docs.size + " docs instead of 1")
+    if (docs.size !== 1)
+        Log.i("db::findDoc: found " + docs.size + " docs instead of 1")
 
     let out = null
     if (docs)

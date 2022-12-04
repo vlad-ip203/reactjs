@@ -55,6 +55,8 @@ export const STRINGS = {
     AUTH_ERROR_DATA: 391,
     AUTH_ERROR_NAME: 392,
     AUTH_ERROR_EMAIL: 393,
+
+    PROFILE: 4,
 }
 
 //String translations and default values
@@ -97,6 +99,8 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_ERROR_DATA, value: "Wrong email and/or password"},
         {key: STRINGS.AUTH_ERROR_NAME, value: "This nickname is wrong or already taken"},
         {key: STRINGS.AUTH_ERROR_EMAIL, value: "This email is wrong or already registered"},
+
+        {key: STRINGS.PROFILE, value: "Profile"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
@@ -130,6 +134,8 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_ERROR_DATA, value: "Неправильні електронна пошта та/або пароль"},
         {key: STRINGS.AUTH_ERROR_NAME, value: "Нікнейм неправильний або вже зайнятий"},
         {key: STRINGS.AUTH_ERROR_EMAIL, value: "Пошта неправильна або вже зареєстрована"},
+
+        {key: STRINGS.PROFILE, value: "Профіль"},
     ],
 }
 

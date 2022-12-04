@@ -15,6 +15,7 @@ import About from "./component/page-about/About"
 import Help from "./component/page-help/Help"
 import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
+import Profile from "./component/page-profile/Profile"
 
 
 //Your Firebase configuration
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
             {path: Site.HELP, element: <Help/>},
             {path: Site.ABOUT, element: <About/>},
             {path: Site.AUTH, element: <Auth/>},
+            {path: Site.PROFILE, element: <Profile/>},
         ],
     },
 ])
