@@ -10,18 +10,21 @@ import {Log} from "../../module/log"
 import {Database} from "../../module/app"
 
 
-const generatedSalt = genSaltSync(10)
+const FORMAT_NAME = /^\w{3,16}$/
+const FORMAT_EMAIL = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
-async function register(dispatch: Context, name, email, password) {
-    const generatedHash = hashSync(password, generatedSalt)
+
+async function register(dispatch: Context, name, email, pass) {
+    const genSalt = genSaltSync(10)
+    const genHash = hashSync(pass, genSalt)
 
     let id
     try {
         const docRef = await addDoc(collection(database, Database.USERS), {
             name: name,
             email: email,
-            passwordSalt: generatedSalt,
-            passwordHash: generatedHash,
+            passwordSalt: genSalt,
+            passwordHash: genHash,
         })
         id = docRef.id
 
@@ -39,11 +42,11 @@ async function register(dispatch: Context, name, email, password) {
     await auth(dispatch, id, name)
 }
 
-async function login(dispatch: Context, email, password) {
+async function login(dispatch: Context, email, pass) {
     let id
     let name
-    let passwordHash
-    let passwordSalt
+    let passHash
+    let passSalt
     try {
         const users = await collection(database, Database.USERS)
         //Query users by email
@@ -53,8 +56,8 @@ async function login(dispatch: Context, email, password) {
             //Get user info
             id = docRef.id
             name = docRef.get(Database.USERS_NAME)
-            passwordHash = docRef.get(Database.USERS_PASSWORD_HASH)
-            passwordSalt = docRef.get(Database.USERS_PASSWORD_SALT)
+            passHash = docRef.get(Database.USERS_PASSWORD_HASH)
+            passSalt = docRef.get(Database.USERS_PASSWORD_SALT)
         })
     } catch (e) {
         Log.e("Auth::login: unable to find the user")
@@ -62,18 +65,17 @@ async function login(dispatch: Context, email, password) {
         Log.e("Auth::login:   = catching: " + e)
     }
 
-    const generatedHash = hashSync(password, passwordSalt)
+    const genHash = hashSync(pass, passSalt)
 
-    if (generatedHash && generatedHash === passwordHash)
+    if (genHash && genHash === passHash) {
         await auth(dispatch, id, name)
+        return true
+    }
+    return false
 }
 
 async function auth(dispatch: Context, id, name) {
 }
-
-
-const FORMAT_NAME = /^\w{3,16}$/
-const FORMAT_EMAIL = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 
 const Auth = () => {
@@ -86,114 +88,82 @@ const Auth = () => {
     const [pass, setPass] = useState("")
     const [pass2, setPass2] = useState("")
 
-    function isNameValid() {
-        if (!FORMAT_NAME.test(name)) return false
-        /*try {
-            const docRef = await getDoc
-        }*/
-        return true
-    }
-    function isEmailValid() {
-        if (!FORMAT_EMAIL.test(email)) return false
-        /*try {
-            const docRef = await getDoc
-        }*/
-        return true
-    }
-    function isPasswordValid() {
-        if (!pass)
-            return false
-        return pass.length >= 8
-    }
-    function doPasswordsMatch() {
-        return pass && pass === pass2
-    }
+    const isNameValid = () => FORMAT_NAME.test(name)
+    const isEmailValid = () => FORMAT_EMAIL.test(email)
+    const isPasswordValid = () => !pass ? false : pass.length >= 8
+    const doPasswordsMatch = () => pass && pass === pass2
 
     return (
         <Container>
             <h1>{getString(state, isLogin ? STRINGS.AUTH_LOGGING : STRINGS.AUTH_REGISTRATION)}</h1>
 
-            <div className="row justify-content-center">
-                <Form className="col-lg-8">
+            <Row className="justify-content-center">
+                <Form className="col-md-8">
                     {isLogin ||
-                        <Form.Group as={Row} className="mt-4">
-                            <Form.Label column md="4">{getString(state, STRINGS.AUTH_NICK)}</Form.Label>
-                            <Col>
-                                <Form.Control type="text"
-                                              placeholder={getString(state, STRINGS.AUTH_NAME_HINT)}
-                                              onChange={event => setName(event.target.value)}
-                                              isValid={isNameValid()}
-                                              isInvalid={name && !isNameValid()}/>
-                            </Col>
-                        </Form.Group>}
+                        <Form.FloatingLabel className="mt-4" label={getString(state, STRINGS.AUTH_NICK)}>
+                            <Form.Control type="text"
+                                          autoComplete="off"
+                                          placeholder={getString(state, STRINGS.AUTH_NAME_HINT)}
+                                          onChange={event => setName(event.target.value)}
+                                          isValid={isNameValid()}
+                                          isInvalid={name && !isNameValid()}/>
+                        </Form.FloatingLabel>}
 
-                    <Form.Group as={Row} className="mt-3">
-                        <Form.Label column md="4">{getString(state, STRINGS.AUTH_EMAIL)}</Form.Label>
-                        <Col>
-                            <Form.Control type="email"
-                                          autoComplete="email"
-                                          placeholder={getString(state, STRINGS.AUTH_EMAIL_HINT)}
-                                          onChange={event => setEmail(event.target.value)}
-                                          isValid={isEmailValid()}
-                                          isInvalid={email && !isEmailValid()}/>
-                            <Form.Text>{getString(state, STRINGS.AUTH_EMAIL_TIP)}</Form.Text>
-                        </Col>
-                    </Form.Group>
+                    <Form.FloatingLabel className="mt-3" label={getString(state, STRINGS.AUTH_EMAIL)}>
+                        <Form.Control type="email"
+                                      autoComplete="email"
+                                      placeholder={getString(state, STRINGS.AUTH_EMAIL_HINT)}
+                                      onChange={event => setEmail(event.target.value)}
+                                      isValid={isEmailValid()}
+                                      isInvalid={email && !isEmailValid()}/>
+                        <Form.Text className="text-muted">{getString(state, STRINGS.AUTH_EMAIL_TIP)}</Form.Text>
+                    </Form.FloatingLabel>
 
-                    <Form.Group as={Row} className="mt-3">
-                        <Form.Label column md="4">{getString(state, STRINGS.AUTH_PASSWORD)}</Form.Label>
-                        <Col>
+                    <Form.FloatingLabel className="mt-3" label={getString(state, STRINGS.AUTH_PASSWORD)}>
+                        <Form.Control type="password"
+                                      autoComplete={isLogin ? "password" : "new-password"}
+                                      placeholder={getString(state, STRINGS.AUTH_PASSWORD_HINT)}
+                                      onChange={event => setPass(event.target.value)}
+                                      isValid={isPasswordValid()}
+                                      isInvalid={pass && !isPasswordValid()}/>
+                    </Form.FloatingLabel>
+
+                    {isLogin ||
+                        <Form.FloatingLabel className="mt-1" label={getString(state, STRINGS.AUTH_PASSWORD_CONFIRM)}>
                             <Form.Control type="password"
-                                          autoComplete={isLogin ? "password" : "new-password"}
-                                          placeholder={getString(state, STRINGS.AUTH_PASSWORD_HINT)}
-                                          onChange={event => setPass(event.target.value)}
-                                          isValid={isPasswordValid()}
-                                          isInvalid={pass && !isPasswordValid()}/>
-                        </Col>
-                    </Form.Group>
-
-                    {isLogin ||
-                        <Form.Group as={Row} className="mt-1">
-                            <Form.Label column md="4">{getString(state, STRINGS.AUTH_PASSWORD_CONFIRM)}</Form.Label>
-                            <Col>
-                                <Form.Control type="password"
-                                              autoComplete="new-password"
-                                              placeholder={getString(state, STRINGS.AUTH_PASSWORD_CONFIRM_HINT)}
-                                              onChange={event => setPass2(event.target.value)}
-                                              isValid={doPasswordsMatch()}
-                                              isInvalid={pass2 && !doPasswordsMatch()}/>
-                            </Col>
-                        </Form.Group>}
+                                          autoComplete="new-password"
+                                          placeholder={getString(state, STRINGS.AUTH_PASSWORD_CONFIRM_HINT)}
+                                          onChange={event => setPass2(event.target.value)}
+                                          isValid={doPasswordsMatch()}
+                                          isInvalid={pass2 && !doPasswordsMatch()}>
+                            </Form.Control>
+                        </Form.FloatingLabel>}
 
                     <Row className="mt-4">
-                        <Button as={Col} className="ms-2"
-                                variant={isLogin ? "primary" : "secondary"}
+                        <Button as={Col}
+                                className="ms-2"
+                                variant={isLogin ? "primary" : "outline-secondary"}
                                 onClick={() => {
                                     if (!isLogin) {
                                         setIsLogin(true)
                                         return
                                     }
-
-                                    if (isEmailValid() &&
-                                        isPasswordValid()) {
+                                    if (isEmailValid() && isPasswordValid()) {
                                         Log.v("Auth::Auth: onClick-> attempting to login")
                                         void login(dispatch, email, pass)
                                     }
                                 }}>
                             {getString(state, STRINGS.AUTH_LOGIN)}
                         </Button>
-                        <Button as={Col} className="ms-3 me-2"
-                                variant={!isLogin ? "primary" : "secondary"}
+                        <Button as={Col}
+                                className="ms-3 me-2"
+                                variant={!isLogin ? "primary" : "outline-secondary"}
                                 onClick={() => {
                                     if (isLogin) {
                                         setIsLogin(false)
                                         return
                                     }
-
-                                    if (isNameValid() &&
-                                        isEmailValid() &&
-                                        isPasswordValid() &&
-                                        doPasswordsMatch()) {
+                                    if (isNameValid() && isEmailValid() && isPasswordValid() && doPasswordsMatch()) {
                                         Log.v("Auth::Auth: onClick-> attempting to register")
                                         void register(dispatch, name, email, pass)
                                     }
@@ -202,7 +172,7 @@ const Auth = () => {
                         </Button>
                     </Row>
                 </Form>
-            </div>
+            </Row>
         </Container>
     )
 }
