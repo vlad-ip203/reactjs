@@ -1,4 +1,4 @@
-import css from "./ItemCard.module.css"
+import css from "./DataCard.module.css"
 import icon_link from "../../res/icon_link.svg"
 import icon_bookmark from "../../res/icon_bookmark.svg"
 import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
@@ -62,7 +62,7 @@ function getBookmarkIcon(card) {
 }
 
 
-const ItemCard = args => {
+const DataCard = args => {
     const [bookmarkIcon, updateBookmarkIcon] = useState(
         getBookmarkIcon(args.card))
 
@@ -115,4 +115,4 @@ const ItemCard = args => {
     )
 }
 
-export default ItemCard
+export default DataCard

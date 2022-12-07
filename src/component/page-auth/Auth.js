@@ -3,14 +3,12 @@ import {Container, Form, Row, Col, Button} from "react-bootstrap"
 import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
-import {getString, STRINGS} from "../../module/const"
+import {getString, STRINGS, REGEX_NAME, REGEX_EMAIL} from "../../module/const"
 import {findDoc, Database} from "../../module/db"
 import {Log} from "../../module/log"
 import {Site} from "../../module/app"
 
 
-const REGEX_NAME = /^\w{3,16}$/
-const REGEX_EMAIL = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 const test_pass = () => !pass ? false : pass.length >= 8
 const test_pass2 = () => pass && pass === pass2
 

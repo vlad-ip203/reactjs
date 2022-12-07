@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 
 import {KEY_BOOKMARKS, MASONRY_BREAKPOINT_COLS} from "../../module/app"
-import ItemCard from "../card/ItemCard"
+import DataCard from "../card/DataCard"
 
 
 const Bookmarks = () => {
@@ -14,7 +14,7 @@ const Bookmarks = () => {
         let out = "No bookmarks"
         if (parsedList && Array.isArray(parsedList) && parsedList.length)
             out = parsedList.map((site, index) => {
-                return <ItemCard key={index}
+                return <DataCard key={index}
                                  card={site}/>
             })
         return out

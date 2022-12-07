@@ -1,10 +1,11 @@
 export class Site {
     static ROOT = "/"
-    static BOOKMARKS = "/bookmarks"
+    static SEARCH = "/search"
     static HELP = "/help"
     static ABOUT = "/about"
     static AUTH = "/auth"
     static PROFILE = "/profile"
+    static BOOKMARKS = "/bookmarks"
 }
 
 export const KEY_BOOKMARKS = "bookmarks"

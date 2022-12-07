@@ -16,6 +16,7 @@ import Help from "./component/page-help/Help"
 import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
 import Profile from "./component/page-profile/Profile"
+import Search from "./component/page-search/Search"
 
 
 //Your Firebase configuration
@@ -46,11 +47,12 @@ const router = createBrowserRouter([
         errorElement: <Error404/>,
         children: [
             {index: true, element: <Home/>},
-            {path: Site.BOOKMARKS, element: <Bookmarks/>},
+            {path: Site.SEARCH, element: <Search/>},
             {path: Site.HELP, element: <Help/>},
             {path: Site.ABOUT, element: <About/>},
             {path: Site.AUTH, element: <Auth/>},
             {path: Site.PROFILE, element: <Profile/>},
+            {path: Site.BOOKMARKS, element: <Bookmarks/>},
         ],
     },
 ])

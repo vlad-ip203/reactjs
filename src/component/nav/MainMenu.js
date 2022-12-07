@@ -3,7 +3,7 @@ import logo from "../../res/logo.svg"
 import React from "react"
 import {Navbar, Container, Nav, NavDropdown, Image} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
-import {Link, useNavigate, redirect} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 import {Site} from "../../module/app"
 import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID} from "../../module/context"
@@ -29,15 +29,14 @@ const MainMenu = () => {
                            className="d-inline-block align-top"/>
                     {" "}
                     {getString(state, STRINGS.APP_NAME)}
-
                 </Link>
 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className="nav-link" to={Site.BOOKMARKS}>
-                            {getString(state, STRINGS.NAV_BOOKMARKS)}
+                        <Link className="nav-link" to={Site.SEARCH}>
+                            {getString(state, STRINGS.SEARCH)}
                         </Link>
 
                         <NavDropdown title={getString(state, STRINGS.NAV_HELP)}
@@ -59,17 +58,20 @@ const MainMenu = () => {
                                          getUserName(state)}>
                             {isGuest ?
                                 <Link className="dropdown-item" to={Site.AUTH}>
-                                    {getString(state, STRINGS.NAV_PROFILE_AUTH)}
+                                    {getString(state, STRINGS.AUTH_LOGIN)}
                                 </Link> :
                                 <>
                                     <Link className="dropdown-item" to={Site.PROFILE}>
-                                        {getString(state, STRINGS.NAV_PROFILE)}
+                                        {getString(state, STRINGS.PROFILE)}
+                                    </Link>
+                                    <Link className="dropdown-item" to={Site.BOOKMARKS}>
+                                        {getString(state, STRINGS.NAV_BOOKMARKS)}
                                     </Link>
                                     <DropdownItem onClick={() => {
                                         logout(dispatch)
                                         navigate(Site.ROOT)
                                     }}>
-                                        {getString(state, STRINGS.NAV_PROFILE_LOGOUT)}
+                                        {getString(state, STRINGS.AUTH_LOGOUT)}
                                     </DropdownItem>
                                 </>
                             }

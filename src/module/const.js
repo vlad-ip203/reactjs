@@ -13,6 +13,9 @@ export const THEMES = [
     THEME_DARK,
 ]
 
+export const REGEX_NAME = /^\w{3,16}$/
+export const REGEX_EMAIL = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 
 //Languages
 const LANGUAGE_EN_US = "en-US"
@@ -38,14 +41,12 @@ export const STRINGS = {
     NAV_LANGUAGE: 23,
     NAV_THEME: 24,
     NAV_ACCOUNT: 25,
-    NAV_PROFILE: 26,
-    NAV_PROFILE_AUTH: 261,
-    NAV_PROFILE_LOGOUT: 262,
 
     AUTH_LOGIN: 31,
     AUTH_LOGGING: 311,
     AUTH_REGISTER: 32,
     AUTH_REGISTRATION: 321,
+    AUTH_LOGOUT: 33,
     AUTH_NICK: 35,
     AUTH_NAME_HINT: 351,
     AUTH_NAME_TIP: 352,
@@ -61,6 +62,9 @@ export const STRINGS = {
     AUTH_ERROR_EMAIL: 393,
 
     PROFILE: 4,
+
+    SEARCH: 5,
+    SEARCH_HINT: 51,
 }
 
 //String translations and default values
@@ -76,21 +80,19 @@ const TRANSLATIONS = {
         {key: THEME_LIGHT, value: "Light"},
         {key: THEME_DARK, value: "Dark"},
 
-        {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
         {key: STRINGS.NAV_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
         {key: STRINGS.NAV_LANGUAGE, value: "Language"},
         {key: STRINGS.NAV_THEME, value: "Theme"},
         {key: STRINGS.NAV_ACCOUNT, value: "Account"},
-        {key: STRINGS.NAV_PROFILE, value: "Profile"},
-        {key: STRINGS.NAV_PROFILE_AUTH, value: "Login"},
-        {key: STRINGS.NAV_PROFILE_LOGOUT, value: "Logout"},
+        {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Login"},
         {key: STRINGS.AUTH_LOGGING, value: "Login"},
         {key: STRINGS.AUTH_REGISTER, value: "Register"},
         {key: STRINGS.AUTH_REGISTRATION, value: "Registration"},
+        {key: STRINGS.AUTH_LOGOUT, value: "Logout"},
         {key: STRINGS.AUTH_NICK, value: "Nickname"},
         {key: STRINGS.AUTH_NAME_HINT, value: "How should we call you?"},
         {
@@ -109,27 +111,28 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_ERROR_EMAIL, value: "This email is wrong or already registered"},
 
         {key: STRINGS.PROFILE, value: "Profile"},
+
+        {key: STRINGS.SEARCH, value: "Search"},
+        {key: STRINGS.SEARCH_HINT, value: "Enter email to search for"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
         {key: THEME_LIGHT, value: "Світла"},
         {key: THEME_DARK, value: "Темна"},
 
-        {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
         {key: STRINGS.NAV_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
         {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
         {key: STRINGS.NAV_THEME, value: "Тема"},
         {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
-        {key: STRINGS.NAV_PROFILE, value: "Профіль"},
-        {key: STRINGS.NAV_PROFILE_AUTH, value: "Увійти"},
-        {key: STRINGS.NAV_PROFILE_LOGOUT, value: "Вийти"},
+        {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Увійти"},
         {key: STRINGS.AUTH_LOGGING, value: "Вхід"},
         {key: STRINGS.AUTH_REGISTER, value: "Зареєструватися"},
         {key: STRINGS.AUTH_REGISTRATION, value: "Реєстрація"},
+        {key: STRINGS.AUTH_LOGOUT, value: "Вийти"},
         {key: STRINGS.AUTH_NICK, value: "Нікнейм"},
         {key: STRINGS.AUTH_NAME_HINT, value: "Як нам звертатися до Вас?"},
         {
@@ -148,6 +151,9 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_ERROR_EMAIL, value: "Пошта неправильна або вже зареєстрована"},
 
         {key: STRINGS.PROFILE, value: "Профіль"},
+
+        {key: STRINGS.SEARCH, value: "Пошук"},
+        {key: STRINGS.SEARCH_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
     ],
 }
 
