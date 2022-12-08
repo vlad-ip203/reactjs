@@ -6,9 +6,10 @@ import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link, useNavigate} from "react-router-dom"
 
 import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID} from "../../module/context"
-import {THEMES, App} from "../../module/const"
+import {App} from "../../module/const"
 import {USER_GUEST} from "../../module/db"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
+import {THEMES} from "../../module/theme"
 
 
 const MainMenu = () => {

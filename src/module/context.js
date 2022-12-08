@@ -3,9 +3,9 @@
 import React, {Context} from "react"
 
 import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from "./storage"
-import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./const"
 import {Log} from "./log"
 import {addUser, getUserByCredentials, USER_GUEST} from "./db"
+import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
 
 
 const defaultGlobalState = {

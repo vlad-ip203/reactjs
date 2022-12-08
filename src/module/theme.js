@@ -2,8 +2,17 @@ import React, {useEffect} from "react"
 import {Helmet} from "react-helmet"
 
 import {useGlobalState, getAppTheme, listenSystemThemeChanges} from "./context"
-import {THEME_LIGHT} from "./const"
 
+
+//Available themes
+export const THEME_SYSTEM = "system"
+export const THEME_LIGHT = "light"
+export const THEME_DARK = "dark"
+export const THEMES = [
+    THEME_SYSTEM,
+    THEME_LIGHT,
+    THEME_DARK,
+]
 
 const styles_light = "styles/bootstrap.min.css" //bootstrap package
 const styles_dark = "styles/bootstrap-night.min.css" //bootstrap-dark-5 package

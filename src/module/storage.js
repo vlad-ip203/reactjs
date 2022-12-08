@@ -1,7 +1,7 @@
-import {THEMES, THEME_SYSTEM} from "./const"
 import {USER_GUEST} from "./db"
 import {Log} from "./log"
 import {LANGUAGE_FALLBACK, LANGUAGES} from "./lang"
+import {THEMES, THEME_SYSTEM} from "./theme"
 
 
 const KEYS = {

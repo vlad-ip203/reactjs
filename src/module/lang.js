@@ -1,7 +1,7 @@
 import {Context} from "react"
 import {getLanguage} from "./context"
 import {Log} from "./log"
-import {THEME_SYSTEM, THEME_LIGHT, THEME_DARK} from "./const"
+import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
 
 
 //Available languages
