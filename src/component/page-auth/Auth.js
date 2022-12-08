@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
 import {REGEX_NAME, REGEX_EMAIL, App} from "../../module/const"
-import {findDoc, Database} from "../../module/db"
+import {queryDocument, Database, allUsers} from "../../module/db"
 import {Log} from "../../module/log"
 import {getString, STRINGS} from "../../module/lang"
 
@@ -66,11 +66,11 @@ const Auth = () => {
         }
 
         //Name passed static checks, checking in DB
-        const userByNameRef = await findDoc(Database.USERS, Database.USERS_NAME, name)
+        const userByNameRef = await queryDocument(allUsers(), Database.USERS_NAME, name)
         setNameWrong(userByNameRef)
 
         //Email passed static checks, checking in DB
-        const userByEmailRef = await findDoc(Database.USERS, Database.USERS_EMAIL, email)
+        const userByEmailRef = await queryDocument(allUsers(), Database.USERS_EMAIL, email)
         setEmailWrong(userByEmailRef)
 
         if (!userByNameRef && !userByEmailRef) {

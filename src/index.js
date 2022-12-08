@@ -5,6 +5,7 @@ import {initializeApp} from "firebase/app"
 import {getAnalytics} from "firebase/analytics"
 import {getFirestore} from "firebase/firestore"
 
+import {App} from "./module/const"
 import {GlobalStateProvider} from "./module/context"
 import ThemeSelector from "./module/theme"
 import Root from "./component/Root"
@@ -16,7 +17,6 @@ import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
 import Profile from "./component/page-profile/Profile"
 import Search from "./component/page-search/Search"
-import {App} from "./module/const"
 
 
 //Your Firebase configuration
@@ -35,9 +35,9 @@ const firebaseConfig = {
 }
 
 //Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
-export const database = getFirestore(app)
+const firebaseApp = initializeApp(firebaseConfig)
+const analytics = getAnalytics(firebaseApp)
+export const database = getFirestore(firebaseApp)
 
 
 const router = createBrowserRouter([
