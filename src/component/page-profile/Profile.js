@@ -1,8 +1,8 @@
 import React from "react"
 import {Container} from "react-bootstrap"
 
-import {STRINGS, getString} from "../../module/const"
 import {useGlobalState} from "../../module/context"
+import {getString, STRINGS} from "../../module/lang"
 
 
 const Profile = () => {

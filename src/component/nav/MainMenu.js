@@ -7,8 +7,9 @@ import {Link, useNavigate} from "react-router-dom"
 
 import {Site} from "../../module/app"
 import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID} from "../../module/context"
-import {getString, STRINGS, THEMES, LANGUAGES} from "../../module/const"
+import {THEMES} from "../../module/const"
 import {USER_GUEST} from "../../module/db"
+import {getString, STRINGS, LANGUAGES} from "../../module/lang"
 
 
 const MainMenu = () => {

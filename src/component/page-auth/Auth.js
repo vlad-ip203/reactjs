@@ -3,10 +3,11 @@ import {Container, Form, Row, Col, Button} from "react-bootstrap"
 import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
-import {getString, STRINGS, REGEX_NAME, REGEX_EMAIL} from "../../module/const"
+import {REGEX_NAME, REGEX_EMAIL} from "../../module/const"
 import {findDoc, Database} from "../../module/db"
 import {Log} from "../../module/log"
 import {Site} from "../../module/app"
+import {getString, STRINGS} from "../../module/lang"
 
 
 const test_pass = () => !pass ? false : pass.length >= 8
