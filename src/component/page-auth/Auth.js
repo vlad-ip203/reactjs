@@ -3,10 +3,9 @@ import {Container, Form, Row, Col, Button} from "react-bootstrap"
 import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
-import {REGEX_NAME, REGEX_EMAIL} from "../../module/const"
+import {REGEX_NAME, REGEX_EMAIL, App} from "../../module/const"
 import {findDoc, Database} from "../../module/db"
 import {Log} from "../../module/log"
-import {Site} from "../../module/app"
 import {getString, STRINGS} from "../../module/lang"
 
 
@@ -56,7 +55,7 @@ const Auth = () => {
 
         Log.v("Auth::tryToLogin: attempting to login")
         if (await login(dispatch, email, pass))
-            navigate(Site.ROOT)
+            navigate(App.ROOT)
         else setPassWrong(true)
     }
 
@@ -77,7 +76,7 @@ const Auth = () => {
         if (!userByNameRef && !userByEmailRef) {
             Log.v("Auth::tryToRegister: attempting to register")
             if (await register(dispatch, name, email, pass))
-                navigate(Site.ROOT)
+                navigate(App.ROOT)
         }
     }
 

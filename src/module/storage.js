@@ -10,6 +10,8 @@ const KEYS = {
     USER: "userID",
 }
 
+export const KEY_BOOKMARKS = "bookmarks"
+
 
 export function readLanguage(): string {
     const lang = window.localStorage.getItem(KEYS.LANGUAGE)

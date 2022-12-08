@@ -3,8 +3,7 @@ import {Container, Form, Row} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 
 import {useGlobalState} from "../../module/context"
-import {REGEX_EMAIL} from "../../module/const"
-import {MASONRY_BREAKPOINT_COLS} from "../../module/app"
+import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import {getString, STRINGS} from "../../module/lang"
 
 

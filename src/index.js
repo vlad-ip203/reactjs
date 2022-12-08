@@ -5,7 +5,6 @@ import {initializeApp} from "firebase/app"
 import {getAnalytics} from "firebase/analytics"
 import {getFirestore} from "firebase/firestore"
 
-import {Site} from "./module/app"
 import {GlobalStateProvider} from "./module/context"
 import ThemeSelector from "./module/theme"
 import Root from "./component/Root"
@@ -17,6 +16,7 @@ import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
 import Profile from "./component/page-profile/Profile"
 import Search from "./component/page-search/Search"
+import {App} from "./module/const"
 
 
 //Your Firebase configuration
@@ -42,17 +42,17 @@ export const database = getFirestore(app)
 
 const router = createBrowserRouter([
     {
-        path: Site.ROOT,
+        path: App.ROOT,
         element: <Root/>,
         errorElement: <Error404/>,
         children: [
             {index: true, element: <Home/>},
-            {path: Site.SEARCH, element: <Search/>},
-            {path: Site.HELP, element: <Help/>},
-            {path: Site.ABOUT, element: <About/>},
-            {path: Site.AUTH, element: <Auth/>},
-            {path: Site.PROFILE, element: <Profile/>},
-            {path: Site.BOOKMARKS, element: <Bookmarks/>},
+            {path: App.SEARCH, element: <Search/>},
+            {path: App.HELP, element: <Help/>},
+            {path: App.ABOUT, element: <About/>},
+            {path: App.AUTH, element: <Auth/>},
+            {path: App.PROFILE, element: <Profile/>},
+            {path: App.BOOKMARKS, element: <Bookmarks/>},
         ],
     },
 ])

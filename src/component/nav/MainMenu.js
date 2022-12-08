@@ -5,9 +5,8 @@ import {Navbar, Container, Nav, NavDropdown, Image} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link, useNavigate} from "react-router-dom"
 
-import {Site} from "../../module/app"
 import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID} from "../../module/context"
-import {THEMES} from "../../module/const"
+import {THEMES, App} from "../../module/const"
 import {USER_GUEST} from "../../module/db"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
 
@@ -22,7 +21,7 @@ const MainMenu = () => {
         <Navbar collapseOnSelect expand="md"
                 bg="light" variant="light">
             <Container>
-                <Link className="navbar-brand" to={Site.ROOT}>
+                <Link className="navbar-brand" to={App.ROOT}>
                     <Image src={logo}
                            alt=""
                            width="32"
@@ -36,17 +35,17 @@ const MainMenu = () => {
 
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className="nav-link" to={Site.SEARCH}>
+                        <Link className="nav-link" to={App.SEARCH}>
                             {getString(state, STRINGS.SEARCH)}
                         </Link>
 
                         <NavDropdown title={getString(state, STRINGS.NAV_HELP)}
                                      menuVariant="light">
-                            <Link className="dropdown-item" to={Site.HELP}>
+                            <Link className="dropdown-item" to={App.HELP}>
                                 {getString(state, STRINGS.NAV_HELP_HELP)}
                             </Link>
                             <NavDropdown.Divider/>
-                            <Link className="dropdown-item" to={Site.ABOUT}>
+                            <Link className="dropdown-item" to={App.ABOUT}>
                                 {getString(state, STRINGS.NAV_HELP_ABOUT)}
                             </Link>
                         </NavDropdown>
@@ -58,19 +57,19 @@ const MainMenu = () => {
                                          getString(state, STRINGS.NAV_ACCOUNT) :
                                          getUserName(state)}>
                             {isGuest ?
-                                <Link className="dropdown-item" to={Site.AUTH}>
+                                <Link className="dropdown-item" to={App.AUTH}>
                                     {getString(state, STRINGS.AUTH_LOGIN)}
                                 </Link> :
                                 <>
-                                    <Link className="dropdown-item" to={Site.PROFILE}>
+                                    <Link className="dropdown-item" to={App.PROFILE}>
                                         {getString(state, STRINGS.PROFILE)}
                                     </Link>
-                                    <Link className="dropdown-item" to={Site.BOOKMARKS}>
+                                    <Link className="dropdown-item" to={App.BOOKMARKS}>
                                         {getString(state, STRINGS.NAV_BOOKMARKS)}
                                     </Link>
                                     <DropdownItem onClick={() => {
                                         logout(dispatch)
-                                        navigate(Site.ROOT)
+                                        navigate(App.ROOT)
                                     }}>
                                         {getString(state, STRINGS.AUTH_LOGOUT)}
                                     </DropdownItem>
