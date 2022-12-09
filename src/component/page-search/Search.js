@@ -30,7 +30,7 @@ const Search = () => {
 
         let results = []
         for (const leak of leaks)
-            results.push(<DataCard key={leak.getKey()} data={leak}/>)
+            results.push(<DataCard key={leak.getID()} data={leak}/>)
 
         setSearchResults(results || getString(state, STRINGS.SEARCH_NO_RESULTS))
     }

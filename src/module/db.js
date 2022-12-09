@@ -128,16 +128,14 @@ export class LeakData {
     person_email
     leak_id
 
-    constructor(login = "", nickname = "", passwordHash = "", tel = "") {
+    constructor(login = "", nickname = "", password_hash = "", tel = "") {
         this.login = login
         this.nickname = nickname
-        this.passwordHash = passwordHash
+        this.password_hash = password_hash
         this.tel = tel
     }
 
-    getKey() {
-        return this.person_id + this.leak_id
-    }
+    getID = () => this.person_id + this.leak_id
 }
 
 //Firestore data converter
@@ -146,13 +144,13 @@ const leakDataConverter = {
         return {
             login: city.login,
             nickname: city.nickname,
-            passwordHash: city.passwordHash,
+            password_hash: city.password_hash,
             tel: city.tel,
         }
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options)
-        return new LeakData(data.login, data.nickname, data.passwordHash, data.tel)
+        return new LeakData(data.login, data.nickname, data.password_hash, data.tel)
     },
 }
 

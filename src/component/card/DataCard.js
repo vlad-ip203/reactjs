@@ -99,11 +99,11 @@ const DataCard = props => {
                 <Card.Title className="mb-4">
                     <FontAwesomeIcon icon={faIdCard}/>
                     {" "}
-                    {data.nickname || data.getKey()}
+                    {data.nickname || data.getID()}
                 </Card.Title>
 
                 {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), data.login)}
-                {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), data.passwordHash)}
+                {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), data.password_hash)}
                 {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), data.person_email)}
                 {labeledParagraph(faPhone, getString(state, STRINGS.LEAK_TEL), data.tel)}
             </Card.Body>
@@ -112,7 +112,7 @@ const DataCard = props => {
                 <Card.Text className="text-muted">
                     <FontAwesomeIcon icon={faLink}/>
                     {" "}
-                    {getString(state, STRINGS.LEAK_ID)}: {data.getKey()}
+                    {getString(state, STRINGS.LEAK_ID)}: {data.getID()}
                 </Card.Text>
             </Card.Footer>
         </Card>
