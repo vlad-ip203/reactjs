@@ -3,6 +3,7 @@ import {Context} from "react"
 import {getLanguageStack} from "./context"
 import {Log} from "./log"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
+import {format} from "react-string-format"
 
 
 //Available languages
@@ -183,13 +184,15 @@ export function createLanguageStack(language: string): [] {
     return stack
 }
 
-export function getString(state: Context, key: string) {
+export function getString(state: Context, key: string, ...args) {
     const langs = getLanguageStack(state)
 
     for (const l of langs)
         for (const s of TRANSLATIONS[l])
             if (s.key === key)
-                return s.value
+                return args ?
+                    format(s.value, ...args) : //Format strings with args
+                    s.value //Return bare string
 
     //Translation doesn't exist
     Log.w("lang::getString: string not found")
