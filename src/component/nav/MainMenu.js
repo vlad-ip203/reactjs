@@ -1,3 +1,4 @@
+import css from "./MainMenu.module.css"
 import logo from "../../res/logo.svg"
 
 import React from "react"
@@ -5,22 +6,23 @@ import {Navbar, Container, Nav, NavDropdown, Image} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link, useNavigate} from "react-router-dom"
 
-import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID} from "../../module/context"
+import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID, getAppTheme} from "../../module/context"
 import {App} from "../../module/const"
 import {USER_GUEST} from "../../module/db"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
-import {THEMES} from "../../module/theme"
+import {THEMES, THEME_DARK} from "../../module/theme"
 
 
 const MainMenu = () => {
     const [state, dispatch] = useGlobalState()
     const navigate = useNavigate()
 
+    const isDark = getAppTheme(state) === THEME_DARK
     const isGuest = getUserID(state) === USER_GUEST.id
 
     return (
-        <Navbar collapseOnSelect expand="md"
-                bg="light" variant="light">
+        <Navbar className={isDark && css.navbar} bg="light" variant="light"
+                collapseOnSelect expand="md">
             <Container>
                 <Link className="navbar-brand" to={App.ROOT}>
                     <Image src={logo}
@@ -40,8 +42,7 @@ const MainMenu = () => {
                             {getString(state, STRINGS.SEARCH)}
                         </Link>
 
-                        <NavDropdown title={getString(state, STRINGS.NAV_HELP)}
-                                     menuVariant="light">
+                        <NavDropdown title={getString(state, STRINGS.NAV_HELP)}>
                             <Link className="dropdown-item" to={App.HELP}>
                                 {getString(state, STRINGS.NAV_HELP_HELP)}
                             </Link>
@@ -53,10 +54,7 @@ const MainMenu = () => {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown menuVariant="light"
-                                     title={isGuest ?
-                                         getString(state, STRINGS.NAV_ACCOUNT) :
-                                         getUserName(state)}>
+                        <NavDropdown title={isGuest ? getString(state, STRINGS.NAV_ACCOUNT) : getUserName(state)}>
                             {isGuest ?
                                 <Link className="dropdown-item" to={App.AUTH}>
                                     {getString(state, STRINGS.AUTH_LOGIN)}
