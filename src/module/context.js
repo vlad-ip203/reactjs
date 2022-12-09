@@ -6,10 +6,12 @@ import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from 
 import {Log} from "./log"
 import {addUser, getUserByCredentials, USER_GUEST} from "./db"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
+import {createLanguageStack} from "./lang"
 
 
 const defaultGlobalState = {
     language: readLanguage(),
+    language_stack: createLanguageStack(readLanguage()),
     theme: readTheme(),
     user: readUser(),
 }
@@ -41,11 +43,14 @@ export const useGlobalState = () => [
 const notifyContextChanged = (dispatch: Context) => dispatch({})
 
 
-export const getLanguage = (state: Context): string => state.language
+export const getLanguageStack = (state: Context): [] => state.language_stack
 
 export function setLanguage(dispatch: Context, value: string) {
     putLanguage(value)
-    dispatch({language: value})
+    dispatch({
+        language: value,
+        language_stack: createLanguageStack(value),
+    })
 }
 
 

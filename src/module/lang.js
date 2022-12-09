@@ -1,6 +1,6 @@
 import {Context} from "react"
 
-import {getLanguage} from "./context"
+import {getLanguageStack} from "./context"
 import {Log} from "./log"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
 
@@ -170,13 +170,12 @@ const TRANSLATIONS = {
 }
 
 
-function getLanguageStack(state: Context) {
-    const language = getLanguage(state)
-
-    let stack = [
+export function createLanguageStack(language: string): [] {
+    const stack = [
         LANGUAGE_DEFAULT, //Look for a default value
         language, //Look for a translation
     ]
+
     //Fallback language just in case
     if (language !== LANGUAGE_FALLBACK)
         stack.push(LANGUAGE_FALLBACK)
