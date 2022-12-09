@@ -99,7 +99,7 @@ const DataCard = props => {
                 <Card.Title className="mb-4">
                     <FontAwesomeIcon icon={faIdCard}/>
                     {" "}
-                    {data.nickname || data.getID()}
+                    {data.nickname || data.person_email}
                 </Card.Title>
 
                 {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), data.login)}

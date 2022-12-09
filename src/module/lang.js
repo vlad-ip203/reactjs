@@ -54,7 +54,9 @@ export const STRINGS = {
 
     SEARCH: 5,
     SEARCH_HINT: 51,
-    SEARCH_NO_RESULTS: 52,
+    SEARCH_ERROR_EMAIL: 531,
+    SEARCH_RESULTS_NOTHING: 551,
+    SEARCH_RESULTS_COUNT: 552,
 
     LEAK_ID: 61,
     LEAK_EMAIL: 62,
@@ -113,7 +115,9 @@ const TRANSLATIONS = {
 
         {key: STRINGS.SEARCH, value: "Search"},
         {key: STRINGS.SEARCH_HINT, value: "Enter email to search for"},
-        {key: STRINGS.SEARCH_NO_RESULTS, value: "Seems like we have nothing by this email yet"},
+        {key: STRINGS.SEARCH_ERROR_EMAIL, value: "Check syntax of the email you've entered"},
+        {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Seems like we don't have anything for email {0} yet"},
+        {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Found {0} results for email address {1}"},
 
         {key: STRINGS.LEAK_EMAIL, value: "Email"},
         {key: STRINGS.LEAK_LOGIN, value: "Login"},
@@ -160,7 +164,9 @@ const TRANSLATIONS = {
 
         {key: STRINGS.SEARCH, value: "Пошук"},
         {key: STRINGS.SEARCH_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
-        {key: STRINGS.SEARCH_NO_RESULTS, value: "Схоже, що в нас ще немає ніяких даних за цією адресою"},
+        {key: STRINGS.SEARCH_ERROR_EMAIL, value: "Перевірте правильність електронної пошти, яку Ви ввели"},
+        {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Схоже, що в нас поки немає ніяких даних за адресою {0}"},
+        {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Знайдено {0} результатів за адресою {1}"},
 
         {key: STRINGS.LEAK_EMAIL, value: "Пошта"},
         {key: STRINGS.LEAK_LOGIN, value: "Логін"},
