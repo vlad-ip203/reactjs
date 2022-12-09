@@ -160,8 +160,8 @@ const leakDataConverter = {
 export async function getLeaks(email: string) {
     const document = await queryDocument(allLeaks(), Database.LEAKS_EMAIL, email)
     if (!document) {
-        Log.w("db::getLeak: unable to find leaks")
-        Log.w("db::getLeak:   - email = " + email)
+        Log.w("db::getLeaks: unable to find leaks")
+        Log.w("db::getLeaks:   - email = " + email)
         return []
     }
 

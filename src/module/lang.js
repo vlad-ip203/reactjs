@@ -192,7 +192,7 @@ export function getString(state: Context, key: string) {
                 return s.value
 
     //Translation doesn't exist
-    Log.w("const::getString: string not found")
-    Log.w("const::getString:   - lang stack = " + langs)
-    Log.w("const::getString:   - key        = " + key)
+    Log.w("lang::getString: string not found")
+    Log.w("lang::getString:   - lang stack = " + langs)
+    Log.w("lang::getString:   - key        = " + key)
 }

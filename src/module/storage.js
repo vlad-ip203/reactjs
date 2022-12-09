@@ -10,6 +10,7 @@ const KEYS = {
     USER: "userID",
 }
 
+//FIXME 12/9/2022: To Firebase
 export const KEY_BOOKMARKS = "bookmarks"
 
 

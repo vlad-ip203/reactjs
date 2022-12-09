@@ -96,10 +96,10 @@ export function listenSystemThemeChanges(state: Context, dispatch: Context) {
                 THEME_LIGHT
 
             if (getTheme(state) === THEME_SYSTEM) {
-                Log.v("theme::ThemeSelector: useEffect-> theme change approved = " + theme)
+                Log.v("context::listenSystemThemeChanges: EventListener-> theme change approved = " + theme)
                 notifyContextChanged(dispatch)
             } else
-                Log.v("theme::ThemeSelector: useEffect-> theme change denied = " + theme)
+                Log.v("context::listenSystemThemeChanges: EventListener-> theme change denied = " + theme)
         })
 }
 
