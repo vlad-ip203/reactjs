@@ -1,14 +1,18 @@
-import css from "./DataCard.module.css"
-import icon_link from "../../res/icon_link.svg"
 import icon_bookmark from "../../res/icon_bookmark.svg"
 import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
 
-import React, {useState} from "react"
-import {Card, Image} from "react-bootstrap"
+import React from "react"
+import {Card} from "react-bootstrap"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faLink, faMailBulk, faHashtag, faKey, faPhone, faIdCard} from "@fortawesome/free-solid-svg-icons"
 
+import {useGlobalState} from "../../module/context"
+import {LeakData} from "../../module/db"
+import {getString, STRINGS} from "../../module/lang"
 import {KEY_BOOKMARKS} from "../../module/storage"
 
 
+//TODO 12/9/2022: Bind bookmarks with Firebase
 let bookmarks = []
 function setBookmarks(list) {
     bookmarks = list
@@ -49,12 +53,6 @@ function removeBookmark(card) {
 }
 
 
-const LINK_PREFIX = "http://127.0.0.1:43110/"
-
-function newTab(url: string) {
-    window.open(url, "_blank")
-}
-
 function getBookmarkIcon(card) {
     return isBookmarked(card) ?
         icon_bookmark :
@@ -62,55 +60,61 @@ function getBookmarkIcon(card) {
 }
 
 
-const DataCard = args => {
-    const [bookmarkIcon, updateBookmarkIcon] = useState(
-        getBookmarkIcon(args.card))
+function labeledParagraph(faIcon, label, text) {
+    return text &&
+        <Card.Text role="button"
+                   onClick={() => void navigator.clipboard.writeText(text)}>
+            <span className="text-muted">
+                <FontAwesomeIcon icon={faIcon}/>
+                {" "}
+                {label}
+            </span>
+            <br/>
+            {text}
+        </Card.Text>
+}
 
-    const image = args.card.icon
-    const link = LINK_PREFIX +
-        (args.card.domain ?
-            args.card.domain :
-            args.card.address)
+
+const DataCard = props => {
+    const [state, dispatch] = useGlobalState()
+    const data: LeakData = props.data
+
+    //const [bookmarkIcon, updateBookmarkIcon] = useState(getBookmarkIcon(props.card))
+
 
     return (
         <Card>
-            <Image className={css.icon_bookmark}
+            {/*<Image className={css.icon_bookmark}
                    role="button"
                    src={bookmarkIcon}
                    onClick={() => {
-                       const card = args.card
+                       const card = props.card
                        isBookmarked(card) ?
                            removeBookmark(card) :
                            addBookmark(card)
                        updateBookmarkIcon(getBookmarkIcon(card))
-                   }}/>
+                   }}/>*/}
 
-            {args.card.icon &&
-                <Card.Header>
-                    <Card.Img className={css.icon}
-                              variant="top"
-                              src={image}/>
-                </Card.Header>}
+            <Card.Body>
+                <Card.Title className="mb-4">
+                    <FontAwesomeIcon icon={faIdCard}/>
+                    {" "}
+                    {data.nickname || data.getKey()}
+                </Card.Title>
 
-            <Card.Body role="button"
-                       onClick={() => newTab(link)}>
-                <Card.Title>{args.card.title}</Card.Title>
-
-                {args.card.description || null}
+                {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), data.login)}
+                {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), data.passwordHash)}
+                {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), data.person_email)}
+                {labeledParagraph(faPhone, getString(state, STRINGS.LEAK_TEL), data.tel)}
             </Card.Body>
 
-            {args.card.domain &&
-                <Card.Footer>
-                    <Card.Subtitle>
-                        <img src={icon_link} alt="Chain icon"/>
-                        {" "}
-                        <a className="link"
-                           href={link}
-                           target="_blank" rel="noreferrer">
-                            {args.card.domain}
-                        </a>
-                    </Card.Subtitle>
-                </Card.Footer>}
+            <Card.Footer>
+                <Card.Text className="text-muted">
+                    <FontAwesomeIcon icon={faLink}/>
+                    {" "}
+                    {getString(state, STRINGS.LEAK_ID)}: {data.getKey()}
+                </Card.Text>
+            </Card.Footer>
         </Card>
     )
 }

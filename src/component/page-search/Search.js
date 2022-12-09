@@ -1,10 +1,16 @@
+import css from "./Search.module.css"
+
 import React, {useState} from "react"
-import {Container, Form, Row} from "react-bootstrap"
+import {Container, Form, InputGroup} from "react-bootstrap"
 import Masonry from "react-masonry-css"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faSearch} from "@fortawesome/free-solid-svg-icons"
 
 import {useGlobalState} from "../../module/context"
 import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import {getString, STRINGS} from "../../module/lang"
+import {getLeaks} from "../../module/db"
+import DataCard from "../card/DataCard"
 
 
 let email = ""
@@ -21,28 +27,42 @@ const Search = () => {
         setEmailWrong(email && !REGEX_EMAIL.test(email))
     }
 
+    async function performSearch() {
+        const leaks = await getLeaks(email)
+
+        let results = []
+        for (const leak of leaks)
+            results.push(<DataCard key={leak.getKey()} data={leak}/>)
+
+        setSearchResults(results || getString(state, STRINGS.SEARCH_NO_RESULTS))
+    }
+
     return (
         <Container>
             <h1>{getString(state, STRINGS.SEARCH)}</h1>
 
-            <Row className="justify-content-center">
-                <Form className="col-md-8">
-                    <Form.FloatingLabel className="mt-3"
-                                        label={getString(state, STRINGS.SEARCH_HINT)}>
-                        <Form.Control type="email"
-                                      autoComplete="email"
-                                      placeholder={getString(state, STRINGS.SEARCH)}
-                                      onChange={event => setEmail(event.target.value)}
-                                      isInvalid={isEmailWrong}/>
-                        <Form.Control.Feedback type="invalid">
-                            {getString(state, STRINGS.AUTH_ERROR_EMAIL)}
-                        </Form.Control.Feedback>
-                    </Form.FloatingLabel>
-                </Form>
-            </Row>
+            <InputGroup className="mt-4 justify-content-center">
+                <Form.FloatingLabel label={getString(state, STRINGS.SEARCH_HINT)}>
+                    <Form.Control className={css.field}
+                                  type="email"
+                                  autoComplete="email"
+                                  placeholder={getString(state, STRINGS.SEARCH)}
+                                  onChange={event => setEmail(event.target.value)}
+                                  isInvalid={isEmailWrong}/>
+                    <Form.Control.Feedback type="invalid">
+                        {getString(state, STRINGS.AUTH_ERROR_EMAIL)}
+                    </Form.Control.Feedback>
+                </Form.FloatingLabel>
 
-            <Masonry breakpointCols={MASONRY_BREAKPOINT_COLS}
-                     className="masonry-grid"
+                <div className="input-group-text"
+                     role="button"
+                     onClick={() => isEmailWrong || performSearch()}>
+                    <FontAwesomeIcon icon={faSearch}/>
+                </div>
+            </InputGroup>
+
+            <Masonry className="masonry-grid mt-4"
+                     breakpointCols={MASONRY_BREAKPOINT_COLS}
                      columnClassName="masonry-grid-column">
                 {searchResults}
             </Masonry>

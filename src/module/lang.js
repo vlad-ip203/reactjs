@@ -1,4 +1,5 @@
 import {Context} from "react"
+
 import {getLanguage} from "./context"
 import {Log} from "./log"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
@@ -52,6 +53,14 @@ export const STRINGS = {
 
     SEARCH: 5,
     SEARCH_HINT: 51,
+    SEARCH_NO_RESULTS: 52,
+
+    LEAK_ID: 61,
+    LEAK_EMAIL: 62,
+    LEAK_LOGIN: 63,
+    LEAK_NICKNAME: 65,
+    LEAK_PASSWORD_HASH: 671,
+    LEAK_TEL: 69,
 }
 
 //String translations and default values
@@ -61,6 +70,8 @@ const TRANSLATIONS = {
         {key: LANGUAGE_UK_UA, value: "Українська"},
 
         {key: STRINGS.APP_NAME, value: "cursenreact.js"},
+
+        {key: STRINGS.LEAK_ID, value: "ID"},
     ],
     "en-US": [
         {key: THEME_SYSTEM, value: "System default"},
@@ -101,6 +112,13 @@ const TRANSLATIONS = {
 
         {key: STRINGS.SEARCH, value: "Search"},
         {key: STRINGS.SEARCH_HINT, value: "Enter email to search for"},
+        {key: STRINGS.SEARCH_NO_RESULTS, value: "Seems like we have nothing by this email yet"},
+
+        {key: STRINGS.LEAK_EMAIL, value: "Email"},
+        {key: STRINGS.LEAK_LOGIN, value: "Login"},
+        {key: STRINGS.LEAK_NICKNAME, value: "Nickname"},
+        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Password hash"},
+        {key: STRINGS.LEAK_TEL, value: "Telephone"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
@@ -141,6 +159,13 @@ const TRANSLATIONS = {
 
         {key: STRINGS.SEARCH, value: "Пошук"},
         {key: STRINGS.SEARCH_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
+        {key: STRINGS.SEARCH_NO_RESULTS, value: "Схоже, що в нас ще немає ніяких даних за цією адресою"},
+
+        {key: STRINGS.LEAK_EMAIL, value: "Пошта"},
+        {key: STRINGS.LEAK_LOGIN, value: "Логін"},
+        {key: STRINGS.LEAK_NICKNAME, value: "Нікнейм"},
+        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Хеш паролю"},
+        {key: STRINGS.LEAK_TEL, value: "Телефон"},
     ],
 }
 

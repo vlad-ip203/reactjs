@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedFunction,JSUnresolvedVariable
+
 import {collection, doc, getDoc, query, where, getDocs, addDoc} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
@@ -11,6 +13,9 @@ export class Database {
     static USERS_EMAIL = "email"
     static USERS_PASSWORD_HASH = "password_hash"
     static USERS_PASSWORD_SALT = "password_salt"
+    static LEAKS = "leaks"
+    static LEAKS_EMAIL = "email"
+    static LEAKS_DATA = "data"
 }
 
 export const USER_GUEST = {
@@ -115,4 +120,61 @@ export async function getUserByCredentials(email: string, password: string) {
             name: document.get(Database.USERS_NAME),
         }
     return null
+}
+
+
+export class LeakData {
+    person_id
+    person_email
+    leak_id
+
+    constructor(login = "", nickname = "", passwordHash = "", tel = "") {
+        this.login = login
+        this.nickname = nickname
+        this.passwordHash = passwordHash
+        this.tel = tel
+    }
+
+    getKey() {
+        return this.person_id + this.leak_id
+    }
+}
+
+//Firestore data converter
+const leakDataConverter = {
+    toFirestore: (city) => {
+        return {
+            login: city.login,
+            nickname: city.nickname,
+            passwordHash: city.passwordHash,
+            tel: city.tel,
+        }
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options)
+        return new LeakData(data.login, data.nickname, data.passwordHash, data.tel)
+    },
+}
+
+
+export async function getLeaks(email: string) {
+    const document = await queryDocument(allLeaks(), Database.LEAKS_EMAIL, email)
+    if (!document) {
+        Log.w("db::getLeak: unable to find leaks")
+        Log.w("db::getLeak:   - email = " + email)
+        return []
+    }
+
+    const docRefs = collection(database, document.ref.path + "/" + Database.LEAKS_DATA).withConverter(leakDataConverter)
+    const docs = await getDocs(docRefs)
+
+    let leaks = []
+    docs.forEach(d => {
+        const leak = d.data()
+        leak.person_id = document.id
+        leak.person_email = email
+        leak.leak_id = d.id
+        leaks.push(leak)
+    })
+    return leaks
 }
