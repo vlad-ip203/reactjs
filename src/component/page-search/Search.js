@@ -1,5 +1,3 @@
-import css from "./Search.module.css"
-
 import React, {useState} from "react"
 import {Container, Form, InputGroup} from "react-bootstrap"
 import Masonry from "react-masonry-css"
@@ -43,8 +41,7 @@ const Search = () => {
 
             <InputGroup className="mt-4 justify-content-center">
                 <Form.FloatingLabel label={getString(state, STRINGS.SEARCH_HINT)}>
-                    <Form.Control className={css.field}
-                                  type="email"
+                    <Form.Control type="email"
                                   autoComplete="email"
                                   placeholder={getString(state, STRINGS.SEARCH)}
                                   onChange={event => setEmail(event.target.value)}

@@ -1,4 +1,5 @@
 import "../style/style.css"
+import "../style/fix.css"
 
 import React from "react"
 import {Outlet} from "react-router-dom"
@@ -12,7 +13,7 @@ const Root = () => {
             <MainMenu/>
         </header>
 
-        <main className="root-main">
+        <main className="mt-4">
             <Outlet/>
         </main>
     </>

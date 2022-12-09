@@ -14,8 +14,8 @@ export const THEMES = [
     THEME_DARK,
 ]
 
-const styles_light = "styles/bootstrap.min.css" //bootstrap package
-const styles_dark = "styles/bootstrap-night.min.css" //bootstrap-dark-5 package
+const styles_light = "styles/bootstrap.min.css"      //bootstrap/dist/css/bootstrap.min.css
+const styles_dark = "styles/bootstrap-night.min.css" //bootstrap-dark-5/dist/css/bootstrap-night.min.css
 
 
 const ThemeSelector = ({children}) => {
