@@ -19,7 +19,6 @@ export function readLanguage(): string {
         lang :
         LANGUAGE_FALLBACK
 }
-
 export function putLanguage(value: string) {
     window.localStorage.setItem(KEYS.LANGUAGE, value)
 }
@@ -30,7 +29,6 @@ export function readTheme(): string {
         theme :
         THEME_SYSTEM
 }
-
 export function putTheme(value: string) {
     window.localStorage.setItem(KEYS.THEME, value)
 }
@@ -39,7 +37,6 @@ export function readUser(): User {
     const id = window.localStorage.getItem(KEYS.USER)
     return new User(id)
 }
-
 export function putUser(value: User) {
     window.localStorage.setItem(KEYS.USER, value.id)
 }

@@ -7,7 +7,7 @@ import {database} from "../index"
 import {Log} from "./log"
 
 
-export class Database {
+export class DB {
     static Roles = class {
         static COLLECTION = "roles"
 
@@ -15,6 +15,8 @@ export class Database {
         static GUEST = "guest"
         static MODERATOR = "moderator"
         static USER = "user"
+
+        static all = () => collection(database, this.COLLECTION)
     }
     static Users = class {
         static COLLECTION = "users"
@@ -25,74 +27,16 @@ export class Database {
         static FIELD_PASSWORD_HASH = "password_hash"
         static FIELD_PASSWORD_SALT = "password_salt"
 
+        static all = () => collection(database, this.COLLECTION)
     }
     static Leaks = class {
         static COLLECTION = "leaks"
         static FIELD_EMAIL = "email"
         static FIELD_DATA = "data"
+
+        static all = () => collection(database, this.COLLECTION)
     }
 }
-
-export class User {
-    id
-    docSnap
-    name
-    role
-
-    constructor(id: string) {
-        this.id = id ? id : Database.Roles.GUEST
-    }
-
-    async getUserDocumentSnapshot() {
-        if (this.id === Database.Roles.GUEST)
-            return null
-
-        if (!this.docSnap) { //Not fetched yet
-            const docRef = doc(database, Database.Users.COLLECTION, this.id)
-
-            const docSnap = await getDoc(docRef)
-            if (!docSnap) {
-                Log.w("db::User::getUserDocumentSnapshot: unable to find the user")
-                Log.w("db::User::getUserDocumentSnapshot:   - id = " + this.id)
-                return null
-            }
-
-            this.docSnap = docSnap
-        }
-        return this.docSnap
-    }
-
-    async getName(): Promise<null | string> {
-        if (!this.name) {
-            const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap)
-                return null
-
-            this.name = await docSnap.get(Database.Users.FIELD_NAME)
-        }
-        return this.name
-    }
-
-    async getRole(): Promise<null | string> {
-        if (!this.role) {
-            const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap)
-                return null
-
-            this.role = await docSnap.get(Database.Users.FIELD_ROLE).id
-        }
-        return this.role
-    }
-
-    isGuest: boolean = () => this.id === Database.Roles.GUEST
-}
-
-export const USER_GUEST = new User()
-
-
-export const allRoles = () => collection(database, Database.Roles.COLLECTION)
-export const allUsers = () => collection(database, Database.Users.COLLECTION)
-export const allLeaks = () => collection(database, Database.Leaks.COLLECTION)
 
 
 export async function queryDocument(there, by: string, value: string) {
@@ -123,13 +67,69 @@ async function queryDocuments(there, by: string, value: string) {
 }
 
 
+export class User {
+    id
+    docSnap
+    name
+    role
+
+    constructor(id: string = DB.Roles.GUEST) {
+        this.id = id
+    }
+
+    async getUserDocumentSnapshot() {
+        if (this.id === DB.Roles.GUEST)
+            return null
+
+        if (!this.docSnap) { //Not fetched yet
+            const docRef = doc(database, DB.Users.COLLECTION, this.id)
+
+            const docSnap = await getDoc(docRef)
+            if (!docSnap) {
+                Log.w("db::User::getUserDocumentSnapshot: unable to find the user")
+                Log.w("db::User::getUserDocumentSnapshot:   - id = " + this.id)
+                return null
+            }
+
+            this.docSnap = docSnap
+        }
+        return this.docSnap
+    }
+
+    async getName(): Promise<null | string> {
+        if (!this.name) {
+            const docSnap = await this.getUserDocumentSnapshot()
+            if (!docSnap)
+                return null
+
+            this.name = await docSnap.get(DB.Users.FIELD_NAME)
+        }
+        return this.name
+    }
+
+    async getRole(): Promise<null | string> {
+        if (!this.role) {
+            const docSnap = await this.getUserDocumentSnapshot()
+            if (!docSnap)
+                return null
+
+            this.role = await docSnap.get(DB.Users.FIELD_ROLE).id
+        }
+        return this.role
+    }
+
+    isGuest: boolean = () => this.id === DB.Roles.GUEST
+}
+
+export const USER_GUEST = new User()
+
 export async function addUser(name: string, email: string, password: string) {
     const generated_salt = genSaltSync(12)
     const generated_hash = hashSync(password, generated_salt)
-    const role = doc(allRoles(), Database.Roles.USER)
+    const role = doc(DB.Roles.all(), DB.Roles.USER)
 
     try {
-        const docRef = await addDoc(allUsers(), {
+        const docRef = await addDoc(DB.Users.all(), {
             name: name,
             email: email,
             password_hash: generated_hash,
@@ -151,7 +151,7 @@ export async function addUser(name: string, email: string, password: string) {
 }
 
 async function getUserByID(id: string) {
-    const docRef = doc(database, Database.Users.COLLECTION, id)
+    const docRef = doc(database, DB.Users.COLLECTION, id)
     const docSnap = await getDoc(docRef)
     if (!docSnap) {
         Log.w("db::getUserByID: unable to find the user")
@@ -162,15 +162,15 @@ async function getUserByID(id: string) {
 }
 
 export async function getUserByCredentials(email: string, password: string) {
-    const docSnap = await queryDocument(allUsers(), Database.Users.FIELD_EMAIL, email)
+    const docSnap = await queryDocument(DB.Users.all(), DB.Users.FIELD_EMAIL, email)
     if (!docSnap) {
         Log.w("db::getUserByCredentials: unable to find the user")
         Log.w("db::getUserByCredentials:   - email = " + email)
         return null
     }
 
-    const password_hash = docSnap.get(Database.Users.FIELD_PASSWORD_HASH)
-    const password_salt = docSnap.get(Database.Users.FIELD_PASSWORD_SALT)
+    const password_hash = docSnap.get(DB.Users.FIELD_PASSWORD_HASH)
+    const password_salt = docSnap.get(DB.Users.FIELD_PASSWORD_SALT)
 
     const generated_hash = hashSync(password, password_salt)
 
@@ -181,6 +181,22 @@ export async function getUserByCredentials(email: string, password: string) {
 
 
 export class LeakData {
+    //Firestore data converter
+    static CONVERTER = {
+        toFirestore: (data) => {
+            return {
+                login: data.login,
+                nickname: data.nickname,
+                password_hash: data.password_hash,
+                tel: data.tel,
+            }
+        },
+        fromFirestore: (snapshot, options) => {
+            const data = snapshot.data(options)
+            return new LeakData(data.login, data.nickname, data.password_hash, data.tel)
+        },
+    }
+
     person_id
     person_email
     leak_id
@@ -195,33 +211,17 @@ export class LeakData {
     getID = () => this.person_id + this.leak_id
 }
 
-//Firestore data converter
-const leakDataConverter = {
-    toFirestore: (data) => {
-        return {
-            login: data.login,
-            nickname: data.nickname,
-            password_hash: data.password_hash,
-            tel: data.tel,
-        }
-    },
-    fromFirestore: (snapshot, options) => {
-        const data = snapshot.data(options)
-        return new LeakData(data.login, data.nickname, data.password_hash, data.tel)
-    },
-}
-
 
 export async function getLeaks(email: string) {
-    const document = await queryDocument(allLeaks(), Database.Leaks.FIELD_EMAIL, email)
+    const document = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
     if (!document) {
         Log.w("db::getLeaks: unable to find leaks")
         Log.w("db::getLeaks:   - email = " + email)
         return []
     }
 
-    const docRefs = collection(database, document.ref.path + "/" + Database.Leaks.FIELD_DATA)
-        .withConverter(leakDataConverter)
+    const docRefs = collection(database, document.ref.path + "/" + DB.Leaks.FIELD_DATA)
+        .withConverter(LeakData.CONVERTER)
     const docs = await getDocs(docRefs)
 
     let leaks = []
