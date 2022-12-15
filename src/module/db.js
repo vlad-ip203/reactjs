@@ -24,11 +24,62 @@ export class Database {
     static LEAKS_DATA = "data"
 }
 
-export const USER_GUEST = {
-    id: "guest",
-    name: "Guest",
-    role: Database.ROLES_GUEST,
+
+export class User {
+    id
+    docSnap
+    name
+    role
+
+    constructor(id: string) {
+        this.id = id ? id : Database.ROLES_GUEST
+    }
+
+    async getUserDocumentSnapshot() {
+        if (this.id === Database.ROLES_GUEST)
+            return null
+
+        if (!this.docSnap) { //Not fetched yet
+            const docRef = doc(database, Database.USERS, this.id)
+
+            const docSnap = await getDoc(docRef)
+            if (!docSnap) {
+                Log.w("db::User::getUserDocumentSnapshot: unable to find the user")
+                Log.w("db::User::getUserDocumentSnapshot:   - id = " + this.id)
+                return null
+            }
+
+            this.docSnap = docSnap
+        }
+        return this.docSnap
+    }
+
+    async getName(): Promise<null | string> {
+        if (!this.name) {
+            const docSnap = await this.getUserDocumentSnapshot()
+            if (!docSnap)
+                return null
+
+            this.name = await docSnap.get(Database.USERS_NAME)
+        }
+        return this.name
+    }
+
+    async getRole(): Promise<null | string> {
+        if (!this.role) {
+            const docSnap = await this.getUserDocumentSnapshot()
+            if (!docSnap)
+                return null
+
+            this.role = await docSnap.get(Database.USERS_ROLE).id
+        }
+        return this.role
+    }
+
+    isGuest: boolean = () => this.id === Database.ROLES_GUEST
 }
+
+export const USER_GUEST = new User()
 
 
 export const allRoles = () => collection(database, Database.ROLES)
@@ -99,12 +150,7 @@ async function getUserByID(id: string) {
         Log.w("db::getUserByID:   - id = " + id)
         return null
     }
-
-    return {
-        id: docSnap.id,
-        name: docSnap.get(Database.USERS_NAME),
-        role: docSnap.get(Database.USERS_ROLE).id,
-    }
+    return new User(docSnap.id)
 }
 
 export async function getUserByCredentials(email: string, password: string) {
@@ -121,11 +167,7 @@ export async function getUserByCredentials(email: string, password: string) {
     const generated_hash = hashSync(password, password_salt)
 
     if (generated_hash && generated_hash === password_hash)
-        return {
-            id: docSnap.id,
-            name: docSnap.get(Database.USERS_NAME),
-            role: docSnap.get(Database.USERS_ROLE).id,
-        }
+        return new User(docSnap.id)
     return null
 }
 

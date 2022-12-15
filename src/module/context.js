@@ -4,7 +4,7 @@ import React, {Context} from "react"
 
 import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from "./storage"
 import {Log} from "./log"
-import {addUser, getUserByCredentials, USER_GUEST} from "./db"
+import {addUser, getUserByCredentials, USER_GUEST, User} from "./db"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
 import {createLanguageStack} from "./lang"
 
@@ -44,7 +44,6 @@ const notifyContextChanged = (dispatch: Context) => dispatch({})
 
 
 export const getLanguageStack = (state: Context): [] => state.language_stack
-
 export function setLanguage(dispatch: Context, value: string) {
     putLanguage(value)
     dispatch({
@@ -55,7 +54,6 @@ export function setLanguage(dispatch: Context, value: string) {
 
 
 export const getTheme = (state: Context): string => state.theme
-
 export function setTheme(dispatch: Context, value: string) {
     putTheme(value)
     dispatch({theme: value})
@@ -104,10 +102,11 @@ export function listenSystemThemeChanges(state: Context, dispatch: Context) {
 }
 
 
-export const getUser = (state: Context): string => state.user
-export const getUserID = (state: Context): string => getUser(state).id
-export const getUserName = (state: Context): string => getUser(state).name
-export const getUserRole = (state: Context): string => getUser(state).role
+export const getUser = (state: Context): User => state.user
+export function setUser(dispatch: Context, user: User) {
+    putUser(user)
+    dispatch({user: user})
+}
 
 export async function register(dispatch: Context, name: string, email: string, pass: string) {
     const user = await addUser(name, email, pass)
@@ -131,9 +130,4 @@ export async function login(dispatch: Context, email: string, password: string) 
 
 export function logout(dispatch: Context) {
     setUser(dispatch, USER_GUEST)
-}
-
-export function setUser(dispatch: Context, user) {
-    putUser(user)
-    dispatch({user: user})
 }

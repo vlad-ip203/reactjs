@@ -1,22 +1,13 @@
 import css from "./MainMenu.module.css"
 import logo from "../../res/logo.svg"
 
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Navbar, Container, Nav, NavDropdown, Image} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link, useNavigate} from "react-router-dom"
 
-import {
-    useGlobalState,
-    setTheme,
-    getUserName,
-    setLanguage,
-    logout,
-    getAppTheme,
-    getUserRole,
-} from "../../module/context"
+import {useGlobalState, setTheme, setLanguage, logout, getAppTheme, getUser} from "../../module/context"
 import {App} from "../../module/const"
-import {USER_GUEST} from "../../module/db"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
 import {THEMES, THEME_DARK} from "../../module/theme"
 
@@ -26,7 +17,13 @@ const MainMenu = () => {
     const navigate = useNavigate()
 
     const isDark = getAppTheme(state) === THEME_DARK
-    const isGuest = getUserRole(state) === USER_GUEST.role
+    const user = getUser(state)
+    const isUserGuest = user.isGuest()
+    const [userName, setUserName] = useState("")
+
+    useEffect(() => {
+        user.getName().then(result => setUserName(result))
+    }, [user])
 
     return (
         <Navbar className={isDark && css.navbar} bg="light" variant="light"
@@ -62,8 +59,8 @@ const MainMenu = () => {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown title={isGuest ? getString(state, STRINGS.NAV_ACCOUNT) : getUserName(state)}>
-                            {isGuest ?
+                        <NavDropdown title={isUserGuest ? getString(state, STRINGS.NAV_ACCOUNT) : userName}>
+                            {isUserGuest ?
                                 <Link className="dropdown-item" to={App.AUTH}>
                                     {getString(state, STRINGS.AUTH_LOGIN)}
                                 </Link> :

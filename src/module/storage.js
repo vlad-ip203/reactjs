@@ -1,5 +1,4 @@
-import {USER_GUEST} from "./db"
-import {Log} from "./log"
+import {User} from "./db"
 import {LANGUAGE_FALLBACK, LANGUAGES} from "./lang"
 import {THEMES, THEME_SYSTEM} from "./theme"
 
@@ -36,28 +35,11 @@ export function putTheme(value: string) {
     window.localStorage.setItem(KEYS.THEME, value)
 }
 
-export function readUser() {
-    const raw = window.localStorage.getItem(KEYS.USER)
-    if (!raw)
-        return USER_GUEST
-
-    try {
-        const json = JSON.parse(raw)
-
-        //Structure: User
-        return {
-            id: json.id,
-            name: json.name,
-            role: json.role,
-        }
-    } catch (e) {
-        Log.e("storage::readUser: unable to parse user")
-        Log.e("storage::readUser:   - raw = " + raw)
-        Log.e("storage::readUser:   = catching: " + e)
-        return USER_GUEST
-    }
+export function readUser(): User {
+    const id = window.localStorage.getItem(KEYS.USER)
+    return new User(id)
 }
 
-export function putUser(value) {
-    window.localStorage.setItem(KEYS.USER, JSON.stringify(value))
+export function putUser(value: User) {
+    window.localStorage.setItem(KEYS.USER, value.id)
 }
