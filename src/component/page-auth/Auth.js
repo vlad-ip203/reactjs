@@ -66,11 +66,11 @@ const Auth = () => {
         }
 
         //Name passed static checks, checking in DB
-        const userByNameRef = await queryDocument(allUsers(), Database.USERS_NAME, name)
+        const userByNameRef = await queryDocument(allUsers(), Database.Users.FIELD_NAME, name)
         setNameWrong(userByNameRef)
 
         //Email passed static checks, checking in DB
-        const userByEmailRef = await queryDocument(allUsers(), Database.USERS_EMAIL, email)
+        const userByEmailRef = await queryDocument(allUsers(), Database.Users.FIELD_EMAIL, email)
         setEmailWrong(userByEmailRef)
 
         if (!userByNameRef && !userByEmailRef) {

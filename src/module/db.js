@@ -8,22 +8,30 @@ import {Log} from "./log"
 
 
 export class Database {
-    static ROLES = "roles"
-    static ROLES_ADMIN = "admin"
-    static ROLES_GUEST = "guest"
-    static ROLES_MODERATOR = "moderator"
-    static ROLES_USER = "user"
-    static USERS = "users"
-    static USERS_NAME = "name"
-    static USERS_EMAIL = "email"
-    static USERS_ROLE = "role"
-    static USERS_PASSWORD_HASH = "password_hash"
-    static USERS_PASSWORD_SALT = "password_salt"
-    static LEAKS = "leaks"
-    static LEAKS_EMAIL = "email"
-    static LEAKS_DATA = "data"
-}
+    static Roles = class {
+        static COLLECTION = "roles"
 
+        static ADMIN = "admin"
+        static GUEST = "guest"
+        static MODERATOR = "moderator"
+        static USER = "user"
+    }
+    static Users = class {
+        static COLLECTION = "users"
+
+        static FIELD_NAME = "name"
+        static FIELD_EMAIL = "email"
+        static FIELD_ROLE = "role"
+        static FIELD_PASSWORD_HASH = "password_hash"
+        static FIELD_PASSWORD_SALT = "password_salt"
+
+    }
+    static Leaks = class {
+        static COLLECTION = "leaks"
+        static FIELD_EMAIL = "email"
+        static FIELD_DATA = "data"
+    }
+}
 
 export class User {
     id
@@ -32,15 +40,15 @@ export class User {
     role
 
     constructor(id: string) {
-        this.id = id ? id : Database.ROLES_GUEST
+        this.id = id ? id : Database.Roles.GUEST
     }
 
     async getUserDocumentSnapshot() {
-        if (this.id === Database.ROLES_GUEST)
+        if (this.id === Database.Roles.GUEST)
             return null
 
         if (!this.docSnap) { //Not fetched yet
-            const docRef = doc(database, Database.USERS, this.id)
+            const docRef = doc(database, Database.Users.COLLECTION, this.id)
 
             const docSnap = await getDoc(docRef)
             if (!docSnap) {
@@ -60,7 +68,7 @@ export class User {
             if (!docSnap)
                 return null
 
-            this.name = await docSnap.get(Database.USERS_NAME)
+            this.name = await docSnap.get(Database.Users.FIELD_NAME)
         }
         return this.name
     }
@@ -71,20 +79,20 @@ export class User {
             if (!docSnap)
                 return null
 
-            this.role = await docSnap.get(Database.USERS_ROLE).id
+            this.role = await docSnap.get(Database.Users.FIELD_ROLE).id
         }
         return this.role
     }
 
-    isGuest: boolean = () => this.id === Database.ROLES_GUEST
+    isGuest: boolean = () => this.id === Database.Roles.GUEST
 }
 
 export const USER_GUEST = new User()
 
 
-export const allRoles = () => collection(database, Database.ROLES)
-export const allUsers = () => collection(database, Database.USERS)
-export const allLeaks = () => collection(database, Database.LEAKS)
+export const allRoles = () => collection(database, Database.Roles.COLLECTION)
+export const allUsers = () => collection(database, Database.Users.COLLECTION)
+export const allLeaks = () => collection(database, Database.Leaks.COLLECTION)
 
 
 export async function queryDocument(there, by: string, value: string) {
@@ -118,7 +126,7 @@ async function queryDocuments(there, by: string, value: string) {
 export async function addUser(name: string, email: string, password: string) {
     const generated_salt = genSaltSync(12)
     const generated_hash = hashSync(password, generated_salt)
-    const role = doc(allRoles(), Database.ROLES_USER)
+    const role = doc(allRoles(), Database.Roles.USER)
 
     try {
         const docRef = await addDoc(allUsers(), {
@@ -143,7 +151,7 @@ export async function addUser(name: string, email: string, password: string) {
 }
 
 async function getUserByID(id: string) {
-    const docRef = doc(database, Database.USERS, id)
+    const docRef = doc(database, Database.Users.COLLECTION, id)
     const docSnap = await getDoc(docRef)
     if (!docSnap) {
         Log.w("db::getUserByID: unable to find the user")
@@ -154,15 +162,15 @@ async function getUserByID(id: string) {
 }
 
 export async function getUserByCredentials(email: string, password: string) {
-    const docSnap = await queryDocument(allUsers(), Database.USERS_EMAIL, email)
+    const docSnap = await queryDocument(allUsers(), Database.Users.FIELD_EMAIL, email)
     if (!docSnap) {
         Log.w("db::getUserByCredentials: unable to find the user")
         Log.w("db::getUserByCredentials:   - email = " + email)
         return null
     }
 
-    const password_hash = docSnap.get(Database.USERS_PASSWORD_HASH)
-    const password_salt = docSnap.get(Database.USERS_PASSWORD_SALT)
+    const password_hash = docSnap.get(Database.Users.FIELD_PASSWORD_HASH)
+    const password_salt = docSnap.get(Database.Users.FIELD_PASSWORD_SALT)
 
     const generated_hash = hashSync(password, password_salt)
 
@@ -205,14 +213,15 @@ const leakDataConverter = {
 
 
 export async function getLeaks(email: string) {
-    const document = await queryDocument(allLeaks(), Database.LEAKS_EMAIL, email)
+    const document = await queryDocument(allLeaks(), Database.Leaks.FIELD_EMAIL, email)
     if (!document) {
         Log.w("db::getLeaks: unable to find leaks")
         Log.w("db::getLeaks:   - email = " + email)
         return []
     }
 
-    const docRefs = collection(database, document.ref.path + "/" + Database.LEAKS_DATA).withConverter(leakDataConverter)
+    const docRefs = collection(database, document.ref.path + "/" + Database.Leaks.FIELD_DATA)
+        .withConverter(leakDataConverter)
     const docs = await getDocs(docRefs)
 
     let leaks = []
