@@ -107,6 +107,7 @@ export function listenSystemThemeChanges(state: Context, dispatch: Context) {
 export const getUser = (state: Context): string => state.user
 export const getUserID = (state: Context): string => getUser(state).id
 export const getUserName = (state: Context): string => getUser(state).name
+export const getUserRole = (state: Context): string => getUser(state).role
 
 export async function register(dispatch: Context, name: string, email: string, pass: string) {
     const user = await addUser(name, email, pass)

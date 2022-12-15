@@ -6,7 +6,15 @@ import {Navbar, Container, Nav, NavDropdown, Image} from "react-bootstrap"
 import DropdownItem from "react-bootstrap/DropdownItem"
 import {Link, useNavigate} from "react-router-dom"
 
-import {useGlobalState, setTheme, getUserName, setLanguage, logout, getUserID, getAppTheme} from "../../module/context"
+import {
+    useGlobalState,
+    setTheme,
+    getUserName,
+    setLanguage,
+    logout,
+    getAppTheme,
+    getUserRole,
+} from "../../module/context"
 import {App} from "../../module/const"
 import {USER_GUEST} from "../../module/db"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
@@ -18,7 +26,7 @@ const MainMenu = () => {
     const navigate = useNavigate()
 
     const isDark = getAppTheme(state) === THEME_DARK
-    const isGuest = getUserID(state) === USER_GUEST.id
+    const isGuest = getUserRole(state) === USER_GUEST.role
 
     return (
         <Navbar className={isDark && css.navbar} bg="light" variant="light"

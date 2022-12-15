@@ -43,9 +43,12 @@ export function readUser() {
 
     try {
         const json = JSON.parse(raw)
+
+        //Structure: User
         return {
             id: json.id,
             name: json.name,
+            role: json.role,
         }
     } catch (e) {
         Log.e("storage::readUser: unable to parse user")

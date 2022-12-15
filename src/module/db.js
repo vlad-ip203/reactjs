@@ -9,14 +9,14 @@ import {Log} from "./log"
 
 export class Database {
     static ROLES = "roles"
+    static ROLES_ADMIN = "admin"
+    static ROLES_GUEST = "guest"
+    static ROLES_MODERATOR = "moderator"
+    static ROLES_USER = "user"
     static USERS = "users"
     static USERS_NAME = "name"
     static USERS_EMAIL = "email"
     static USERS_ROLE = "role"
-    static USERS_ROLE_ADMIN = "admin"
-    static USERS_ROLE_GUEST = "guest"
-    static USERS_ROLE_MODERATOR = "moderator"
-    static USERS_ROLE_USER = "user"
     static USERS_PASSWORD_HASH = "password_hash"
     static USERS_PASSWORD_SALT = "password_salt"
     static LEAKS = "leaks"
@@ -27,6 +27,7 @@ export class Database {
 export const USER_GUEST = {
     id: "guest",
     name: "Guest",
+    role: Database.ROLES_GUEST,
 }
 
 
@@ -66,7 +67,7 @@ async function queryDocuments(there, by: string, value: string) {
 export async function addUser(name: string, email: string, password: string) {
     const generated_salt = genSaltSync(12)
     const generated_hash = hashSync(password, generated_salt)
-    const role = doc(allRoles(), Database.USERS_ROLE_USER)
+    const role = doc(allRoles(), Database.ROLES_USER)
 
     try {
         const docRef = await addDoc(allUsers(), {
@@ -102,6 +103,7 @@ async function getUserByID(id: string) {
     return {
         id: docSnap.id,
         name: docSnap.get(Database.USERS_NAME),
+        role: docSnap.get(Database.USERS_ROLE).id,
     }
 }
 
@@ -122,6 +124,7 @@ export async function getUserByCredentials(email: string, password: string) {
         return {
             id: docSnap.id,
             name: docSnap.get(Database.USERS_NAME),
+            role: docSnap.get(Database.USERS_ROLE).id,
         }
     return null
 }
