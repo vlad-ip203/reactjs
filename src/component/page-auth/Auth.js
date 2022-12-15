@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom"
 
 import {useGlobalState, login, register} from "../../module/context"
 import {REGEX_NAME, REGEX_EMAIL, App} from "../../module/const"
-import {queryDocument, DB} from "../../module/db"
+import {queryDocument, DB} from "../../module/db/db"
 import {Log} from "../../module/log"
 import {getString, STRINGS} from "../../module/lang"
 

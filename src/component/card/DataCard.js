@@ -8,8 +8,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faLink, faMailBulk, faHashtag, faKey, faPhone, faIdCard} from "@fortawesome/free-solid-svg-icons"
 
 import {useGlobalState, getUser} from "../../module/context"
-import {LeakData} from "../../module/db"
 import {getString, STRINGS} from "../../module/lang"
+import {LeakData} from "../../module/db/leak"
 
 
 function labeledParagraph(faIcon, label, text) {

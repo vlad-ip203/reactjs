@@ -4,9 +4,9 @@ import React, {Context} from "react"
 
 import {readLanguage, putLanguage, readTheme, putTheme, readUser, putUser} from "./storage"
 import {Log} from "./log"
-import {addUser, getUserByCredentials, USER_GUEST, User} from "./db"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
 import {createLanguageStack} from "./lang"
+import {User, getUserByCredentials, addUser, USER_GUEST} from "./db/user"
 
 
 const defaultGlobalState = {

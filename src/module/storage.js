@@ -1,6 +1,6 @@
-import {User} from "./db"
 import {LANGUAGE_FALLBACK, LANGUAGES} from "./lang"
 import {THEMES, THEME_SYSTEM} from "./theme"
+import {User} from "./db/user"
 
 
 const KEYS = {

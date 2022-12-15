@@ -10,8 +10,8 @@ import {useGlobalState} from "../../module/context"
 import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import {getString, STRINGS} from "../../module/lang"
 import {Log} from "../../module/log"
-import {getLeaks} from "../../module/db"
 import DataCard from "../card/DataCard"
+import {getLeaks} from "../../module/db/leak"
 
 
 let email = ""
