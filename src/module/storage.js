@@ -9,9 +9,6 @@ const KEYS = {
     USER: "userID",
 }
 
-//FIXME 12/9/2022: To Firebase
-export const KEY_BOOKMARKS = "bookmarks"
-
 
 export function readLanguage(): string {
     const lang = window.localStorage.getItem(KEYS.LANGUAGE)

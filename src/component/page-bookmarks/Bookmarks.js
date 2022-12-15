@@ -1,25 +1,29 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Container} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 
 import DataCard from "../card/DataCard"
 import {MASONRY_BREAKPOINT_COLS} from "../../module/const"
-import {KEY_BOOKMARKS} from "../../module/storage"
+import {useGlobalState, getUser} from "../../module/context"
 
 
 const Bookmarks = () => {
-    const getBookmarks = () => {
-        let raw = window.localStorage.getItem(KEY_BOOKMARKS)
-        let parsedList = raw ? JSON.parse(raw) : raw
+    const [state, dispatch] = useGlobalState()
 
-        let out = "No bookmarks"
-        if (parsedList && Array.isArray(parsedList) && parsedList.length)
-            out = parsedList.map((site, index) => {
-                return <DataCard key={index}
-                                 card={site}/>
-            })
-        return out
-    }
+    const user = getUser(state)
+    const [bookmarks, setBookmarks] = useState([])
+
+    useEffect(() => {
+        user.getBookmarks().then(result => {
+            if (result && result.length)
+                setBookmarks(
+                    result.map((site, index) => {
+                        return <DataCard key={index}
+                                         card={site}/>
+                    }))
+            else setBookmarks("No bookmarks")
+        })
+    }, [user])
 
     return (
         <Container>
@@ -28,7 +32,7 @@ const Bookmarks = () => {
             <Masonry breakpointCols={MASONRY_BREAKPOINT_COLS}
                      className="masonry-grid"
                      columnClassName="masonry-grid-column">
-                {getBookmarks()}
+                {bookmarks}
             </Masonry>
         </Container>
     )

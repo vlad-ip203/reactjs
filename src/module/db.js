@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-import {collection, doc, getDoc, query, where, getDocs, addDoc} from "firebase/firestore"
+import {collection, doc, getDoc, query, where, getDocs, addDoc, deleteDoc} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../index"
@@ -27,12 +27,24 @@ export class DB {
         static FIELD_PASSWORD_HASH = "password_hash"
         static FIELD_PASSWORD_SALT = "password_salt"
 
+        static Bookmarks = class {
+            static COLLECTION = "bookmarks"
+
+            static FIELD_LEAK = "leak"
+
+            static all = (userDocSnap) => collection(database, userDocSnap.ref.path + "/" + this.COLLECTION)
+        }
+
         static all = () => collection(database, this.COLLECTION)
     }
     static Leaks = class {
         static COLLECTION = "leaks"
+
         static FIELD_EMAIL = "email"
-        static FIELD_DATA = "data"
+
+        static Data = class {
+            static COLLECTION = "data"
+        }
 
         static all = () => collection(database, this.COLLECTION)
     }
@@ -72,10 +84,13 @@ export class User {
     docSnap
     name
     role
+    bookmarks
 
     constructor(id: string = DB.Roles.GUEST) {
         this.id = id
     }
+
+    isGuest: boolean = () => this.id === DB.Roles.GUEST
 
     async getUserDocumentSnapshot() {
         if (this.id === DB.Roles.GUEST)
@@ -96,29 +111,71 @@ export class User {
         return this.docSnap
     }
 
-    async getName(): Promise<null | string> {
+    async getName() {
         if (!this.name) {
             const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap)
-                return null
+            if (!docSnap) return null
 
             this.name = await docSnap.get(DB.Users.FIELD_NAME)
         }
         return this.name
     }
 
-    async getRole(): Promise<null | string> {
+    async getRole() {
         if (!this.role) {
             const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap)
-                return null
+            if (!docSnap) return null
 
             this.role = await docSnap.get(DB.Users.FIELD_ROLE).id
         }
         return this.role
     }
 
-    isGuest: boolean = () => this.id === DB.Roles.GUEST
+    async getBookmarks() {
+        if (!this.bookmarks) {
+            const docSnap = await this.getUserDocumentSnapshot()
+            if (!docSnap) return null
+
+            const docRefs = DB.Users.Bookmarks.all(docSnap)
+            const docs = await getDocs(docRefs)
+
+            let bookmarks = []
+            docs.forEach(d => bookmarks.push(d.data()))
+            this.bookmarks = bookmarks
+        }
+        return this.bookmarks
+    }
+
+    async isBookmarked(data: LeakData) {
+        const bookmarks = await this.getBookmarks()
+        return bookmarks.some(value => value.leak === data.leak)
+    }
+
+    async addBookmark(data: LeakData) {
+        const docSnap = await this.getUserDocumentSnapshot()
+        if (!docSnap) return
+
+        const docRef = await addDoc(DB.Users.Bookmarks.all(docSnap), data)
+        Log.v("db::addBookmarks: bookmark added with id = " + docRef.id)
+
+        this.bookmarks.push(data)
+    }
+
+    async removeBookmark(data: LeakData) {
+        const docSnap = await this.getUserDocumentSnapshot()
+        if (!docSnap) return
+
+        //FIXME 12/16/2022: Would it work with snapshot?
+        const bookmarkDocSnap = await queryDocument(DB.Users.Bookmarks.all(docSnap), DB.Users.Bookmarks.FIELD_LEAK, data.leak)
+        void deleteDoc(bookmarkDocSnap)
+
+        let iToRemove
+        this.bookmarks.forEach((value, i) => {
+            if (value.leak === data.leak)
+                iToRemove = i
+        })
+        this.bookmarks.splice(iToRemove, 1)
+    }
 }
 
 export const USER_GUEST = new User()
@@ -211,23 +268,22 @@ export class LeakData {
     getID = () => this.person_id + this.leak_id
 }
 
-
 export async function getLeaks(email: string) {
-    const document = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
-    if (!document) {
+    const docSnap = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
+    if (!docSnap) {
         Log.w("db::getLeaks: unable to find leaks")
         Log.w("db::getLeaks:   - email = " + email)
         return []
     }
 
-    const docRefs = collection(database, document.ref.path + "/" + DB.Leaks.FIELD_DATA)
+    const docRefs = collection(database, docSnap.ref.path + "/" + DB.Leaks.Data.COLLECTION)
         .withConverter(LeakData.CONVERTER)
     const docs = await getDocs(docRefs)
 
     let leaks = []
     docs.forEach(d => {
         const leak = d.data()
-        leak.person_id = document.id
+        leak.person_id = docSnap.id
         leak.person_email = email
         leak.leak_id = d.id
         leaks.push(leak)
