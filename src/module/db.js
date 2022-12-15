@@ -8,9 +8,15 @@ import {Log} from "./log"
 
 
 export class Database {
+    static ROLES = "roles"
     static USERS = "users"
     static USERS_NAME = "name"
     static USERS_EMAIL = "email"
+    static USERS_ROLE = "role"
+    static USERS_ROLE_ADMIN = "admin"
+    static USERS_ROLE_GUEST = "guest"
+    static USERS_ROLE_MODERATOR = "moderator"
+    static USERS_ROLE_USER = "user"
     static USERS_PASSWORD_HASH = "password_hash"
     static USERS_PASSWORD_SALT = "password_salt"
     static LEAKS = "leaks"
@@ -24,13 +30,9 @@ export const USER_GUEST = {
 }
 
 
-export function allUsers() {
-    return collection(database, Database.USERS)
-}
-
-export function allLeaks() {
-    return collection(database, Database.LEAKS)
-}
+export const allRoles = () => collection(database, Database.ROLES)
+export const allUsers = () => collection(database, Database.USERS)
+export const allLeaks = () => collection(database, Database.LEAKS)
 
 
 export async function queryDocument(there, by: string, value: string) {
@@ -64,6 +66,7 @@ async function queryDocuments(there, by: string, value: string) {
 export async function addUser(name: string, email: string, password: string) {
     const generated_salt = genSaltSync(12)
     const generated_hash = hashSync(password, generated_salt)
+    const role = doc(allRoles(), Database.USERS_ROLE_USER)
 
     try {
         const docRef = await addDoc(allUsers(), {
@@ -71,6 +74,7 @@ export async function addUser(name: string, email: string, password: string) {
             email: email,
             password_hash: generated_hash,
             password_salt: generated_salt,
+            role: role,
         })
 
         Log.v("db::addUser: a user was added to the database")
