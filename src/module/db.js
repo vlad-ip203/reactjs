@@ -106,22 +106,22 @@ async function getUserByID(id: string) {
 }
 
 export async function getUserByCredentials(email: string, password: string) {
-    const document = await queryDocument(allUsers(), Database.USERS_EMAIL, email)
-    if (!document) {
+    const docSnap = await queryDocument(allUsers(), Database.USERS_EMAIL, email)
+    if (!docSnap) {
         Log.w("db::getUserByCredentials: unable to find the user")
         Log.w("db::getUserByCredentials:   - email = " + email)
         return null
     }
 
-    const password_hash = document.get(Database.USERS_PASSWORD_HASH)
-    const password_salt = document.get(Database.USERS_PASSWORD_SALT)
+    const password_hash = docSnap.get(Database.USERS_PASSWORD_HASH)
+    const password_salt = docSnap.get(Database.USERS_PASSWORD_SALT)
 
     const generated_hash = hashSync(password, password_salt)
 
     if (generated_hash && generated_hash === password_hash)
         return {
-            id: document.id,
-            name: document.get(Database.USERS_NAME),
+            id: docSnap.id,
+            name: docSnap.get(Database.USERS_NAME),
         }
     return null
 }
@@ -144,12 +144,12 @@ export class LeakData {
 
 //Firestore data converter
 const leakDataConverter = {
-    toFirestore: (city) => {
+    toFirestore: (data) => {
         return {
-            login: city.login,
-            nickname: city.nickname,
-            password_hash: city.password_hash,
-            tel: city.tel,
+            login: data.login,
+            nickname: data.nickname,
+            password_hash: data.password_hash,
+            tel: data.tel,
         }
     },
     fromFirestore: (snapshot, options) => {
