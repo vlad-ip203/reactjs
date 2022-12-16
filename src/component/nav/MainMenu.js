@@ -19,7 +19,7 @@ const MainMenu = () => {
 
     const isDark = getAppTheme(state) === THEME_DARK
     const user = getUser(state)
-    const isUserGuest = user.isGuest()
+    const isGuest = user.isGuest()
     const [role, setRole] = useState("")
     const [name, setName] = useState("")
 
@@ -55,8 +55,8 @@ const MainMenu = () => {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown title={isUserGuest ? getString(state, STRINGS.NAV_ACCOUNT) : name}>
-                            {isUserGuest ?
+                        <NavDropdown title={isGuest ? getString(state, STRINGS.NAV_ACCOUNT) : name}>
+                            {isGuest ?
                                 <Link className="dropdown-item" to={App.AUTH}>
                                     {getString(state, STRINGS.AUTH_LOGIN)}
                                 </Link> :

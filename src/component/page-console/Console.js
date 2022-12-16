@@ -1,16 +1,26 @@
 import css from "./Console.module.css"
 
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Container, Form, Button, Row, Col} from "react-bootstrap"
+import {useNavigate} from "react-router-dom"
 
-import {useGlobalState} from "../../module/context"
+import {useGlobalState, getUser} from "../../module/context"
 import {getString, STRINGS} from "../../module/lang"
 import {Log} from "../../module/log"
 import {addLeak} from "../../module/db/leak"
+import {App} from "../../module/const"
 
 
 const Console = () => {
     const [state] = useGlobalState()
+    const navigate = useNavigate()
+
+    const user = getUser(state)
+
+    useEffect(() => {
+        if (user.isGuest())
+            navigate(App.AUTH)
+    }, [navigate, state, user])
 
     const [field, setField] = useState("")
 

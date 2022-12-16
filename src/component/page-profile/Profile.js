@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from "react"
 import {Container, Form, Button, Col, Row} from "react-bootstrap"
+import {useNavigate} from "react-router-dom"
 import {where} from "firebase/firestore"
 
 import {useGlobalState, getUser, reload} from "../../module/context"
 import {getString, STRINGS} from "../../module/lang"
-import {REGEX_NAME} from "../../module/const"
+import {REGEX_NAME, App} from "../../module/const"
 import {Log} from "../../module/log"
 import {querySingleDoc, DB} from "../../module/db/db"
 
 
 const Profile = () => {
     const [state, dispatch] = useGlobalState()
+    const navigate = useNavigate()
 
     const user = getUser(state)
     const [role, setRole] = useState("")
@@ -18,9 +20,12 @@ const Profile = () => {
     const [isNameWrong, setNameWrong] = useState(false)
 
     useEffect(() => {
+        if (user.isGuest())
+            navigate(App.AUTH)
+
         user.getRole().then(role => setRole(role))
         user.getName().then(name => setName(name))
-    }, [user])
+    }, [navigate, user])
 
     function checkName() {
         setNameWrong(name && !REGEX_NAME.test(name))
@@ -56,7 +61,7 @@ const Profile = () => {
                                       autoComplete="off"
                                       disabled={true}
                                       placeholder={getString(state, STRINGS.PROFILE_ROLE_HINT)}
-                                      value={getString(state, role)}/>
+                                      value={role && getString(state, role)}/>
                         <Form.Text className="text-muted">
                             {getString(state, STRINGS.PROFILE_ROLE_HINT)}
                         </Form.Text>

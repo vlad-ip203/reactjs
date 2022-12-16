@@ -1,15 +1,16 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Container, Form, Button, Row} from "react-bootstrap"
 import Masonry from "react-masonry-css"
+import {useNavigate} from "react-router-dom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSearch} from "@fortawesome/free-solid-svg-icons"
 
-import {useGlobalState} from "../../module/context"
+import {useGlobalState, getUser} from "../../module/context"
 import {getLeak} from "../../module/db/leak"
-import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS} from "../../module/const"
+import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS, App} from "../../module/const"
 import {getString, STRINGS} from "../../module/lang"
-import DataCard from "../card/DataCard"
 import {Log} from "../../module/log"
+import DataCard from "../card/DataCard"
 
 
 let email = ""
@@ -17,6 +18,14 @@ let email = ""
 
 const Search = () => {
     const [state] = useGlobalState()
+    const navigate = useNavigate()
+
+    const user = getUser(state)
+
+    useEffect(() => {
+        if (user.isGuest())
+            navigate(App.AUTH)
+    }, [navigate, state, user])
 
     const [isEmailSyntaxWrong, setEmailSyntaxWrong] = useState(true)
     const [isEmailWrong, setEmailWrong] = useState(false)
