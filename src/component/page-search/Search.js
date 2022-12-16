@@ -42,7 +42,7 @@ const Search = () => {
             Log.v("Search::performSearch: leak pieces received: " + pieces.length)
 
             setContent(<>
-                <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, content.length, email)}</p>
+                <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, pieces.length, email)}</p>
                 <Masonry className="masonry-grid mt-4"
                          breakpointCols={MASONRY_BREAKPOINT_COLS}
                          columnClassName="masonry-grid-column">

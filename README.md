@@ -1,4 +1,4 @@
-# cursenreact.js
+# cLeakLook
 
 The course 3 semester 5 coursework at IFNTUOG about ReactJS website development
 

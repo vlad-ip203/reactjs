@@ -86,7 +86,7 @@ const TRANSLATIONS = {
         {key: LANGUAGE_EN_US, value: "English"},
         {key: LANGUAGE_UK_UA, value: "Українська"},
 
-        {key: STRINGS.APP_NAME, value: "cursenreact.js"},
+        {key: STRINGS.APP_NAME, value: "cLeakLook"},
 
         {key: STRINGS.LEAK_ID, value: "ID"},
     ],
