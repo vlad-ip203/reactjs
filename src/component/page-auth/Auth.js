@@ -1,10 +1,11 @@
 import React, {useState} from "react"
 import {Container, Form, Row, Col, Button} from "react-bootstrap"
 import {useNavigate} from "react-router-dom"
+import {where} from "firebase/firestore"
 
 import {useGlobalState, login, register} from "../../module/context"
 import {REGEX_NAME, REGEX_EMAIL, App} from "../../module/const"
-import {queryDocument, DB} from "../../module/db/db"
+import {querySingleDoc, DB} from "../../module/db/db"
 import {Log} from "../../module/log"
 import {getString, STRINGS} from "../../module/lang"
 
@@ -66,15 +67,18 @@ const Auth = () => {
         }
 
         //Name passed static checks, checking in DB
-        const userByNameRef = await queryDocument(DB.Users.all(), DB.Users.FIELD_NAME, name)
-        setNameWrong(userByNameRef)
+        const userByNameSnap = await querySingleDoc(DB.Users.all(),
+            where(DB.Users.FIELD_NAME, "==", name))
+        setNameWrong(userByNameSnap)
 
         //Email passed static checks, checking in DB
-        const userByEmailRef = await queryDocument(DB.Users.all(), DB.Users.FIELD_EMAIL, email)
-        setEmailWrong(userByEmailRef)
+        const userByEmailSnap = await querySingleDoc(DB.Users.all(),
+            where(DB.Users.FIELD_EMAIL, "==", email))
+        setEmailWrong(userByEmailSnap)
 
-        if (!userByNameRef && !userByEmailRef) {
+        if (!userByNameSnap && !userByEmailSnap) {
             Log.v("Auth::tryToRegister: attempting to register")
+
             if (await register(dispatch, name, email, pass))
                 navigate(App.ROOT)
         }

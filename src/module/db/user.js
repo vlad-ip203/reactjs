@@ -1,8 +1,8 @@
-import {doc, getDoc, getDocs, addDoc, deleteDoc, query, where} from "firebase/firestore"
+import {doc, getDoc, getDocs, addDoc, deleteDoc, where} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../../index"
-import {DB, queryDocument, getDocSnapshot} from "./db"
+import {DB, querySingleDoc, getDocSnapshot, queryDocs} from "./db"
 import {Piece, Leak} from "./leak"
 import {Log} from "../log"
 
@@ -110,12 +110,12 @@ export class User {
         if (!snap) return
 
         try {
-            const q = query(
-                DB.Users.Bookmarks.all(snap),
-                where(DB.Users.Bookmarks.FIELD_LEAK_ID, "==", piece.leak.leakID),
-                where(DB.Users.Bookmarks.FIELD_PIECE_ID, "==", piece.pieceID))
+            const docs = await queryDocs(DB.Users.Bookmarks.all(snap),
+                [
+                    where(DB.Users.Bookmarks.FIELD_LEAK_ID, "==", piece.leak.leakID),
+                    where(DB.Users.Bookmarks.FIELD_PIECE_ID, "==", piece.pieceID),
+                ])
 
-            const docs = await getDocs(q)
             docs.forEach(doc => {
                 Log.v("user::User::removeBookmark: trying to delete the document")
                 Log.v("user::User::removeBookmark:   - id = " + doc.id)
@@ -181,19 +181,20 @@ async function getUserByID(id: string) {
 }
 
 export async function getUserByCredentials(email: string, password: string) {
-    const docSnap = await queryDocument(DB.Users.all(), DB.Users.FIELD_EMAIL, email)
-    if (!docSnap) {
+    const snap = await querySingleDoc(DB.Users.all(),
+        where(DB.Users.FIELD_EMAIL, "==", email))
+    if (!snap) {
         Log.w("user::getUserByCredentials: unable to find the user")
         Log.w("user::getUserByCredentials:   - email = " + email)
         return null
     }
 
-    const password_hash = docSnap.get(DB.Users.FIELD_PASSWORD_HASH)
-    const password_salt = docSnap.get(DB.Users.FIELD_PASSWORD_SALT)
+    const password_hash = snap.get(DB.Users.FIELD_PASSWORD_HASH)
+    const password_salt = snap.get(DB.Users.FIELD_PASSWORD_SALT)
 
     const generated_hash = hashSync(password, password_salt)
 
     if (generated_hash && generated_hash === password_hash)
-        return new User(docSnap.id)
+        return new User(snap.id)
     return null
 }

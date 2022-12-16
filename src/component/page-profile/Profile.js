@@ -6,7 +6,7 @@ import {getString, STRINGS} from "../../module/lang"
 
 
 const Profile = () => {
-    const [state, dispatch] = useGlobalState()
+    const [state] = useGlobalState()
 
     return (
         <Container>

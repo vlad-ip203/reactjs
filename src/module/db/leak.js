@@ -1,7 +1,7 @@
-import {collection, getDocs} from "firebase/firestore"
+import {collection, getDocs, where} from "firebase/firestore"
 
 import {database} from "../../index"
-import {DB, getDocSnapshot, queryDocument} from "./db"
+import {DB, getDocSnapshot, querySingleDoc} from "./db"
 import {Log} from "../log"
 
 
@@ -119,7 +119,8 @@ export class Piece {
 
 
 export async function getLeak(email: string) {
-    const snap = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
+    const snap = await querySingleDoc(DB.Leaks.all(),
+        where(DB.Users.FIELD_EMAIL, "==", email))
     if (!snap) {
         Log.e("leak::getLeak: unable to find the document")
         Log.e("leak::getLeak:   - email = " + email)

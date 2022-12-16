@@ -3,6 +3,7 @@ import {Container} from "react-bootstrap"
 
 
 const About = () => {
+    // noinspection SpellCheckingInspection
     return (
         <Container>
             <h1>About</h1>

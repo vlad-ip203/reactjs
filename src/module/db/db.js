@@ -1,4 +1,4 @@
-import {collection, query, where, getDocs, doc, getDoc} from "firebase/firestore"
+import {collection, query, getDocs, doc, getDoc} from "firebase/firestore"
 
 import {database} from "../../index"
 import {Log} from "../log"
@@ -80,29 +80,31 @@ export async function getDocSnapshot(lastSnap, collection: string, id: string) {
 }
 
 
-export async function queryDocument(there, by: string, value: string) {
-    const docs = await queryDocuments(there, by, value)
+export async function queryDocs(there, constraints) {
+    try {
+        //Query docs
+        const q = Array.isArray(constraints) ?
+            query(there, ...constraints) :
+            query(there, constraints)
+
+        //Return all of them
+        return await getDocs(q)
+    } catch (e) {
+        Log.e("db::queryDocs: unable to perform query")
+        Log.e("db::queryDocs:   - there       = " + there)
+        Log.e("db::queryDocs:   - constraints = " + constraints.map(value => value.toString()))
+        Log.e("db::queryDocs:   = catching: " + e)
+        return null
+    }
+}
+
+export async function querySingleDoc(there, constraints) {
+    const docs = await queryDocs(there, constraints)
     if (docs.size !== 1)
-        Log.i("db::queryDocument: found " + docs.size + " docs instead of 1")
+        Log.i("db::querySingleDoc: found " + docs.size + " docs instead of 1")
 
     let out = null
     if (docs)
         docs.forEach(docRef => out = docRef)
     return out
-}
-
-async function queryDocuments(there, by: string, value: string) {
-    try {
-        //Query docs
-        const q = query(there, where(by, "==", value))
-        //Return all of them
-        return await getDocs(q)
-    } catch (e) {
-        Log.e("db::queryDocuments: unable to perform a query")
-        Log.e("db::queryDocuments:   - there = " + there)
-        Log.e("db::queryDocuments:   - by    = " + by)
-        Log.e("db::queryDocuments:   - value = " + value)
-        Log.e("db::queryDocuments:   = catching: " + e)
-        return null
-    }
 }
