@@ -53,6 +53,11 @@ export class DB {
 
         static Pieces = class {
             static COLLECTION = "pieces"
+
+            static all(pieceDocRef) {
+                const path = pieceDocRef.path + "/" + this.COLLECTION
+                return collection(database, path)
+            }
         }
 
         static all() {

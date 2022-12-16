@@ -1,4 +1,4 @@
-import {collection, getDocs, where} from "firebase/firestore"
+import {collection, getDocs, where, addDoc} from "firebase/firestore"
 
 import {database} from "../../index"
 import {DB, getDocSnapshot, querySingleDoc} from "./db"
@@ -115,6 +115,42 @@ export class Piece {
     getFriendlyPieceRef = () => this.leak.leakID + "@" + this.pieceID
 }
 
+
+export async function addLeak(email: string, pieces: []) {
+    const leakByEmailSnap = await querySingleDoc(DB.Leaks.all(),
+        where(DB.Leaks.FIELD_EMAIL, "==", email))
+
+    let leakRef
+    if (leakByEmailSnap) {
+        Log.i("leak::addLeak: email already exists, merging leaks")
+        leakRef = leakByEmailSnap.ref
+    } else
+        try {
+            leakRef = await addDoc(DB.Leaks.all(), {
+                email: email,
+            })
+
+            Log.v("user::addUser: a leak was added to the database")
+            Log.v("user::addUser:   - id = " + leakRef.id)
+        } catch (e) {
+            Log.e("user::addUser: unable to add a leak")
+            Log.e("user::addUser:   - email = " + email)
+            Log.e("user::addUser:   = catching: " + e)
+            return
+        }
+
+    try {
+        for (const piece of pieces) {
+            const pieceRef = await addDoc(DB.Leaks.Pieces.all(leakRef), piece)
+
+            Log.v("user::addUser: a leak piece was added to the database")
+            Log.v("user::addUser:   - id = " + pieceRef.id)
+        }
+    } catch (e) {
+        Log.e("user::addUser: unable to add pieces")
+        Log.e("user::addUser:   = catching: " + e)
+    }
+}
 
 export async function getLeak(email: string) {
     const snap = await querySingleDoc(DB.Leaks.all(),

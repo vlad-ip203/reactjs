@@ -75,6 +75,9 @@ export const STRINGS = {
     BOOKMARKS_RESULTS_NOTHING: 204.21,
 
     CONSOLE: 205,
+    CONSOLE_INTRO: 205.1,
+    CONSOLE_DATA: 205.2,
+    CONSOLE_PUSH: 205.3,
 }
 
 //String translations and default values
@@ -150,6 +153,9 @@ const TRANSLATIONS = {
         {key: STRINGS.BOOKMARKS_HINT, value: "Wanna add some?"},
 
         {key: STRINGS.CONSOLE, value: "Console"},
+        {key: STRINGS.CONSOLE_INTRO, value: "Put formatted JSON data here to push to the database"},
+        {key: STRINGS.CONSOLE_DATA, value: "Data to push"},
+        {key: STRINGS.CONSOLE_PUSH, value: "Push"},
     ],
 
     "uk-UA": [
@@ -214,6 +220,9 @@ const TRANSLATIONS = {
         {key: STRINGS.BOOKMARKS_HINT, value: "Може додати?"},
 
         {key: STRINGS.CONSOLE, value: "Консоль"},
+        {key: STRINGS.CONSOLE_INTRO, value: "Введіть дані у форматі JSON, щоб імпортувати в базу даних"},
+        {key: STRINGS.CONSOLE_DATA, value: "Дані для відправки"},
+        {key: STRINGS.CONSOLE_PUSH, value: "Відправити"},
     ],
 }
 
