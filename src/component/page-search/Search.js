@@ -7,11 +7,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSearch} from "@fortawesome/free-solid-svg-icons"
 
 import {useGlobalState} from "../../module/context"
+import {getLeak} from "../../module/db/leak"
 import {REGEX_EMAIL, MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import {getString, STRINGS} from "../../module/lang"
-import {Log} from "../../module/log"
 import DataCard from "../card/DataCard"
-import {getLeaks} from "../../module/db/leak"
+import {Log} from "../../module/log"
 
 
 let email = ""
@@ -32,12 +32,11 @@ const Search = () => {
     }
 
     async function performSearch() {
-        const leaks = await getLeaks(email)
-        Log.v("Search::performSearch: received " + leaks.length + " leaks")
+        const leak = await getLeak(email)
+        const pieces = await leak.getPieces()
 
-        let results = []
-        for (const leak of leaks)
-            results.push(<DataCard key={leak.getID()} data={leak}/>)
+        let results = pieces.map(piece =>
+            <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>)
 
         setSearchResults(results.length ? <>
                 <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, results.length, email)}</p>

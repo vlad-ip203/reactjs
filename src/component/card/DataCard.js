@@ -9,7 +9,7 @@ import {faLink, faMailBulk, faHashtag, faKey, faPhone, faIdCard} from "@fortawes
 
 import {useGlobalState, getUser} from "../../module/context"
 import {getString, STRINGS} from "../../module/lang"
-import {LeakData} from "../../module/db/leak"
+import {Piece} from "../../module/db/leak"
 
 
 function labeledParagraph(faIcon, label, text) {
@@ -28,19 +28,18 @@ function labeledParagraph(faIcon, label, text) {
 
 
 const DataCard = props => {
-    const [state, dispatch] = useGlobalState()
+    const [state] = useGlobalState()
 
     const user = getUser(state)
-    const data: LeakData = props.data
+    const piece: Piece = props.data
 
     const [bookmarkIcon, updateBookmarkIcon] = useState(icon_bookmark_add)
     useEffect(() => {
-        user.isBookmarked(data).then(result =>
-            updateBookmarkIcon(
-                result ?
-                    icon_bookmark :
-                    icon_bookmark_add))
-    }, [data, user])
+        user.isBookmarked(piece).then(result =>
+            updateBookmarkIcon(result ?
+                icon_bookmark :
+                icon_bookmark_add))
+    }, [piece, user])
 
     return (
         <Card>
@@ -48,12 +47,12 @@ const DataCard = props => {
                    role="button"
                    src={bookmarkIcon}
                    onClick={() => {
-                       user.isBookmarked(data).then(result => {
+                       user.isBookmarked(piece).then(result => {
                            if (result) {
-                               void user.removeBookmark(data)
+                               void user.removeBookmark(piece)
                                updateBookmarkIcon(icon_bookmark_add)
                            } else {
-                               void user.addBookmark(data)
+                               void user.addBookmark(piece)
                                updateBookmarkIcon(icon_bookmark)
                            }
                        })
@@ -63,20 +62,20 @@ const DataCard = props => {
                 <Card.Title className="mb-4">
                     <FontAwesomeIcon icon={faIdCard}/>
                     {" "}
-                    {data.nickname || data.person_email}
+                    {piece.nickname || piece.leak.getEmail()}
                 </Card.Title>
 
-                {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), data.login)}
-                {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), data.password_hash)}
-                {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), data.person_email)}
-                {labeledParagraph(faPhone, getString(state, STRINGS.LEAK_TEL), data.tel)}
+                {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), piece.login)}
+                {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), piece.password_hash)}
+                {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), piece.leak.getEmail())}
+                {labeledParagraph(faPhone, getString(state, STRINGS.LEAK_TEL), piece.tel)}
             </Card.Body>
 
             <Card.Footer>
                 <Card.Text className="text-muted">
                     <FontAwesomeIcon icon={faLink}/>
                     {" "}
-                    {getString(state, STRINGS.LEAK_ID)}: {data.getID()}
+                    {getString(state, STRINGS.LEAK_ID)}: {piece.getFriendlyPieceRef()}
                 </Card.Text>
             </Card.Footer>
         </Card>

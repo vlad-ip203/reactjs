@@ -10,6 +10,7 @@ import {useGlobalState, setTheme, setLanguage, logout, getAppTheme, getUser} fro
 import {App} from "../../module/const"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
 import {THEMES, THEME_DARK} from "../../module/theme"
+import {Log} from "../../module/log"
 
 
 const MainMenu = () => {
@@ -22,7 +23,13 @@ const MainMenu = () => {
     const [userName, setUserName] = useState("")
 
     useEffect(() => {
-        user.getName().then(result => setUserName(result))
+        user.getName().then(result => {
+            Log.v("MainMenu::useEffect: username received")
+            Log.v("MainMenu::useEffect:   - isGuest  = " + user.isGuest())
+            Log.v("MainMenu::useEffect:   - username = " + result)
+
+            setUserName(result)
+        })
     }, [user])
 
     return (

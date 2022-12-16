@@ -2,107 +2,118 @@ import {doc, getDoc, getDocs, addDoc, deleteDoc} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../../index"
-import {DB, queryDocument} from "./db"
-import {LeakData} from "./leak"
+import {DB, queryDocument, getDocSnapshot} from "./db"
+import {Piece} from "./leak"
 import {Log} from "../log"
 
 
 export class User {
-    id
-    docSnap
-    name
-    role
-    bookmarks
+    userID: string
+    docSnapshot = null
+
+    name: string
+    role: string
+    bookmarks: Piece[]
 
 
-    constructor(id: string = DB.Roles.GUEST) {
-        this.id = id
+    constructor(id: string) {
+        this.userID = id ? id : DB.Roles.GUEST
     }
 
-
-    isGuest: boolean = () => this.id === DB.Roles.GUEST
-
-    async getUserDocumentSnapshot() {
+    async getDocSnapshot() {
         if (this.isGuest)
             return null
 
-        if (!this.docSnap) { //Not fetched yet
-            const docRef = doc(database, DB.Users.COLLECTION, this.id)
-
-            const docSnap = await getDoc(docRef)
-            if (!docSnap) {
-                Log.w("user::User::getUserDocumentSnapshot: unable to find the user")
-                Log.w("user::User::getUserDocumentSnapshot:   - id = " + this.id)
-                return null
-            }
-
-            this.docSnap = docSnap
-        }
-        return this.docSnap
+        return this.docSnapshot = await getDocSnapshot(
+            this.docSnapshot,
+            DB.Users.COLLECTION,
+            this.userID)
     }
 
-    async getName() {
-        if (!this.name) {
-            const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap) return null
 
-            this.name = await docSnap.get(DB.Users.FIELD_NAME)
-        }
-        return this.name
+    isGuest: boolean = () => this.userID === DB.Roles.GUEST
+
+    async getName() {
+        if (this.name) //Already fetched
+            return this.name
+
+        const snap = await this.getDocSnapshot()
+        if (!snap) return null
+
+        return this.name = await snap.get(DB.Users.FIELD_NAME)
     }
 
     async getRole() {
-        if (!this.role) {
-            const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap) return null
+        if (this.role) //Already fetched
+            return this.role
 
-            this.role = await docSnap.get(DB.Users.FIELD_ROLE).id
-        }
-        return this.role
+        const snap = await this.getDocSnapshot()
+        if (!snap) return null
+
+        return this.role = await snap.get(DB.Users.FIELD_ROLE).id
     }
 
 
     async getBookmarks() {
-        if (!this.bookmarks) {
-            const docSnap = await this.getUserDocumentSnapshot()
-            if (!docSnap) return null
+        if (this.bookmarks) //Already fetched
+            return this.bookmarks
 
-            const docRefs = DB.Users.Bookmarks.all(docSnap)
-            const docs = await getDocs(docRefs)
+        const snap = await this.getDocSnapshot()
+        if (!snap) return null
 
-            let bookmarks = []
-            docs.forEach(d => bookmarks.push(d.data()))
-            this.bookmarks = bookmarks
-        }
-        return this.bookmarks
+        const docRefs = DB.Users.Bookmarks.all(snap)
+            .withConverter(Piece.FIRESTORE_CONVERTER)
+        const docs = await getDocs(docRefs)
+
+        let bookmarks: Piece[] = []
+        docs.forEach(d => {
+            const piece = d.data()
+            // noinspection JSUnresolvedVariable
+            piece.setLeakID(d.leakID)
+            bookmarks.push(piece)
+        })
+        return this.bookmarks = bookmarks
     }
 
-    async isBookmarked(data: LeakData) {
+    async isBookmarked(piece: Piece) {
         const bookmarks = await this.getBookmarks()
-        return bookmarks.some(value => value.leak === data.leak)
+        return bookmarks.some(value => value.getPieceRef() === piece.getPieceRef())
     }
 
-    async addBookmark(data: LeakData) {
-        const docSnap = await this.getUserDocumentSnapshot()
-        if (!docSnap) return
+    async addBookmark(piece: Piece) {
+        const snap = await this.getDocSnapshot()
+        if (!snap) return
 
-        const docRef = await addDoc(DB.Users.Bookmarks.all(docSnap), data)
-        Log.v("user::addBookmarks: bookmark added with id = " + docRef.id)
+        //FIXME 12/16/2022: Experimental converter usage
+        const docRef = await addDoc(
+            DB.Users.Bookmarks.all(snap).withConverter(Piece.FIRESTORE_CONVERTER),
+            piece)
 
-        this.bookmarks.push(data)
+        Log.v("user::User::addBookmarks: bookmark added with id = " + docRef.id)
+
+        this.bookmarks.push(piece)
     }
 
-    async removeBookmark(data: LeakData) {
-        const docSnap = await this.getUserDocumentSnapshot()
-        if (!docSnap) return
+    async removeBookmark(piece: Piece) {
+        const userSnap = await this.getDocSnapshot()
+        if (!userSnap) return
 
-        //FIXME 12/16/2022: Would it work with snapshot?
-        const bookmarkDocSnap = await queryDocument(DB.Users.Bookmarks.all(docSnap), DB.Users.Bookmarks.FIELD_LEAK, data.leak)
-        void deleteDoc(bookmarkDocSnap)
+        //FIXME 12/16/2022: Would it work with snapshots?
+        const query_leak = await queryDocument(
+            DB.Users.Bookmarks.all(userSnap),
+            DB.Users.Bookmarks.FIELD_LEAK_ID,
+            piece.leak.leakID)
+        Log.d("user::removeBookmark: query_leak completed")
+        const query_piece = await queryDocument(
+            query_leak,
+            DB.Users.Bookmarks.FIELD_PIECE_ID,
+            piece.pieceID)
+        Log.d("user::removeBookmark: query_piece completed")
+        void deleteDoc(query_piece)
 
         let iToRemove
         this.bookmarks.forEach((value, i) => {
-            if (value.leak === data.leak)
+            if (value.getPieceRef() === piece.getPieceRef())
                 iToRemove = i
         })
         this.bookmarks.splice(iToRemove, 1)

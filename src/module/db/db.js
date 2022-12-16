@@ -1,4 +1,4 @@
-import {collection, query, where, getDocs} from "firebase/firestore"
+import {collection, query, where, getDocs, doc, getDoc} from "firebase/firestore"
 
 import {database} from "../../index"
 import {Log} from "../log"
@@ -13,8 +13,12 @@ export class DB {
         static MODERATOR = "moderator"
         static USER = "user"
 
-        static all = () => collection(database, this.COLLECTION)
+        static all() {
+            return collection(database, this.COLLECTION)
+        }
     }
+
+
     static Users = class {
         static COLLECTION = "users"
 
@@ -27,24 +31,52 @@ export class DB {
         static Bookmarks = class {
             static COLLECTION = "bookmarks"
 
-            static FIELD_LEAK = "leak"
+            static FIELD_LEAK_ID = "leakID"
+            static FIELD_PIECE_ID = "pieceID"
 
-            static all = (userDocSnap) => collection(database, userDocSnap.ref.path + "/" + this.COLLECTION)
+            static all(userDocSnap) {
+                const path = userDocSnap.ref.path + "/" + this.COLLECTION
+                return collection(database, path)
+            }
         }
 
-        static all = () => collection(database, this.COLLECTION)
+        static all() {
+            return collection(database, this.COLLECTION)
+        }
     }
+
+
     static Leaks = class {
         static COLLECTION = "leaks"
 
         static FIELD_EMAIL = "email"
 
-        static Data = class {
-            static COLLECTION = "data"
+        static Pieces = class {
+            static COLLECTION = "pieces"
         }
 
-        static all = () => collection(database, this.COLLECTION)
+        static all() {
+            return collection(database, this.COLLECTION)
+        }
     }
+}
+
+
+export async function getDocSnapshot(lastSnap, collection: string, id: string) {
+    if (lastSnap) //Already defined
+        return lastSnap
+
+    const docRef = doc(database, collection, id)
+
+    const docSnap = await getDoc(docRef)
+    if (!docSnap) {
+        Log.e("db::getDocSnapshot: unable to find the document")
+        Log.e("db::getDocSnapshot:   - id         = " + id)
+        Log.e("db::getDocSnapshot:   - collection = " + collection)
+        Log.e("db::getDocSnapshot:   - lastSnap   = " + lastSnap)
+        return null
+    }
+    return docSnap
 }
 
 

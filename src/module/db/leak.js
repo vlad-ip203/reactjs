@@ -1,63 +1,120 @@
 import {collection, getDocs} from "firebase/firestore"
 
 import {database} from "../../index"
-import {queryDocument, DB} from "./db"
+import {DB, getDocSnapshot, queryDocument} from "./db"
 import {Log} from "../log"
 
 
-export class LeakData {
+export class Leak {
+    leakID: string
+    docSnapshot = null
+    piecesPath: string
+
+    email: string
+    pieces: []
+
+
+    constructor(id: string) {
+        this.leakID = id
+    }
+
+    async getDocSnapshot() {
+        return this.docSnapshot = await getDocSnapshot(
+            this.docSnapshot,
+            DB.Leaks.COLLECTION,
+            this.leakID)
+    }
+
+
+    async getEmail() {
+        if (this.email) //Already fetched
+            return this.email
+
+        const snap = await this.getDocSnapshot()
+        return this.email = snap.get(DB.Leaks.FIELD_EMAIL)
+    }
+
+    async getPieces() {
+        if (this.pieces) //Already fetched
+            return this.pieces
+
+        const snap = await this.getDocSnapshot()
+        this.piecesPath = snap.ref.path + "/" + DB.Leaks.Pieces.COLLECTION
+
+        const docRefs = collection(database, this.piecesPath)
+            .withConverter(Piece.FIRESTORE_CONVERTER)
+        const docs = await getDocs(docRefs)
+
+        let out: Piece[] = []
+        docs.forEach(d => {
+            const piece = d.data()
+            piece.setLeak(this)
+            out.push(piece)
+        })
+        return out
+    }
+}
+
+
+export class Piece {
     //Firestore data converter
-    static CONVERTER = {
-        toFirestore: (data) => {
+    // noinspection JSUnusedGlobalSymbols
+    static FIRESTORE_CONVERTER = {
+        toFirestore: (obj: Piece) => {
+            //TODO 12/16/2022: Does pieceID needed? (probably needed for bookmark search)
             return {
-                login: data.login,
-                nickname: data.nickname,
-                password_hash: data.password_hash,
-                tel: data.tel,
+                leakID: obj.leak.leakID,
+                pieceID: obj.pieceID,
+                login: obj.login,
+                nickname: obj.nickname,
+                password_hash: obj.password_hash,
+                tel: obj.tel,
             }
         },
         fromFirestore: (snapshot, options) => {
-            const data = snapshot.data(options)
-            return new LeakData(data.login, data.nickname, data.password_hash, data.tel)
+            const dict = snapshot.data(options)
+            //TODO 12/16/2022: When we have snapshot.id?
+            return new Piece(
+                snapshot.id,
+                dict.login,
+                dict.nickname,
+                dict.password_hash,
+                dict.tel,
+            )
         },
     }
 
-    person_id
-    person_email
-    leak_id
+    leak: Leak
+    pieceID: string
+
+    login: string
+    nickname: string
+    password_hash: string
+    tel: string
 
 
-    constructor(login = "", nickname = "", password_hash = "", tel = "") {
+    constructor(pieceID: string, login = "", nickname = "", password_hash = "", tel = "") {
+        this.pieceID = pieceID
         this.login = login
         this.nickname = nickname
         this.password_hash = password_hash
         this.tel = tel
     }
 
+    setLeak = (value: Leak) => this.leak = value
+    setLeakID = (leakID: string) => this.setLeak(new Leak(leakID))
 
-    getID = () => this.person_id + this.leak_id
+    getPieceRef = () => this.leak.piecesPath + "/" + this.pieceID
+    getFriendlyPieceRef = () => this.leak.leakID + "@" + this.pieceID
 }
 
 
-export async function getLeaks(email: string) {
-    const docSnap = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
-    if (!docSnap) {
-        Log.w("leak::getLeaks: unable to find leaks")
-        Log.w("leak::getLeaks:   - email = " + email)
-        return []
+export async function getLeak(email: string) {
+    const snap = await queryDocument(DB.Leaks.all(), DB.Leaks.FIELD_EMAIL, email)
+    if (!snap) {
+        Log.e("leak::getLeak: unable to find the document")
+        Log.e("leak::getLeak:   - email = " + email)
+        return null
     }
-
-    const docRefs = collection(database, docSnap.ref.path + "/" + DB.Leaks.Data.COLLECTION)
-        .withConverter(LeakData.CONVERTER)
-    const docs = await getDocs(docRefs)
-
-    let leaks = []
-    docs.forEach(d => {
-        const leak = d.data()
-        leak.person_id = docSnap.id
-        leak.person_email = email
-        leak.leak_id = d.id
-        leaks.push(leak)
-    })
-    return leaks
+    return new Leak(snap.id)
 }

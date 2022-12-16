@@ -35,5 +35,5 @@ export function readUser(): User {
     return new User(id)
 }
 export function putUser(value: User) {
-    window.localStorage.setItem(KEYS.USER, value.id)
+    window.localStorage.setItem(KEYS.USER, value.userID)
 }

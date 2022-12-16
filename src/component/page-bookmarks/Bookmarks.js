@@ -8,7 +8,7 @@ import {useGlobalState, getUser} from "../../module/context"
 
 
 const Bookmarks = () => {
-    const [state, dispatch] = useGlobalState()
+    const [state] = useGlobalState()
 
     const user = getUser(state)
     const [bookmarks, setBookmarks] = useState([])
@@ -16,11 +16,8 @@ const Bookmarks = () => {
     useEffect(() => {
         user.getBookmarks().then(result => {
             if (result && result.length)
-                setBookmarks(
-                    result.map((site, index) => {
-                        return <DataCard key={index}
-                                         card={site}/>
-                    }))
+                setBookmarks(result.map(piece =>
+                    <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>))
             else setBookmarks("No bookmarks")
         })
     }, [user])
