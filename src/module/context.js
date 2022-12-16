@@ -42,6 +42,8 @@ export const useGlobalState = () => [
 
 const notifyContextChanged = (dispatch: Context) => dispatch({})
 
+export const reload = () => window.location.reload()
+
 
 export const getLanguageStack = (state: Context): [] => state.language_stack
 export function setLanguage(dispatch: Context, value: string) {

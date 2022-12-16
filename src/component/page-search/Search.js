@@ -1,5 +1,3 @@
-import css from "./Search.module.css"
-
 import React, {useState} from "react"
 import {Container, Form, Button} from "react-bootstrap"
 import Masonry from "react-masonry-css"
@@ -62,14 +60,14 @@ const Search = () => {
 
             <Form className="mt-4">
                 <Form.FloatingLabel label={getString(state, STRINGS.SEARCH_HINT)}>
-                    <Form.Control className={css.input}
+                    <Form.Control className="form-input-max"
                                   type="email"
                                   autoComplete="email"
                                   placeholder={getString(state, STRINGS.SEARCH)}
                                   onChange={event => setEmail(event.target.value)}
                                   isInvalid={isEmailWrong}/>
 
-                    <Button className={css.button}
+                    <Button className="form-button-floating"
                             disabled={isEmailSyntaxWrong}
                             onClick={() => performSearch()}>
                         <FontAwesomeIcon icon={faSearch}/>

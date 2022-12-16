@@ -10,8 +10,20 @@
     padding-left: 30px; /* gutter size */
     background-clip: padding-box;
 }
-
 /* Style items */
 .masonry-grid-column > div { /* change div to reference your elements you put in <Masonry> */
     margin-bottom: 30px;
+}
+
+
+.form-input-max {
+    display: inline-block !important;
+    width: calc(100% - (2.5rem + 2px)) !important;
+}
+
+.form-button-floating {
+    display: inline-block !important;
+    height: calc(3.5rem + 2px) !important;
+    width: calc(2.5rem + 2px) !important;
+    vertical-align: top !important;
 }

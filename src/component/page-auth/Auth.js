@@ -92,17 +92,17 @@ const Auth = () => {
                 <Form className="col-md-8">
                     {isLogin ||
                         <Form.FloatingLabel className="mt-4"
-                                            label={getString(state, STRINGS.AUTH_NICK)}>
+                                            label={getString(state, STRINGS.GENERAL_NICK)}>
                             <Form.Control type="text"
                                           autoComplete="off"
-                                          placeholder={getString(state, STRINGS.AUTH_NAME_HINT)}
+                                          placeholder={getString(state, STRINGS.GENERAL_NICK_HINT)}
                                           onChange={event => setName(event.target.value)}
                                           isInvalid={isNameWrong}/>
                             <Form.Control.Feedback type="invalid">
-                                {getString(state, STRINGS.AUTH_ERROR_NAME)}
+                                {getString(state, STRINGS.GENERAL_NICK_ERROR)}
                             </Form.Control.Feedback>
                             <Form.Text className="text-muted">
-                                {getString(state, STRINGS.AUTH_NAME_TIP)}
+                                {getString(state, STRINGS.GENERAL_NICK_TIP)}
                             </Form.Text>
                         </Form.FloatingLabel>}
 
