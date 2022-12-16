@@ -5,31 +5,32 @@ import Masonry from "react-masonry-css"
 import DataCard from "../card/DataCard"
 import {MASONRY_BREAKPOINT_COLS} from "../../module/const"
 import {useGlobalState, getUser} from "../../module/context"
+import {getString, STRINGS} from "../../module/lang"
 
 
 const Bookmarks = () => {
     const [state] = useGlobalState()
 
     const user = getUser(state)
-    const [bookmarks, setBookmarks] = useState([])
+    const [cards, setCards] = useState([])
 
     useEffect(() => {
-        user.getBookmarks().then(result => {
-            if (result && result.length)
-                setBookmarks(result.map(piece =>
+        user.getBookmarks().then(bookmarks => {
+            if (bookmarks && bookmarks.length)
+                setCards(bookmarks.map(piece =>
                     <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>))
-            else setBookmarks("No bookmarks")
+            else setCards(getString(state, STRINGS.BOOKMARKS_RESULTS_NOTHING))
         })
-    }, [user])
+    }, [cards, user])
 
     return (
         <Container>
-            <h1>Bookmarks</h1>
+            <h1>{getString(state, STRINGS.BOOKMARKS)}</h1>
 
             <Masonry breakpointCols={MASONRY_BREAKPOINT_COLS}
                      className="masonry-grid"
                      columnClassName="masonry-grid-column">
-                {bookmarks}
+                {cards}
             </Masonry>
         </Container>
     )

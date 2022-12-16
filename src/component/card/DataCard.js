@@ -32,13 +32,18 @@ const DataCard = props => {
 
     const user = getUser(state)
     const piece: Piece = props.data
+    const [email, setEmail] = useState("")
 
     const [bookmarkIcon, updateBookmarkIcon] = useState(icon_bookmark_add)
     useEffect(() => {
-        user.isBookmarked(piece).then(result =>
-            updateBookmarkIcon(result ?
+        user.isBookmarked(piece).then(is =>
+            updateBookmarkIcon(is ?
                 icon_bookmark :
                 icon_bookmark_add))
+
+        piece.leak.getEmail().then(email => {
+            setEmail(email)
+        })
     }, [piece, user])
 
     return (
@@ -47,8 +52,8 @@ const DataCard = props => {
                    role="button"
                    src={bookmarkIcon}
                    onClick={() => {
-                       user.isBookmarked(piece).then(result => {
-                           if (result) {
+                       user.isBookmarked(piece).then(is => {
+                           if (is) {
                                void user.removeBookmark(piece)
                                updateBookmarkIcon(icon_bookmark_add)
                            } else {
@@ -62,12 +67,12 @@ const DataCard = props => {
                 <Card.Title className="mb-4">
                     <FontAwesomeIcon icon={faIdCard}/>
                     {" "}
-                    {piece.nickname || piece.leak.getEmail()}
+                    {piece.nickname || email}
                 </Card.Title>
 
                 {labeledParagraph(faKey, getString(state, STRINGS.LEAK_LOGIN), piece.login)}
                 {labeledParagraph(faHashtag, getString(state, STRINGS.LEAK_PASSWORD_HASH), piece.password_hash)}
-                {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), piece.leak.getEmail())}
+                {labeledParagraph(faMailBulk, getString(state, STRINGS.LEAK_EMAIL), email)}
                 {labeledParagraph(faPhone, getString(state, STRINGS.LEAK_TEL), piece.tel)}
             </Card.Body>
 

@@ -18,11 +18,11 @@ let email = ""
 
 
 const Search = () => {
-    const [state, dispatch] = useGlobalState()
+    const [state] = useGlobalState()
 
     const [isEmailSyntaxWrong, setEmailSyntaxWrong] = useState(true)
     const [isEmailWrong, setEmailWrong] = useState(false)
-    const [searchResults, setSearchResults] = useState([])
+    const [cards, setCards] = useState([])
 
     function setEmail(value: string) {
         email = value
@@ -33,16 +33,17 @@ const Search = () => {
 
     async function performSearch() {
         const leak = await getLeak(email)
-        const pieces = await leak.getPieces()
+        leak.getPieces().then(pieces => {
+            Log.v("Search::performSearch: leak pieces received: " + pieces.length)
 
-        let results = pieces.map(piece =>
-            <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>)
+            setCards(pieces.length ? <>
+                    <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, pieces.length, email)}</p>
 
-        setSearchResults(results.length ? <>
-                <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, results.length, email)}</p>
-                {results}
-            </> :
-            <p>{getString(state, STRINGS.SEARCH_RESULTS_NOTHING, email)}</p>)
+                    {pieces.map(piece =>
+                        <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>)}
+                </> :
+                <p>{getString(state, STRINGS.SEARCH_RESULTS_NOTHING, email)}</p>)
+        })
     }
 
     return (
@@ -73,7 +74,7 @@ const Search = () => {
             <Masonry className="masonry-grid mt-4"
                      breakpointCols={MASONRY_BREAKPOINT_COLS}
                      columnClassName="masonry-grid-column">
-                {searchResults}
+                {cards}
             </Masonry>
         </Container>
     )

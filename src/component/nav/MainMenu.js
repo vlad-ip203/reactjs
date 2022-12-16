@@ -23,12 +23,12 @@ const MainMenu = () => {
     const [userName, setUserName] = useState("")
 
     useEffect(() => {
-        user.getName().then(result => {
+        user.getName().then(name => {
             Log.v("MainMenu::useEffect: username received")
-            Log.v("MainMenu::useEffect:   - isGuest  = " + user.isGuest())
-            Log.v("MainMenu::useEffect:   - username = " + result)
+            Log.v("MainMenu::useEffect:   - isGuest = " + user.isGuest())
+            Log.v("MainMenu::useEffect:   - name    = " + name)
 
-            setUserName(result)
+            setUserName(name)
         })
     }, [user])
 
@@ -76,7 +76,7 @@ const MainMenu = () => {
                                         {getString(state, STRINGS.PROFILE)}
                                     </Link>
                                     <Link className="dropdown-item" to={App.BOOKMARKS}>
-                                        {getString(state, STRINGS.NAV_BOOKMARKS)}
+                                        {getString(state, STRINGS.BOOKMARKS)}
                                     </Link>
                                     <DropdownItem onClick={() => {
                                         logout(dispatch)

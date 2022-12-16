@@ -21,8 +21,10 @@ export class User {
     }
 
     async getDocSnapshot() {
-        if (this.isGuest)
+        if (this.isGuest()) {
+            Log.i("user::getDocSnapshot: no snapshot for a guest")
             return null
+        }
 
         return this.docSnapshot = await getDocSnapshot(
             this.docSnapshot,

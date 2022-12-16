@@ -23,7 +23,6 @@ export const LANGUAGE_FALLBACK = LANGUAGE_EN_US
 export const STRINGS = {
     APP_NAME: 11,
 
-    NAV_BOOKMARKS: 21,
     NAV_HELP: 22,
     NAV_HELP_HELP: 221,
     NAV_HELP_ABOUT: 222,
@@ -64,6 +63,9 @@ export const STRINGS = {
     LEAK_NICKNAME: 65,
     LEAK_PASSWORD_HASH: 671,
     LEAK_TEL: 69,
+
+    BOOKMARKS: 7,
+    BOOKMARKS_RESULTS_NOTHING: 711,
 }
 
 //String translations and default values
@@ -87,7 +89,6 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_LANGUAGE, value: "Language"},
         {key: STRINGS.NAV_THEME, value: "Theme"},
         {key: STRINGS.NAV_ACCOUNT, value: "Account"},
-        {key: STRINGS.NAV_BOOKMARKS, value: "Bookmarks"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Login"},
         {key: STRINGS.AUTH_LOGGING, value: "Login"},
@@ -124,6 +125,9 @@ const TRANSLATIONS = {
         {key: STRINGS.LEAK_NICKNAME, value: "Nickname"},
         {key: STRINGS.LEAK_PASSWORD_HASH, value: "Password hash"},
         {key: STRINGS.LEAK_TEL, value: "Telephone"},
+
+        {key: STRINGS.BOOKMARKS, value: "Bookmarks"},
+        {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "No bookmarks yet"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
@@ -136,7 +140,6 @@ const TRANSLATIONS = {
         {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
         {key: STRINGS.NAV_THEME, value: "Тема"},
         {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
-        {key: STRINGS.NAV_BOOKMARKS, value: "Закладки"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Увійти"},
         {key: STRINGS.AUTH_LOGGING, value: "Вхід"},
@@ -173,6 +176,9 @@ const TRANSLATIONS = {
         {key: STRINGS.LEAK_NICKNAME, value: "Нікнейм"},
         {key: STRINGS.LEAK_PASSWORD_HASH, value: "Хеш паролю"},
         {key: STRINGS.LEAK_TEL, value: "Телефон"},
+
+        {key: STRINGS.BOOKMARKS, value: "Закладки"},
+        {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "Ще немає закладок"},
     ],
 }
 

@@ -61,7 +61,7 @@ export class Piece {
     // noinspection JSUnusedGlobalSymbols
     static FIRESTORE_CONVERTER = {
         toFirestore: (obj: Piece) => {
-            //TODO 12/16/2022: Does pieceID needed? (probably needed for bookmark search)
+            //TODO 12/16/2022: Is pieceID needed? (probably needed for bookmark search)
             return {
                 leakID: obj.leak.leakID,
                 pieceID: obj.pieceID,

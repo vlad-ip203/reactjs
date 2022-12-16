@@ -63,7 +63,7 @@ export class DB {
 
 
 export async function getDocSnapshot(lastSnap, collection: string, id: string) {
-    if (lastSnap) //Already defined
+    if (lastSnap) //Already fetched
         return lastSnap
 
     const docRef = doc(database, collection, id)
