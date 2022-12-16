@@ -49,16 +49,9 @@ const MainMenu = () => {
                         <Link className="nav-link" to={App.SEARCH}>
                             {getString(state, STRINGS.SEARCH)}
                         </Link>
-
-                        <NavDropdown title={getString(state, STRINGS.NAV_HELP)}>
-                            <Link className="dropdown-item" to={App.HELP}>
-                                {getString(state, STRINGS.NAV_HELP_HELP)}
-                            </Link>
-                            <NavDropdown.Divider/>
-                            <Link className="dropdown-item" to={App.ABOUT}>
-                                {getString(state, STRINGS.NAV_HELP_ABOUT)}
-                            </Link>
-                        </NavDropdown>
+                        <Link className="nav-link" to={App.ABOUT}>
+                            {getString(state, STRINGS.ABOUT)}
+                        </Link>
                     </Nav>
 
                     <Nav>

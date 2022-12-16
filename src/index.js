@@ -12,7 +12,6 @@ import Root from "./component/Root"
 import Error404 from "./component/page-service/Error404"
 import Home from "./component/page-home/Home"
 import About from "./component/page-about/About"
-import Help from "./component/page-help/Help"
 import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
 import Profile from "./component/page-profile/Profile"
@@ -49,7 +48,6 @@ const router = createBrowserRouter([
         children: [
             {index: true, element: <Home/>},
             {path: App.SEARCH, element: <Search/>},
-            {path: App.HELP, element: <Help/>},
             {path: App.ABOUT, element: <About/>},
             {path: App.AUTH, element: <Auth/>},
             {path: App.PROFILE, element: <Profile/>},

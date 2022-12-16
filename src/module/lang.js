@@ -24,9 +24,6 @@ export const LANGUAGE_FALLBACK = LANGUAGE_EN_US
 export const STRINGS = {
     APP_NAME: 100.1,
 
-    NAV_HELP: 101.1,
-    NAV_HELP_HELP: 101.11,
-    NAV_HELP_ABOUT: 101.12,
     NAV_LANGUAGE: 101.2,
     NAV_THEME: 101.3,
     NAV_ACCOUNT: 101.4,
@@ -78,6 +75,9 @@ export const STRINGS = {
     CONSOLE_INTRO: 205.1,
     CONSOLE_DATA: 205.2,
     CONSOLE_PUSH: 205.3,
+
+    ABOUT: 206,
+    ABOUT_INTRO: 206.1,
 }
 
 //String translations and default values
@@ -100,9 +100,6 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Moderator"},
         {key: DB.Roles.USER, value: "User"},
 
-        {key: STRINGS.NAV_HELP, value: "Help"},
-        {key: STRINGS.NAV_HELP_HELP, value: "Help"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
         {key: STRINGS.NAV_LANGUAGE, value: "Language"},
         {key: STRINGS.NAV_THEME, value: "Theme"},
         {key: STRINGS.NAV_ACCOUNT, value: "Account"},
@@ -156,6 +153,12 @@ const TRANSLATIONS = {
         {key: STRINGS.CONSOLE_INTRO, value: "Put formatted JSON data here to push to the database"},
         {key: STRINGS.CONSOLE_DATA, value: "Data to push"},
         {key: STRINGS.CONSOLE_PUSH, value: "Push"},
+
+        {key: STRINGS.ABOUT, value: "About"},
+        {
+            key: STRINGS.ABOUT_INTRO,
+            value: "This project aims to help collect open data from leaked databases",
+        },
     ],
 
     "uk-UA": [
@@ -167,9 +170,6 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Модератор"},
         {key: DB.Roles.USER, value: "Користувач"},
 
-        {key: STRINGS.NAV_HELP, value: "Допомога"},
-        {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
         {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
         {key: STRINGS.NAV_THEME, value: "Тема"},
         {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
@@ -223,6 +223,12 @@ const TRANSLATIONS = {
         {key: STRINGS.CONSOLE_INTRO, value: "Введіть дані у форматі JSON, щоб імпортувати в базу даних"},
         {key: STRINGS.CONSOLE_DATA, value: "Дані для відправки"},
         {key: STRINGS.CONSOLE_PUSH, value: "Відправити"},
+
+        {key: STRINGS.ABOUT, value: "Про проект"},
+        {
+            key: STRINGS.ABOUT_INTRO,
+            value: "Ціль проекту - допомогти зібрати дані, що опинилися у відкритому доступі внаслідок витікання баз даних",
+        },
     ],
 }
 

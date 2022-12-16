@@ -2,8 +2,8 @@ import css from "./Error404.module.css"
 import logo from "../../res/logo.svg"
 
 import React from "react"
+import {Container, Image} from "react-bootstrap"
 import {useRouteError} from "react-router-dom"
-import {Container} from "react-bootstrap"
 
 import MainMenu from "../nav/MainMenu"
 
@@ -28,7 +28,7 @@ const Error404 = () => {
                     Details: {error.statusText || error.message}
                 </p>
 
-                <img className={css.logo} src={logo} alt="logo"/>
+                <Image className={css.logo} src={logo} alt="logo"/>
             </Container>
         </main>
 

@@ -1,7 +1,6 @@
 export class App {
     static ROOT = "/"
     static SEARCH = "/search"
-    static HELP = "/help"
     static ABOUT = "/about"
     static AUTH = "/auth"
     static PROFILE = "/profile"
