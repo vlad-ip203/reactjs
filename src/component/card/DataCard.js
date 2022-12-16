@@ -5,7 +5,16 @@ import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
 import React, {useState, useEffect} from "react"
 import {Card, Image} from "react-bootstrap"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faLink, faMailBulk, faHashtag, faKey, faPhone, faIdCard} from "@fortawesome/free-solid-svg-icons"
+import {
+    faLink,
+    faMailBulk,
+    faHashtag,
+    faKey,
+    faPhone,
+    faIdCard,
+    faBookmark as fasBookmark,
+} from "@fortawesome/free-solid-svg-icons"
+import {faBookmark as farBookmark} from "@fortawesome/free-regular-svg-icons"
 
 import {useGlobalState, getUser} from "../../module/context"
 import {getString, STRINGS} from "../../module/lang"
