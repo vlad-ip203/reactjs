@@ -51,7 +51,19 @@ export class Leak {
             piece.setLeak(this)
             out.push(piece)
         })
-        return out
+        return this.pieces = out
+    }
+
+    async getPiece(id: string) {
+        if (!this.pieces) //Not yet fetched
+            await this.getPieces()
+
+        let piece = null
+        this.pieces.forEach(value => {
+            if (value.pieceID === id)
+                piece = value
+        })
+        return piece
     }
 }
 
@@ -63,8 +75,6 @@ export class Piece {
         toFirestore: (obj: Piece) => {
             //TODO 12/16/2022: Is pieceID needed? (probably needed for bookmark search)
             return {
-                leakID: obj.leak.leakID,
-                pieceID: obj.pieceID,
                 login: obj.login,
                 nickname: obj.nickname,
                 password_hash: obj.password_hash,
@@ -102,7 +112,6 @@ export class Piece {
     }
 
     setLeak = (value: Leak) => this.leak = value
-    setLeakID = (leakID: string) => this.setLeak(new Leak(leakID))
 
     getPieceRef = () => this.leak.piecesPath + "/" + this.pieceID
     getFriendlyPieceRef = () => this.leak.leakID + "@" + this.pieceID

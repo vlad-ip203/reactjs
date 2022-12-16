@@ -1,9 +1,9 @@
-import {doc, getDoc, getDocs, addDoc, deleteDoc} from "firebase/firestore"
+import {doc, getDoc, getDocs, addDoc, deleteDoc, query, where} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../../index"
 import {DB, queryDocument, getDocSnapshot} from "./db"
-import {Piece} from "./leak"
+import {Piece, Leak} from "./leak"
 import {Log} from "../log"
 
 
@@ -64,61 +64,78 @@ export class User {
         if (!snap) return null
 
         const docRefs = DB.Users.Bookmarks.all(snap)
-            .withConverter(Piece.FIRESTORE_CONVERTER)
         const docs = await getDocs(docRefs)
 
+        const docsSplit = []
+        docs.forEach(d => docsSplit.push(d))
+
         let bookmarks: Piece[] = []
-        docs.forEach(d => {
-            const piece = d.data()
-            // noinspection JSUnresolvedVariable
-            piece.setLeakID(d.leakID)
+        for (const doc of docsSplit) {
+            const leakID = doc.get(DB.Users.Bookmarks.FIELD_LEAK_ID)
+            const pieceID = doc.get(DB.Users.Bookmarks.FIELD_PIECE_ID)
+
+            const leak = new Leak(leakID)
+            const piece = await leak.getPiece(pieceID)
+            piece.setLeak(leak)
+            Log.v("user::User::getBookmarks: leak piece retrieved = " + piece.getFriendlyPieceRef())
+
             bookmarks.push(piece)
-        })
+        }
         return this.bookmarks = bookmarks
     }
 
     async isBookmarked(piece: Piece) {
         const bookmarks = await this.getBookmarks()
-        return bookmarks.some(value => value.getPieceRef() === piece.getPieceRef())
+        return bookmarks.some(bookmark =>
+            bookmark.getPieceRef() === piece.getPieceRef())
     }
 
     async addBookmark(piece: Piece) {
         const snap = await this.getDocSnapshot()
         if (!snap) return
 
-        //FIXME 12/16/2022: Experimental converter usage
         const docRef = await addDoc(
-            DB.Users.Bookmarks.all(snap).withConverter(Piece.FIRESTORE_CONVERTER),
-            piece)
-
+            DB.Users.Bookmarks.all(snap),
+            {
+                leakID: piece.leak.leakID,
+                pieceID: piece.pieceID,
+            })
         Log.v("user::User::addBookmarks: bookmark added with id = " + docRef.id)
 
         this.bookmarks.push(piece)
     }
 
     async removeBookmark(piece: Piece) {
-        const userSnap = await this.getDocSnapshot()
-        if (!userSnap) return
+        const snap = await this.getDocSnapshot()
+        if (!snap) return
 
-        //FIXME 12/16/2022: Would it work with snapshots?
-        const query_leak = await queryDocument(
-            DB.Users.Bookmarks.all(userSnap),
-            DB.Users.Bookmarks.FIELD_LEAK_ID,
-            piece.leak.leakID)
-        Log.d("user::removeBookmark: query_leak completed")
-        const query_piece = await queryDocument(
-            query_leak,
-            DB.Users.Bookmarks.FIELD_PIECE_ID,
-            piece.pieceID)
-        Log.d("user::removeBookmark: query_piece completed")
-        void deleteDoc(query_piece)
+        try {
+            const q = query(
+                DB.Users.Bookmarks.all(snap),
+                where(DB.Users.Bookmarks.FIELD_LEAK_ID, "==", piece.leak.leakID),
+                where(DB.Users.Bookmarks.FIELD_PIECE_ID, "==", piece.pieceID))
 
-        let iToRemove
+            const docs = await getDocs(q)
+            docs.forEach(doc => {
+                Log.v("user::User::removeBookmark: trying to delete the document")
+                Log.v("user::User::removeBookmark:   - id = " + doc.id)
+
+                void deleteDoc(doc.ref)
+            })
+        } catch (e) {
+            Log.e("user::User::removeBookmark: unable to delete the document")
+            Log.e("user::User::removeBookmark:   - leakID  = " + piece.leak.leakID)
+            Log.e("user::User::removeBookmark:   - pieceID = " + piece.pieceID)
+            Log.e("user::User::removeBookmark:   = catching: " + e)
+            return
+        }
+
+        let removeI
         this.bookmarks.forEach((value, i) => {
             if (value.getPieceRef() === piece.getPieceRef())
-                iToRemove = i
+                removeI = i
         })
-        this.bookmarks.splice(iToRemove, 1)
+        this.bookmarks.splice(removeI, 1)
     }
 }
 

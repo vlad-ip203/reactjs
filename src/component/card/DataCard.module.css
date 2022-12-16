@@ -1,13 +1,6 @@
-.icon {
-    max-width: 256px;
-    max-height: 256px;
-    margin: auto;
-    padding: 24px;
-}
-
 .icon_bookmark {
     position: absolute;
     top: 6px;
-    right: 3px;
-    height: 24px;
+    right: 6px;
+    height: 22px;
 }

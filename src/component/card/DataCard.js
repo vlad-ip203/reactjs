@@ -1,9 +1,7 @@
 import css from "./DataCard.module.css"
-import icon_bookmark from "../../res/icon_bookmark.svg"
-import icon_bookmark_add from "../../res/icon_bookmark_add.svg"
 
 import React, {useState, useEffect} from "react"
-import {Card, Image} from "react-bootstrap"
+import {Card} from "react-bootstrap"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {
     faLink,
@@ -43,34 +41,25 @@ const DataCard = props => {
     const piece: Piece = props.data
     const [email, setEmail] = useState("")
 
-    const [bookmarkIcon, updateBookmarkIcon] = useState(icon_bookmark_add)
+    const [isBookmarked, setIsBookmarked] = useState(false)
     useEffect(() => {
-        user.isBookmarked(piece).then(is =>
-            updateBookmarkIcon(is ?
-                icon_bookmark :
-                icon_bookmark_add))
+        user.isBookmarked(piece).then(is => setIsBookmarked(is))
 
-        piece.leak.getEmail().then(email => {
-            setEmail(email)
-        })
+        piece.leak.getEmail().then(email => setEmail(email))
     }, [piece, user])
 
     return (
         <Card>
-            <Image className={css.icon_bookmark}
-                   role="button"
-                   src={bookmarkIcon}
-                   onClick={() => {
-                       user.isBookmarked(piece).then(is => {
-                           if (is) {
-                               void user.removeBookmark(piece)
-                               updateBookmarkIcon(icon_bookmark_add)
-                           } else {
-                               void user.addBookmark(piece)
-                               updateBookmarkIcon(icon_bookmark)
-                           }
-                       })
-                   }}/>
+            <FontAwesomeIcon className={css.icon_bookmark}
+                             role="button"
+                             icon={isBookmarked ? fasBookmark : farBookmark}
+                             onClick={() => {
+                                 setIsBookmarked(!isBookmarked)
+
+                                 if (isBookmarked)
+                                     void user.removeBookmark(piece)
+                                 else void user.addBookmark(piece)
+                             }}/>
 
             <Card.Body>
                 <Card.Title className="mb-4">
