@@ -22,7 +22,7 @@ const Search = () => {
 
     const [isEmailSyntaxWrong, setEmailSyntaxWrong] = useState(true)
     const [isEmailWrong, setEmailWrong] = useState(false)
-    const [cards, setCards] = useState([])
+    const [content, setContent] = useState("initial")
 
     function setEmail(value: string) {
         email = value
@@ -33,16 +33,26 @@ const Search = () => {
 
     async function performSearch() {
         const leak = await getLeak(email)
+        if (!leak) {
+            setContent(
+                <p>{getString(state, STRINGS.SEARCH_RESULTS_NOTHING, email)}</p>,
+            )
+            return
+        }
+
         leak.getPieces().then(pieces => {
             Log.v("Search::performSearch: leak pieces received: " + pieces.length)
 
-            setCards(pieces.length ? <>
-                    <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, pieces.length, email)}</p>
-
+            setContent(<>
+                <p>{getString(state, STRINGS.SEARCH_RESULTS_COUNT, content.length, email)}</p>
+                <Masonry className="masonry-grid mt-4"
+                         breakpointCols={MASONRY_BREAKPOINT_COLS}
+                         columnClassName="masonry-grid-column">
                     {pieces.map(piece =>
-                        <DataCard key={piece.getFriendlyPieceRef()} data={piece}/>)}
-                </> :
-                <p>{getString(state, STRINGS.SEARCH_RESULTS_NOTHING, email)}</p>)
+                        <DataCard key={piece.getFriendlyPieceRef()}
+                                  data={piece}/>)}
+                </Masonry>
+            </>)
         })
     }
 
@@ -71,11 +81,7 @@ const Search = () => {
                 </Form.FloatingLabel>
             </Form>
 
-            <Masonry className="masonry-grid mt-4"
-                     breakpointCols={MASONRY_BREAKPOINT_COLS}
-                     columnClassName="masonry-grid-column">
-                {cards}
-            </Masonry>
+            {content !== "initial" && content}
         </Container>
     )
 }

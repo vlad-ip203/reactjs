@@ -66,6 +66,7 @@ export const STRINGS = {
 
     BOOKMARKS: 7,
     BOOKMARKS_RESULTS_NOTHING: 711,
+    BOOKMARKS_HINT: 72,
 }
 
 //String translations and default values
@@ -128,6 +129,7 @@ const TRANSLATIONS = {
 
         {key: STRINGS.BOOKMARKS, value: "Bookmarks"},
         {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "No bookmarks yet"},
+        {key: STRINGS.BOOKMARKS_HINT, value: "Wanna add some?"},
     ],
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
@@ -179,6 +181,7 @@ const TRANSLATIONS = {
 
         {key: STRINGS.BOOKMARKS, value: "Закладки"},
         {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "Ще немає закладок"},
+        {key: STRINGS.BOOKMARKS_HINT, value: "Може додати?"},
     ],
 }
 
