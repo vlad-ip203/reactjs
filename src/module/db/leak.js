@@ -73,7 +73,6 @@ export class Piece {
     // noinspection JSUnusedGlobalSymbols
     static FIRESTORE_CONVERTER = {
         toFirestore: (obj: Piece) => {
-            //TODO 12/16/2022: Is pieceID needed? (probably needed for bookmark search)
             return {
                 login: obj.login,
                 nickname: obj.nickname,
@@ -83,7 +82,6 @@ export class Piece {
         },
         fromFirestore: (snapshot, options) => {
             const dict = snapshot.data(options)
-            //TODO 12/16/2022: When we have snapshot.id?
             return new Piece(
                 snapshot.id,
                 dict.login,

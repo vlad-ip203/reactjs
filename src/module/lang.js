@@ -24,10 +24,10 @@ export const LANGUAGE_FALLBACK = LANGUAGE_EN_US
 export const STRINGS = {
     APP_NAME: 101,
 
-    GENERAL_NICK: 12,
-    GENERAL_NICK_HINT: 121,
-    GENERAL_NICK_TIP: 122,
-    GENERAL_NICK_ERROR: 123,
+    NICK: 12,
+    NICK_HINT: 121,
+    NICK_TIP: 122,
+    NICK_ERROR: 123,
 
     NAV_HELP: 22,
     NAV_HELP_HELP: 221,
@@ -93,13 +93,13 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Moderator"},
         {key: DB.Roles.USER, value: "User"},
 
-        {key: STRINGS.GENERAL_NICK, value: "Nickname"},
-        {key: STRINGS.GENERAL_NICK_HINT, value: "How should we call you?"},
+        {key: STRINGS.NICK, value: "Nickname"},
+        {key: STRINGS.NICK_HINT, value: "How should we call you?"},
         {
-            key: STRINGS.GENERAL_NICK_TIP,
+            key: STRINGS.NICK_TIP,
             value: "Nickname must have 3 to 16 characters and can contain letters, numbers, and underscores",
         },
-        {key: STRINGS.GENERAL_NICK_ERROR, value: "This nickname is wrong or already taken"},
+        {key: STRINGS.NICK_ERROR, value: "This nickname is wrong or already taken"},
 
         {key: STRINGS.NAV_HELP, value: "Help"},
         {key: STRINGS.NAV_HELP_HELP, value: "Help"},
@@ -153,13 +153,13 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Модератор"},
         {key: DB.Roles.USER, value: "Користувач"},
 
-        {key: STRINGS.GENERAL_NICK, value: "Нікнейм"},
-        {key: STRINGS.GENERAL_NICK_HINT, value: "Як нам звертатися до Вас?"},
+        {key: STRINGS.NICK, value: "Нікнейм"},
+        {key: STRINGS.NICK_HINT, value: "Як нам звертатися до Вас?"},
         {
-            key: STRINGS.GENERAL_NICK_TIP,
+            key: STRINGS.NICK_TIP,
             value: "Нікнейм повинен мати від 3 до 16 символів та може містити букви, цифри й підкреслення",
         },
-        {key: STRINGS.GENERAL_NICK_ERROR, value: "Нікнейм неправильний або вже зайнятий"},
+        {key: STRINGS.NICK_ERROR, value: "Нікнейм неправильний або вже зайнятий"},
 
         {key: STRINGS.NAV_HELP, value: "Допомога"},
         {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},

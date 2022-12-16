@@ -63,10 +63,10 @@ const Profile = () => {
                 </Form.FloatingLabel>
 
                 <Form.FloatingLabel className="mt-4"
-                                    label={getString(state, STRINGS.GENERAL_NICK)}>
+                                    label={getString(state, STRINGS.NICK)}>
                     <Form.Control type="text"
                                   autoComplete="off"
-                                  placeholder={getString(state, STRINGS.GENERAL_NICK_HINT)}
+                                  placeholder={getString(state, STRINGS.NICK_HINT)}
                                   value={name}
                                   onChange={event => {
                                       setName(event.target.value)
@@ -74,10 +74,10 @@ const Profile = () => {
                                   }}
                                   isInvalid={isNameWrong}/>
                     <Form.Control.Feedback type="invalid">
-                        {getString(state, STRINGS.GENERAL_NICK_ERROR)}
+                        {getString(state, STRINGS.NICK_ERROR)}
                     </Form.Control.Feedback>
                     <Form.Text className="text-muted">
-                        {getString(state, STRINGS.GENERAL_NICK_TIP)}
+                        {getString(state, STRINGS.NICK_TIP)}
                     </Form.Text>
                 </Form.FloatingLabel>
 
