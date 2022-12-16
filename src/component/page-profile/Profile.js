@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import {Container, Form, Button, Col, Row} from "react-bootstrap"
-import {useNavigate} from "react-router-dom"
 import {where} from "firebase/firestore"
 
 import {useGlobalState, getUser, reload} from "../../module/context"
@@ -12,13 +11,14 @@ import {querySingleDoc, DB} from "../../module/db/db"
 
 const Profile = () => {
     const [state, dispatch] = useGlobalState()
-    const navigate = useNavigate()
 
     const user = getUser(state)
+    const [role, setRole] = useState("")
     const [name, setName] = useState("")
     const [isNameWrong, setNameWrong] = useState(false)
 
     useEffect(() => {
+        user.getRole().then(role => setRole(role))
         user.getName().then(name => setName(name))
     }, [user])
 
@@ -50,6 +50,18 @@ const Profile = () => {
             <h1>{getString(state, STRINGS.PROFILE)}</h1>
 
             <Form className="mt-4">
+                <Form.FloatingLabel className="mt-4"
+                                    label={getString(state, STRINGS.PROFILE_ROLE)}>
+                    <Form.Control type="text"
+                                  autoComplete="off"
+                                  disabled={true}
+                                  placeholder={getString(state, STRINGS.PROFILE_ROLE_HINT)}
+                                  value={getString(state, role)}/>
+                    <Form.Text className="text-muted">
+                        {getString(state, STRINGS.PROFILE_ROLE_HINT)}
+                    </Form.Text>
+                </Form.FloatingLabel>
+
                 <Form.FloatingLabel className="mt-4"
                                     label={getString(state, STRINGS.GENERAL_NICK)}>
                     <Form.Control type="text"

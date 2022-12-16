@@ -1,9 +1,10 @@
 import {Context} from "react"
+import {format} from "react-string-format"
 
 import {getLanguageStack} from "./context"
 import {Log} from "./log"
 import {THEME_DARK, THEME_LIGHT, THEME_SYSTEM} from "./theme"
-import {format} from "react-string-format"
+import {DB} from "./db/db"
 
 
 //Available languages
@@ -52,6 +53,8 @@ export const STRINGS = {
 
     PROFILE: 4,
     PROFILE_SAVE: 41,
+    PROFILE_ROLE: 42,
+    PROFILE_ROLE_HINT: 421,
 
     SEARCH: 5,
     SEARCH_HINT: 51,
@@ -85,6 +88,10 @@ const TRANSLATIONS = {
         {key: THEME_SYSTEM, value: "System default"},
         {key: THEME_LIGHT, value: "Light"},
         {key: THEME_DARK, value: "Dark"},
+        {key: DB.Roles.ADMIN, value: "Admin"},
+        {key: DB.Roles.GUEST, value: "Guest"},
+        {key: DB.Roles.MODERATOR, value: "Moderator"},
+        {key: DB.Roles.USER, value: "User"},
 
         {key: STRINGS.GENERAL_NICK, value: "Nickname"},
         {key: STRINGS.GENERAL_NICK_HINT, value: "How should we call you?"},
@@ -118,6 +125,8 @@ const TRANSLATIONS = {
 
         {key: STRINGS.PROFILE, value: "Profile"},
         {key: STRINGS.PROFILE_SAVE, value: "Save"},
+        {key: STRINGS.PROFILE_ROLE, value: "Role"},
+        {key: STRINGS.PROFILE_ROLE_HINT, value: "This is your permission level"},
 
         {key: STRINGS.SEARCH, value: "Search"},
         {key: STRINGS.SEARCH_HINT, value: "Enter email to search for"},
@@ -139,6 +148,10 @@ const TRANSLATIONS = {
         {key: THEME_SYSTEM, value: "За вибором системи"},
         {key: THEME_LIGHT, value: "Світла"},
         {key: THEME_DARK, value: "Темна"},
+        {key: DB.Roles.ADMIN, value: "Адміністратор"},
+        {key: DB.Roles.GUEST, value: "Гость"},
+        {key: DB.Roles.MODERATOR, value: "Модератор"},
+        {key: DB.Roles.USER, value: "Користувач"},
 
         {key: STRINGS.GENERAL_NICK, value: "Нікнейм"},
         {key: STRINGS.GENERAL_NICK_HINT, value: "Як нам звертатися до Вас?"},
@@ -172,6 +185,8 @@ const TRANSLATIONS = {
 
         {key: STRINGS.PROFILE, value: "Профіль"},
         {key: STRINGS.PROFILE_SAVE, value: "Зберегти"},
+        {key: STRINGS.PROFILE_ROLE, value: "Роль"},
+        {key: STRINGS.PROFILE_ROLE_HINT, value: "Це Ваш рівень доступу"},
 
         {key: STRINGS.SEARCH, value: "Пошук"},
         {key: STRINGS.SEARCH_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},

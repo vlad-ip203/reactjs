@@ -1,4 +1,4 @@
-import {doc, getDoc, getDocs, addDoc, deleteDoc, where, setDoc} from "firebase/firestore"
+import {doc, getDoc, getDocs, addDoc, deleteDoc, where, updateDoc} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../../index"
@@ -6,7 +6,6 @@ import {DB, querySingleDoc, getDocSnapshot, queryDocs} from "./db"
 import {Piece, Leak} from "./leak"
 import {Log} from "../log"
 import {Context} from "react"
-import {notifyContextChanged} from "../context"
 
 
 export class User {
@@ -50,7 +49,7 @@ export class User {
     async setName(dispatch: Context, value: string) {
         const ref = doc(database, DB.Users.COLLECTION, this.userID)
         try {
-            await setDoc(ref, {name: value})
+            await updateDoc(ref, {name: value})
         } catch (e) {
             Log.e("user::User::setName: unable to update the user")
             Log.e("user::User::setName:   - name old = " + this.name)
@@ -70,7 +69,8 @@ export class User {
         const snap = await this.getDocSnapshot()
         if (!snap) return null
 
-        return this.role = await snap.get(DB.Users.FIELD_ROLE).id
+        const doc = await snap.get(DB.Users.FIELD_ROLE)
+        return this.role = doc.id
     }
 
 
