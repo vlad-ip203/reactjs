@@ -114,7 +114,7 @@ const Auth = () => {
                                       onChange={event => setEmail(event.target.value)}
                                       isInvalid={isEmailWrong}/>
                         <Form.Control.Feedback type="invalid">
-                            {getString(state, STRINGS.AUTH_ERROR_EMAIL)}
+                            {getString(state, STRINGS.AUTH_EMAIL_ERROR)}
                         </Form.Control.Feedback>
                         <Form.Text className="text-muted">
                             {getString(state, STRINGS.AUTH_EMAIL_TIP)}
@@ -130,7 +130,7 @@ const Auth = () => {
                                       isInvalid={isPassWrong}/>
                         {isLogin &&
                             <Form.Control.Feedback type="invalid">
-                                {getString(state, STRINGS.AUTH_ERROR_DATA)}
+                                {getString(state, STRINGS.AUTH_DATA_ERROR)}
                             </Form.Control.Feedback>}
                     </Form.FloatingLabel>
 

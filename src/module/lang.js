@@ -22,56 +22,57 @@ export const LANGUAGE_FALLBACK = LANGUAGE_EN_US
 
 //String keys
 export const STRINGS = {
-    APP_NAME: 101,
+    APP_NAME: 100.1,
 
-    NICK: 12,
-    NICK_HINT: 121,
-    NICK_TIP: 122,
-    NICK_ERROR: 123,
+    NAV_HELP: 101.1,
+    NAV_HELP_HELP: 101.11,
+    NAV_HELP_ABOUT: 101.12,
+    NAV_LANGUAGE: 101.2,
+    NAV_THEME: 101.3,
+    NAV_ACCOUNT: 101.4,
 
-    NAV_HELP: 22,
-    NAV_HELP_HELP: 221,
-    NAV_HELP_ABOUT: 222,
-    NAV_LANGUAGE: 23,
-    NAV_THEME: 24,
-    NAV_ACCOUNT: 25,
+    LEAK_ID: 102.1,
+    LEAK_EMAIL: 102.2,
+    LEAK_LOGIN: 102.3,
+    LEAK_NICKNAME: 102.4,
+    LEAK_PASSWORD_HASH: 102.51,
+    LEAK_TEL: 102.6,
 
-    AUTH_LOGIN: 31,
-    AUTH_LOGGING: 311,
-    AUTH_REGISTER: 32,
-    AUTH_REGISTRATION: 321,
-    AUTH_LOGOUT: 33,
-    AUTH_EMAIL: 36,
-    AUTH_EMAIL_HINT: 361,
-    AUTH_EMAIL_TIP: 362,
-    AUTH_PASSWORD: 37,
-    AUTH_PASSWORD_HINT: 371,
-    AUTH_PASSWORD_CONFIRM: 372,
-    AUTH_PASSWORD_CONFIRM_HINT: 3721,
-    AUTH_ERROR_DATA: 391,
-    AUTH_ERROR_EMAIL: 393,
+    NICK: 103,
+    NICK_HINT: 103.1,
+    NICK_TIP: 103.2,
+    NICK_ERROR: 103.3,
 
-    PROFILE: 4,
-    PROFILE_SAVE: 41,
-    PROFILE_ROLE: 42,
-    PROFILE_ROLE_HINT: 421,
 
-    SEARCH: 5,
-    SEARCH_HINT: 51,
-    SEARCH_ERROR_EMAIL: 531,
-    SEARCH_RESULTS_NOTHING: 551,
-    SEARCH_RESULTS_COUNT: 552,
+    AUTH_LOGIN: 201.11,
+    AUTH_LOGGING: 201.12,
+    AUTH_REGISTER: 201.13,
+    AUTH_REGISTRATION: 201.14,
+    AUTH_LOGOUT: 201.15,
+    AUTH_EMAIL: 201.2,
+    AUTH_EMAIL_HINT: 201.21,
+    AUTH_EMAIL_TIP: 201.22,
+    AUTH_EMAIL_ERROR: 201.23,
+    AUTH_PASSWORD: 201.3,
+    AUTH_PASSWORD_HINT: 201.31,
+    AUTH_PASSWORD_CONFIRM: 201.32,
+    AUTH_PASSWORD_CONFIRM_HINT: 201.321,
+    AUTH_DATA_ERROR: 201.41,
 
-    LEAK_ID: 61,
-    LEAK_EMAIL: 62,
-    LEAK_LOGIN: 63,
-    LEAK_NICKNAME: 65,
-    LEAK_PASSWORD_HASH: 671,
-    LEAK_TEL: 69,
+    PROFILE: 202,
+    PROFILE_SAVE: 202.1,
+    PROFILE_ROLE: 202.2,
+    PROFILE_ROLE_HINT: 202.21,
 
-    BOOKMARKS: 7,
-    BOOKMARKS_RESULTS_NOTHING: 711,
-    BOOKMARKS_HINT: 72,
+    SEARCH: 203,
+    SEARCH_HINT: 203.1,
+    SEARCH_ERROR_EMAIL: 203.21,
+    SEARCH_RESULTS_NOTHING: 203.31,
+    SEARCH_RESULTS_COUNT: 203.32,
+
+    BOOKMARKS: 204,
+    BOOKMARKS_HINT: 204.1,
+    BOOKMARKS_RESULTS_NOTHING: 204.21,
 }
 
 //String translations and default values
@@ -84,6 +85,7 @@ const TRANSLATIONS = {
 
         {key: STRINGS.LEAK_ID, value: "ID"},
     ],
+
     "en-US": [
         {key: THEME_SYSTEM, value: "System default"},
         {key: THEME_LIGHT, value: "Light"},
@@ -93,6 +95,19 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Moderator"},
         {key: DB.Roles.USER, value: "User"},
 
+        {key: STRINGS.NAV_HELP, value: "Help"},
+        {key: STRINGS.NAV_HELP_HELP, value: "Help"},
+        {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
+        {key: STRINGS.NAV_LANGUAGE, value: "Language"},
+        {key: STRINGS.NAV_THEME, value: "Theme"},
+        {key: STRINGS.NAV_ACCOUNT, value: "Account"},
+
+        {key: STRINGS.LEAK_EMAIL, value: "Email"},
+        {key: STRINGS.LEAK_LOGIN, value: "Login"},
+        {key: STRINGS.LEAK_NICKNAME, value: "Nickname"},
+        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Password hash"},
+        {key: STRINGS.LEAK_TEL, value: "Telephone"},
+
         {key: STRINGS.NICK, value: "Nickname"},
         {key: STRINGS.NICK_HINT, value: "How should we call you?"},
         {
@@ -101,12 +116,6 @@ const TRANSLATIONS = {
         },
         {key: STRINGS.NICK_ERROR, value: "This nickname is wrong or already taken"},
 
-        {key: STRINGS.NAV_HELP, value: "Help"},
-        {key: STRINGS.NAV_HELP_HELP, value: "Help"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "About"},
-        {key: STRINGS.NAV_LANGUAGE, value: "Language"},
-        {key: STRINGS.NAV_THEME, value: "Theme"},
-        {key: STRINGS.NAV_ACCOUNT, value: "Account"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Login"},
         {key: STRINGS.AUTH_LOGGING, value: "Login"},
@@ -116,12 +125,12 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_EMAIL, value: "Email address"},
         {key: STRINGS.AUTH_EMAIL_HINT, value: "Enter your email"},
         {key: STRINGS.AUTH_EMAIL_TIP, value: "We'll never share your email with anyone else"},
+        {key: STRINGS.AUTH_EMAIL_ERROR, value: "This email is wrong or already registered"},
         {key: STRINGS.AUTH_PASSWORD, value: "Password"},
         {key: STRINGS.AUTH_PASSWORD_HINT, value: "Enter your password"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM, value: "Password confirmation"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM_HINT, value: "Enter your password again"},
-        {key: STRINGS.AUTH_ERROR_DATA, value: "Wrong email and/or password"},
-        {key: STRINGS.AUTH_ERROR_EMAIL, value: "This email is wrong or already registered"},
+        {key: STRINGS.AUTH_DATA_ERROR, value: "Wrong email and/or password"},
 
         {key: STRINGS.PROFILE, value: "Profile"},
         {key: STRINGS.PROFILE_SAVE, value: "Save"},
@@ -134,16 +143,11 @@ const TRANSLATIONS = {
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Seems like we don't have anything for email {0} yet"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Found {0} results for email address {1}"},
 
-        {key: STRINGS.LEAK_EMAIL, value: "Email"},
-        {key: STRINGS.LEAK_LOGIN, value: "Login"},
-        {key: STRINGS.LEAK_NICKNAME, value: "Nickname"},
-        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Password hash"},
-        {key: STRINGS.LEAK_TEL, value: "Telephone"},
-
         {key: STRINGS.BOOKMARKS, value: "Bookmarks"},
         {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "No bookmarks yet"},
         {key: STRINGS.BOOKMARKS_HINT, value: "Wanna add some?"},
     ],
+
     "uk-UA": [
         {key: THEME_SYSTEM, value: "За вибором системи"},
         {key: THEME_LIGHT, value: "Світла"},
@@ -153,6 +157,19 @@ const TRANSLATIONS = {
         {key: DB.Roles.MODERATOR, value: "Модератор"},
         {key: DB.Roles.USER, value: "Користувач"},
 
+        {key: STRINGS.NAV_HELP, value: "Допомога"},
+        {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
+        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
+        {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
+        {key: STRINGS.NAV_THEME, value: "Тема"},
+        {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
+
+        {key: STRINGS.LEAK_EMAIL, value: "Пошта"},
+        {key: STRINGS.LEAK_LOGIN, value: "Логін"},
+        {key: STRINGS.LEAK_NICKNAME, value: "Нікнейм"},
+        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Хеш паролю"},
+        {key: STRINGS.LEAK_TEL, value: "Телефон"},
+
         {key: STRINGS.NICK, value: "Нікнейм"},
         {key: STRINGS.NICK_HINT, value: "Як нам звертатися до Вас?"},
         {
@@ -161,12 +178,6 @@ const TRANSLATIONS = {
         },
         {key: STRINGS.NICK_ERROR, value: "Нікнейм неправильний або вже зайнятий"},
 
-        {key: STRINGS.NAV_HELP, value: "Допомога"},
-        {key: STRINGS.NAV_HELP_HELP, value: "Допомога"},
-        {key: STRINGS.NAV_HELP_ABOUT, value: "Про нас"},
-        {key: STRINGS.NAV_LANGUAGE, value: "Мова"},
-        {key: STRINGS.NAV_THEME, value: "Тема"},
-        {key: STRINGS.NAV_ACCOUNT, value: "Акаунт"},
 
         {key: STRINGS.AUTH_LOGIN, value: "Увійти"},
         {key: STRINGS.AUTH_LOGGING, value: "Вхід"},
@@ -176,12 +187,12 @@ const TRANSLATIONS = {
         {key: STRINGS.AUTH_EMAIL, value: "Електронна пошта"},
         {key: STRINGS.AUTH_EMAIL_HINT, value: "Введіть Вашу електронну пошту"},
         {key: STRINGS.AUTH_EMAIL_TIP, value: "Ми ніколи не поділимося Вашою електронною адресою з кимось іншим"},
+        {key: STRINGS.AUTH_EMAIL_ERROR, value: "Пошта неправильна або вже зареєстрована"},
         {key: STRINGS.AUTH_PASSWORD, value: "Пароль"},
         {key: STRINGS.AUTH_PASSWORD_HINT, value: "Введіть Ваш пароль"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM, value: "Підтвердження паролю"},
         {key: STRINGS.AUTH_PASSWORD_CONFIRM_HINT, value: "Введіть Ваш пароль ще раз"},
-        {key: STRINGS.AUTH_ERROR_DATA, value: "Неправильні електронна пошта та/або пароль"},
-        {key: STRINGS.AUTH_ERROR_EMAIL, value: "Пошта неправильна або вже зареєстрована"},
+        {key: STRINGS.AUTH_DATA_ERROR, value: "Неправильні електронна пошта та/або пароль"},
 
         {key: STRINGS.PROFILE, value: "Профіль"},
         {key: STRINGS.PROFILE_SAVE, value: "Зберегти"},
@@ -193,12 +204,6 @@ const TRANSLATIONS = {
         {key: STRINGS.SEARCH_ERROR_EMAIL, value: "Перевірте правильність електронної пошти, яку Ви ввели"},
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Схоже, що в нас поки немає ніяких даних за адресою {0}"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Знайдено {0} результатів за адресою {1}"},
-
-        {key: STRINGS.LEAK_EMAIL, value: "Пошта"},
-        {key: STRINGS.LEAK_LOGIN, value: "Логін"},
-        {key: STRINGS.LEAK_NICKNAME, value: "Нікнейм"},
-        {key: STRINGS.LEAK_PASSWORD_HASH, value: "Хеш паролю"},
-        {key: STRINGS.LEAK_TEL, value: "Телефон"},
 
         {key: STRINGS.BOOKMARKS, value: "Закладки"},
         {key: STRINGS.BOOKMARKS_RESULTS_NOTHING, value: "Ще немає закладок"},
