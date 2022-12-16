@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Container, Form, Button} from "react-bootstrap"
+import {Container, Form, Button, Row} from "react-bootstrap"
 import Masonry from "react-masonry-css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSearch} from "@fortawesome/free-solid-svg-icons"
@@ -57,27 +57,31 @@ const Search = () => {
     return (
         <Container>
             <h1>{getString(state, STRINGS.SEARCH)}</h1>
+            <p>{getString(state, STRINGS.SEARCH_INTRO)}</p>
 
-            <Form className="mt-4">
-                <Form.FloatingLabel label={getString(state, STRINGS.SEARCH_HINT)}>
-                    <Form.Control className="form-input-max"
-                                  type="email"
-                                  autoComplete="email"
-                                  placeholder={getString(state, STRINGS.SEARCH)}
-                                  onChange={event => setEmail(event.target.value)}
-                                  isInvalid={isEmailWrong}/>
+            <Row className="justify-content-center">
+                <Form className="col-md-5">
+                    <Form.FloatingLabel className="mt-4"
+                                        label={getString(state, STRINGS.SEARCH_EMAIL_HINT)}>
+                        <Form.Control className="form-input-floating"
+                                      type="email"
+                                      autoComplete="email"
+                                      placeholder={getString(state, STRINGS.SEARCH)}
+                                      onChange={event => setEmail(event.target.value)}
+                                      isInvalid={isEmailWrong}/>
 
-                    <Button className="form-button-floating"
-                            disabled={isEmailSyntaxWrong}
-                            onClick={() => performSearch()}>
-                        <FontAwesomeIcon icon={faSearch}/>
-                    </Button>
+                        <Button className="form-input-floating-button"
+                                disabled={isEmailSyntaxWrong}
+                                onClick={() => performSearch()}>
+                            <FontAwesomeIcon icon={faSearch}/>
+                        </Button>
 
-                    <Form.Control.Feedback type="invalid">
-                        {getString(state, STRINGS.SEARCH_ERROR_EMAIL)}
-                    </Form.Control.Feedback>
-                </Form.FloatingLabel>
-            </Form>
+                        <Form.Control.Feedback type="invalid">
+                            {getString(state, STRINGS.SEARCH_EMAIL_ERROR)}
+                        </Form.Control.Feedback>
+                    </Form.FloatingLabel>
+                </Form>
+            </Row>
 
             {content !== "initial" && content}
         </Container>

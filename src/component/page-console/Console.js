@@ -38,7 +38,7 @@ const Console = () => {
             <h1>{getString(state, STRINGS.CONSOLE)}</h1>
             <p>{getString(state, STRINGS.CONSOLE_INTRO)}</p>
 
-            <Form className="mt-4">
+            <Form>
                 <Form.FloatingLabel className="mt-4"
                                     label={getString(state, STRINGS.CONSOLE_DATA)}>
                     <Form.Control as={"textarea"}

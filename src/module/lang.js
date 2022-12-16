@@ -41,6 +41,9 @@ export const STRINGS = {
     NICK_ERROR: 103.3,
 
 
+    HOME_INTRO1: 200.1,
+    HOME_INTRO2: 200.2,
+
     AUTH_LOGIN: 201.11,
     AUTH_LOGGING: 201.12,
     AUTH_REGISTER: 201.13,
@@ -62,8 +65,9 @@ export const STRINGS = {
     PROFILE_ROLE_HINT: 202.21,
 
     SEARCH: 203,
-    SEARCH_HINT: 203.1,
-    SEARCH_ERROR_EMAIL: 203.21,
+    SEARCH_INTRO: 203.1,
+    SEARCH_EMAIL_HINT: 203.21,
+    SEARCH_EMAIL_ERROR: 203.22,
     SEARCH_RESULTS_NOTHING: 203.31,
     SEARCH_RESULTS_COUNT: 203.32,
 
@@ -119,6 +123,9 @@ const TRANSLATIONS = {
         {key: STRINGS.NICK_ERROR, value: "This nickname is wrong or already taken"},
 
 
+        {key: STRINGS.HOME_INTRO1, value: "Let's find out"},
+        {key: STRINGS.HOME_INTRO2, value: "What the Internet knows about you"},
+
         {key: STRINGS.AUTH_LOGIN, value: "Login"},
         {key: STRINGS.AUTH_LOGGING, value: "Login"},
         {key: STRINGS.AUTH_REGISTER, value: "Register"},
@@ -140,8 +147,12 @@ const TRANSLATIONS = {
         {key: STRINGS.PROFILE_ROLE_HINT, value: "This is your permission level"},
 
         {key: STRINGS.SEARCH, value: "Search"},
-        {key: STRINGS.SEARCH_HINT, value: "Enter email to search for"},
-        {key: STRINGS.SEARCH_ERROR_EMAIL, value: "Check syntax of the email you've entered"},
+        {
+            key: STRINGS.SEARCH_INTRO,
+            value: "Enter an email address you want to find and we'll show you everything we have on this email",
+        },
+        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Enter email to search for"},
+        {key: STRINGS.SEARCH_EMAIL_ERROR, value: "Check syntax of the email you've entered"},
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Seems like we don't have anything for email {0} yet"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Found {0} results for email address {1}"},
 
@@ -189,6 +200,9 @@ const TRANSLATIONS = {
         {key: STRINGS.NICK_ERROR, value: "Нікнейм неправильний або вже зайнятий"},
 
 
+        {key: STRINGS.HOME_INTRO1, value: "Давайте дізнаємося,"},
+        {key: STRINGS.HOME_INTRO2, value: "Що Інтернет знає про Вас"},
+
         {key: STRINGS.AUTH_LOGIN, value: "Увійти"},
         {key: STRINGS.AUTH_LOGGING, value: "Вхід"},
         {key: STRINGS.AUTH_REGISTER, value: "Зареєструватися"},
@@ -210,8 +224,12 @@ const TRANSLATIONS = {
         {key: STRINGS.PROFILE_ROLE_HINT, value: "Це Ваш рівень доступу"},
 
         {key: STRINGS.SEARCH, value: "Пошук"},
-        {key: STRINGS.SEARCH_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
-        {key: STRINGS.SEARCH_ERROR_EMAIL, value: "Перевірте правильність електронної пошти, яку Ви ввели"},
+        {
+            key: STRINGS.SEARCH_INTRO,
+            value: "Введіть адресу електронної пошти, яку хочете знайти, і ми покажемо все, що в нас є",
+        },
+        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
+        {key: STRINGS.SEARCH_EMAIL_ERROR, value: "Перевірте правильність електронної пошти, яку Ви ввели"},
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Схоже, що в нас поки немає ніяких даних за адресою {0}"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Знайдено {0} результатів за адресою {1}"},
 

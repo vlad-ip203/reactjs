@@ -89,10 +89,9 @@ const Auth = () => {
             <h1>{getString(state, isLogin ? STRINGS.AUTH_LOGGING : STRINGS.AUTH_REGISTRATION)}</h1>
 
             <Row className="justify-content-center">
-                <Form className="col-md-8">
+                <Form className="col-md-5">
                     {isLogin ||
-                        <Form.FloatingLabel className="mt-4"
-                                            label={getString(state, STRINGS.NICK)}>
+                        <Form.FloatingLabel label={getString(state, STRINGS.NICK)}>
                             <Form.Control type="text"
                                           autoComplete="off"
                                           placeholder={getString(state, STRINGS.NICK_HINT)}

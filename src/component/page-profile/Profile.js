@@ -49,47 +49,48 @@ const Profile = () => {
         <Container>
             <h1>{getString(state, STRINGS.PROFILE)}</h1>
 
-            <Form className="mt-4">
-                <Form.FloatingLabel className="mt-4"
-                                    label={getString(state, STRINGS.PROFILE_ROLE)}>
-                    <Form.Control type="text"
-                                  autoComplete="off"
-                                  disabled={true}
-                                  placeholder={getString(state, STRINGS.PROFILE_ROLE_HINT)}
-                                  value={getString(state, role)}/>
-                    <Form.Text className="text-muted">
-                        {getString(state, STRINGS.PROFILE_ROLE_HINT)}
-                    </Form.Text>
-                </Form.FloatingLabel>
+            <Row className="justify-content-center">
+                <Form className="col-md-5">
+                    <Form.FloatingLabel label={getString(state, STRINGS.PROFILE_ROLE)}>
+                        <Form.Control type="text"
+                                      autoComplete="off"
+                                      disabled={true}
+                                      placeholder={getString(state, STRINGS.PROFILE_ROLE_HINT)}
+                                      value={getString(state, role)}/>
+                        <Form.Text className="text-muted">
+                            {getString(state, STRINGS.PROFILE_ROLE_HINT)}
+                        </Form.Text>
+                    </Form.FloatingLabel>
 
-                <Form.FloatingLabel className="mt-4"
-                                    label={getString(state, STRINGS.NICK)}>
-                    <Form.Control type="text"
-                                  autoComplete="off"
-                                  placeholder={getString(state, STRINGS.NICK_HINT)}
-                                  value={name}
-                                  onChange={event => {
-                                      setName(event.target.value)
-                                      checkName()
-                                  }}
-                                  isInvalid={isNameWrong}/>
-                    <Form.Control.Feedback type="invalid">
-                        {getString(state, STRINGS.NICK_ERROR)}
-                    </Form.Control.Feedback>
-                    <Form.Text className="text-muted">
-                        {getString(state, STRINGS.NICK_TIP)}
-                    </Form.Text>
-                </Form.FloatingLabel>
+                    <Form.FloatingLabel className="mt-4"
+                                        label={getString(state, STRINGS.NICK)}>
+                        <Form.Control type="text"
+                                      autoComplete="off"
+                                      placeholder={getString(state, STRINGS.NICK_HINT)}
+                                      value={name}
+                                      onChange={event => {
+                                          setName(event.target.value)
+                                          checkName()
+                                      }}
+                                      isInvalid={isNameWrong}/>
+                        <Form.Control.Feedback type="invalid">
+                            {getString(state, STRINGS.NICK_ERROR)}
+                        </Form.Control.Feedback>
+                        <Form.Text className="text-muted">
+                            {getString(state, STRINGS.NICK_TIP)}
+                        </Form.Text>
+                    </Form.FloatingLabel>
 
-                <Row className="mt-4">
-                    <Button as={Col}
-                            className="ms-3 me-2"
-                            variant="primary"
-                            onClick={() => void tryToUpdate()}>
-                        {getString(state, STRINGS.PROFILE_SAVE)}
-                    </Button>
-                </Row>
-            </Form>
+                    <Row className="mt-4">
+                        <Button as={Col}
+                                className="ms-3 me-2"
+                                variant="primary"
+                                onClick={() => void tryToUpdate()}>
+                            {getString(state, STRINGS.PROFILE_SAVE)}
+                        </Button>
+                    </Row>
+                </Form>
+            </Row>
         </Container>
     )
 }
