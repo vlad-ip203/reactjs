@@ -17,6 +17,7 @@ import Bookmarks from "./component/page-bookmarks/Bookmarks"
 import Auth from "./component/page-auth/Auth"
 import Profile from "./component/page-profile/Profile"
 import Search from "./component/page-search/Search"
+import Console from "./component/page-console/Console"
 
 
 //Your Firebase configuration
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
             {path: App.ABOUT, element: <About/>},
             {path: App.AUTH, element: <Auth/>},
             {path: App.PROFILE, element: <Profile/>},
+            {path: App.CONSOLE, element: <Console/>},
             {path: App.BOOKMARKS, element: <Bookmarks/>},
         ],
     },

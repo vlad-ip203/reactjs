@@ -10,7 +10,7 @@ import {useGlobalState, setTheme, setLanguage, logout, getAppTheme, getUser} fro
 import {App} from "../../module/const"
 import {getString, STRINGS, LANGUAGES} from "../../module/lang"
 import {THEMES, THEME_DARK} from "../../module/theme"
-import {Log} from "../../module/log"
+import {DB} from "../../module/db/db"
 
 
 const MainMenu = () => {
@@ -20,16 +20,12 @@ const MainMenu = () => {
     const isDark = getAppTheme(state) === THEME_DARK
     const user = getUser(state)
     const isUserGuest = user.isGuest()
-    const [userName, setUserName] = useState("")
+    const [role, setRole] = useState("")
+    const [name, setName] = useState("")
 
     useEffect(() => {
-        user.getName().then(name => {
-            Log.v("MainMenu::useEffect: username received")
-            Log.v("MainMenu::useEffect:   - isGuest = " + user.isGuest())
-            Log.v("MainMenu::useEffect:   - name    = " + name)
-
-            setUserName(name)
-        })
+        user.getRole().then(role => setRole(role))
+        user.getName().then(name => setName(name))
     }, [user])
 
     return (
@@ -66,7 +62,7 @@ const MainMenu = () => {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown title={isUserGuest ? getString(state, STRINGS.NAV_ACCOUNT) : userName}>
+                        <NavDropdown title={isUserGuest ? getString(state, STRINGS.NAV_ACCOUNT) : name}>
                             {isUserGuest ?
                                 <Link className="dropdown-item" to={App.AUTH}>
                                     {getString(state, STRINGS.AUTH_LOGIN)}
@@ -75,6 +71,10 @@ const MainMenu = () => {
                                     <Link className="dropdown-item" to={App.PROFILE}>
                                         {getString(state, STRINGS.PROFILE)}
                                     </Link>
+                                    {role === DB.Roles.ADMIN &&
+                                        <Link className="dropdown-item" to={App.CONSOLE}>
+                                            {getString(state, STRINGS.CONSOLE)}
+                                        </Link>}
                                     <Link className="dropdown-item" to={App.BOOKMARKS}>
                                         {getString(state, STRINGS.BOOKMARKS)}
                                     </Link>

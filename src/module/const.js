@@ -5,6 +5,7 @@ export class App {
     static ABOUT = "/about"
     static AUTH = "/auth"
     static PROFILE = "/profile"
+    static CONSOLE = "/console"
     static BOOKMARKS = "/bookmarks"
 }
 
