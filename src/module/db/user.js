@@ -1,3 +1,4 @@
+import {Context} from "react"
 import {doc, getDoc, getDocs, addDoc, deleteDoc, where, updateDoc} from "firebase/firestore"
 import {hashSync, genSaltSync} from "bcryptjs-react"
 
@@ -5,7 +6,6 @@ import {database} from "../../index"
 import {DB, querySingleDoc, getDocSnapshot, queryDocs} from "./db"
 import {Piece, Leak} from "./leak"
 import {Log} from "../log"
-import {Context} from "react"
 
 
 export class User {
