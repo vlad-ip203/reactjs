@@ -151,7 +151,7 @@ const TRANSLATIONS = {
             key: STRINGS.SEARCH_INTRO,
             value: "Enter an email address you want to find and we'll show you everything we have on this email",
         },
-        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Enter email to search for"},
+        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Email address"},
         {key: STRINGS.SEARCH_EMAIL_ERROR, value: "Check syntax of the email you've entered"},
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Seems like we don't have anything for email {0} yet"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Found {0} results for email address {1}"},
@@ -168,7 +168,7 @@ const TRANSLATIONS = {
         {key: STRINGS.ABOUT, value: "About"},
         {
             key: STRINGS.ABOUT_INTRO,
-            value: "This project aims to help collect open data from leaked databases",
+            value: "This project aims to help collect open data from leaked databases.",
         },
     ],
 
@@ -228,7 +228,7 @@ const TRANSLATIONS = {
             key: STRINGS.SEARCH_INTRO,
             value: "Введіть адресу електронної пошти, яку хочете знайти, і ми покажемо все, що в нас є",
         },
-        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Введіть електронну пошту, яку бажаєте знайти"},
+        {key: STRINGS.SEARCH_EMAIL_HINT, value: "Електронна пошта"},
         {key: STRINGS.SEARCH_EMAIL_ERROR, value: "Перевірте правильність електронної пошти, яку Ви ввели"},
         {key: STRINGS.SEARCH_RESULTS_NOTHING, value: "Схоже, що в нас поки немає ніяких даних за адресою {0}"},
         {key: STRINGS.SEARCH_RESULTS_COUNT, value: "Знайдено {0} результатів за адресою {1}"},
@@ -245,7 +245,7 @@ const TRANSLATIONS = {
         {key: STRINGS.ABOUT, value: "Про проект"},
         {
             key: STRINGS.ABOUT_INTRO,
-            value: "Ціль проекту - допомогти зібрати дані, що опинилися у відкритому доступі внаслідок витікання баз даних",
+            value: "Ціль проекту - допомогти зібрати дані, що опинилися у відкритому доступі внаслідок витікання баз даних.",
         },
     ],
 }
