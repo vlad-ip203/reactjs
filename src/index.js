@@ -28,14 +28,10 @@ const firebaseConfig = {
     storageBucket: "cursenreact-js.appspot.com",
     messagingSenderId: "1072824985855",
     appId: "1:1072824985855:web:6c103b7f169956da8804ca",
-    //For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    measurementId: "G-DKB13LDD45",
-
-    databaseURL: "https://cursenreact-js.firebaseio.com",
 }
 
 //Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig)
+export const firebaseApp = initializeApp(firebaseConfig)
 getAnalytics(firebaseApp)
 export const database = getFirestore(firebaseApp)
 

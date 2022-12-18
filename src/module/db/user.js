@@ -4,8 +4,9 @@ import {hashSync, genSaltSync} from "bcryptjs-react"
 
 import {database} from "../../index"
 import {DB, querySingleDoc, getDocSnapshot, queryDocs} from "./db"
-import {Piece, Leak} from "./leak"
+import {Leak} from "./leak"
 import {Log} from "../log"
+import {Piece} from "./piece"
 
 
 export class User {
@@ -23,7 +24,7 @@ export class User {
 
     async getDocSnapshot() {
         if (this.isGuest()) {
-            Log.i("user::getDocSnapshot: no snapshot for a guest")
+            Log.i("user::User::getDocSnapshot: no snapshot for a guest")
             return null
         }
 

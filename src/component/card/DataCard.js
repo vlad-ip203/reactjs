@@ -16,7 +16,7 @@ import {faBookmark as farBookmark} from "@fortawesome/free-regular-svg-icons"
 
 import {useGlobalState, getUser} from "../../module/context"
 import {getString, STRINGS} from "../../module/lang"
-import {Piece} from "../../module/db/leak"
+import {Piece} from "../../module/db/piece"
 
 
 function labeledParagraph(faIcon, label, text) {
