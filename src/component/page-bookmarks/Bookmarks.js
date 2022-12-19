@@ -8,7 +8,6 @@ import {useGlobalState, getUser} from "../../module/context"
 import {Log} from "../../module/log"
 import {getString, STRINGS} from "../../module/lang"
 import DataCard from "../card/DataCard"
-import {DB} from "../../module/db/db"
 
 
 const Bookmarks = () => {
@@ -20,11 +19,6 @@ const Bookmarks = () => {
     useEffect(() => {
         if (user.isGuest())
             navigate(App.AUTH)
-
-        user.getRole().then(role => {
-            if (role !== DB.Roles.ADMIN)
-                navigate(App.ROOT)
-        })
     }, [navigate, state, user])
 
     const [content, setContent] = useState("initial")

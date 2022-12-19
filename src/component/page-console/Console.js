@@ -9,6 +9,7 @@ import {getString, STRINGS} from "../../module/lang"
 import {Log} from "../../module/log"
 import {addLeak} from "../../module/db/leak"
 import {App} from "../../module/const"
+import {DB} from "../../module/db/db"
 
 
 const Console = () => {
@@ -20,6 +21,11 @@ const Console = () => {
     useEffect(() => {
         if (user.isGuest())
             navigate(App.AUTH)
+
+        user.getRole().then(role => {
+            if (role !== DB.Roles.ADMIN)
+                navigate(App.ROOT)
+        })
     }, [navigate, state, user])
 
     const [field, setField] = useState("")
